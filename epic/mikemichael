@@ -3,26 +3,22 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="../css/style.css" type="text/css"/>
 </head>
-<header> Mike Michael USE-CASE/Persona</header>
+<!--@see http://msboolean.com/hipster-baby-name-generator/ -->
+<header>BASIL MAYNARD DEVON  USE-CASE/Persona</header>
 	<body>
 		<p>
 
 			PERSONA:
-			Name: Mike Michael
-			Age: 30
+			Name: Basil Maynard Devon
+			Age: 25
 
-			High School : As a high school baseball coach, Mike Michael has a full roster of very energetic and talented players.
-			After an intense workout session with his players, he went on the internet so go compare players for his upcoming
-			game with a rival team this weekend. Unfortuanately, his results yield very low data on anything. --Fast forward
-			after the game:
-			Mike Michael after a 5-4 victory again goes to the internet to see what searches he finds on his players and yeilds very
-			low results. Mike knows he has very talented kids however no real way of highlighting them on the web.
+			Software Developer : Basil, is a software developer who for fun makes websites pro-bono has developed many
+			different websites that use external API's and loves integrting whenever possible.
 
 
 			USE-CASE:
-			Mike Michael, would be estatic on having a respository of reliable player data on both the high school level as
-			well as the collegiate level. As a user Mike Michael has professional need for a data driven web site that
-			contains data that he could use in order to maximize how he employs his players
+			Basil Maynard Devon: After a scrum meeting goes back to his seat and does a quick duckduckgo.com search
+			on most useful
 		</p>
 
 
