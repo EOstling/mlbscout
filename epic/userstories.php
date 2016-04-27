@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <head>
 	<meta charset="utf-8">
+	<meta lang="en"
 </head>
 <body>
 	<h1>User Stories</h1>
