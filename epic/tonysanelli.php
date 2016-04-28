@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 	</head>
@@ -14,7 +14,7 @@
 			baseball teams.</p>
 
 		<h3>Technology:</h3>
-			<p>Mac Pro Desktop, Mac laptop at home or used for the office, or Iphone 6 with mobile app availability.</p>
+			<p>Macbook Pro Desktop, Mac laptop at home or used for the office, or Iphone 6 with mobile app availability.</p>
 
 		<h3>Attitudes and Behaviors:</h3>
 			<p>long hours throughout the week with practices highschool scouting and trying to get his current
