@@ -7,27 +7,24 @@
 	<body>
 		<main>
 			<h1>Conceptual Model</h1>
-			<h3>Coach</h3>
+			<h3>User</h3>
 			<ul>
+				<li>access levelId</li>
 				<li>hash</li>
 				<li>salt</li>
+				<li>activation token</li>
 				<li>email</li>
 				<li>profileId</li>
 				<li>first name</li>
 				<li>last name</li>
 				<li>phone number</li>
 				<li>password</li>
-				<li>posting</li>
+				<li>API key</li>
 			</ul>
-			<h3>Scout</h3>
+			<h3>Access level</h3>
 			<ul>
-				<li>hash</li>
-				<li>salt</li>
-				<li>email</li>
-				<li>foreignId</li>
-				<li>first name</li>
-				<li>last name</li>
-				<li>password</li>
+				<li>Access levelId</li>
+				<li>Access Name</li>
 			</ul>
 			<h3>Player</h3>
 			<ul>
@@ -44,22 +41,31 @@
 			</ul>
 			<h3>Teams</h3>
 			<ul>
-				<li>location</li>
-				<li>time</li>
 				<li>team name</li>
 				<li>team type</li>
 				<li>starters</li>
 			</ul>
-			<p>
-			coaches post about players   m - to - n   Many coaches can post about many different players
-			coaches view players         m - to - n   Many coaches can view many different players
-			scouts view players          m - to - n   Many scouts can view many different players
-			coaches favorite players     m - to - n   Many coaches can favorite many different players
-			scout favorite players       m - to - n   Many scouts can favorite many different players
-			coaches can have teams       m - to - n   Many coaches can have many different teams
-			coaches view schedules       m - to - n   Many coaches can view many different schedules
-			scouts view schedules        m - to - n   Many scouts can view many different schedules
-			many teams have many players m - to - n   Many teams can have many different players</p>
+			<h3>API call</h3>
+			<ul>
+				<li>Session Handler Interface</li>
+				<li>dateTime</li>
+				<li>Query String</li>
+				<li>UserId</li>
+				<li>URL</li>
+				<li>HTTPVerb</li>
+				<li>Browser</li>
+				<li>IP</li>
+				<li>Payload</li>
+			</ul>
+			<h3>Relations</h3>
+			<ul>
+				<li>User post about players    m - to - n   Many users can post about many different players</li>
+				<li>User view players          m - to - n   Many users can view many different players</li>
+				<li>Users favorite players     m - to - n   Many users can favorite many different players</li>
+				<li>Users can have teams       m - to - n   Many users can have many different teams</li>
+				<li>Users view schedules       m - to - n   Many users can view many different schedules</li>
+				<li>Teams have players         m - to - n   Many teams can have many different players</li>
+			</ul>
 		</main>
 	</body>
 </html>
