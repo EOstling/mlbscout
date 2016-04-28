@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="em">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8"
 	</head>
 	<body>
-		<p>0) Scouting web app that fulfills the hole left by the MLB bureau scout service.
+		<h1>Executive Summary</h1>
+		<p>Scouting web app that fulfills the hole left by the MLB bureau scout service.
 			The core idea being that the web app provides general information on player
 			tangibles in addition to where and when their team is playing. This helps the scout
 			be more effective getting to more players in less time. Validated High School

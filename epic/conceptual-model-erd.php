@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="em">
 	<head>
 		<meta charset="UTF-8">
 		<title>Conceptual Model & ERD</title>

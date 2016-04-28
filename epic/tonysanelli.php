@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="em">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 	</head>
 	<body>
 		<h1>Tony Sanelli</h1>
