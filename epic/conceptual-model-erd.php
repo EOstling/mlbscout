@@ -67,13 +67,11 @@
 				<li>scheduleId</li>
 				<li>scheduleTeamId</li>
 			</ul>
-
 			<h3>favoritePlayer</h3>
 			<ul>
 				<li>favoriteUserId</li>
 				<li>favoritePlayerId</li>
 			</ul>
-
 			<h3>Relations</h3>
 			<ul>
 				<li>User updates about players 1 - to - m   Users can post about many different players</li>
@@ -85,9 +83,6 @@
 				<li>User has ApiCall	 			 1 - to - m   User can have many ApiCalls</li>
 				<li>User favorites player 		 m - to - m   Many users can favorite many players</li>
 				<li>User has access level 		 1 - to - m   Many users can have one access level</li>
-
-
-
 			</ul>
 		</main>
 	</body>
