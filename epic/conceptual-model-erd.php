@@ -9,62 +9,85 @@
 			<h1>Conceptual Model</h1>
 			<h3>User</h3>
 			<ul>
-				<li>access levelId</li>
-				<li>hash</li>
-				<li>salt</li>
-				<li>activation token</li>
-				<li>email</li>
-				<li>profileId</li>
-				<li>first name</li>
-				<li>last name</li>
-				<li>phone number</li>
-				<li>password</li>
-				<li>API key</li>
+				<li>userAccessLevelId</li>
+				<li>userHash</li>
+				<li>userSalt</li>
+				<li>userActivationToken</li>
+				<li>userEmail</li>
+				<li>userProfileIdPrimaryKey </li>
+				<li>userFirstName</li>
+				<li>userLastName</li>
+				<li>userPhoneNumber</li>
+				<li>userPassword</li>
+				<li>userApiKey</li>
 			</ul>
 			<h3>Access level</h3>
 			<ul>
-				<li>Access levelId</li>
-				<li>Access Name</li>
+				<li>accessLevelId</li>
+				<li>accessName</li>
 			</ul>
 			<h3>Player</h3>
 			<ul>
-				<li>throwing hand</li>
-				<li>batting</li>
-				<li>first name</li>
-				<li>last name</li>
-				<li>commitment</li>
-				<li>location</li>
-				<li>position</li>
-				<li>height</li>
-				<li>weight</li>
-				<li>health status</li>
+				<li>playerThrowingHand</li>
+				<li>playerBatting</li>
+				<li>playerFirstName</li>
+				<li>playerLastName</li>
+				<li>playerCommitment</li>
+				<li>playerLocation</li>
+				<li>playerPosition</li>
+				<li>playerHeight</li>
+				<li>playerWeight</li>
+				<li>playerHealthStatus</li>
 			</ul>
-			<h3>Teams</h3>
+			<h3>Team</h3>
 			<ul>
-				<li>team name</li>
-				<li>team type</li>
-				<li>starters</li>
+				<li>teamName</li>
+				<li>teamType</li>
+				<li>teamStarter</li>
 			</ul>
-			<h3>API call</h3>
+			<h3>ApiCall</h3>
 			<ul>
-				<li>Session Handler Interface</li>
-				<li>dateTime</li>
-				<li>Query String</li>
-				<li>UserId</li>
-				<li>URL</li>
-				<li>HTTPVerb</li>
-				<li>Browser</li>
-				<li>IP</li>
-				<li>Payload</li>
+				<li>apiCallId</li>
+				<li>apiCallDateTime</li>
+				<li>apiCallQueryString</li>
+				<li>apiCallUserId</li>
+				<li>apiCallUrl</li>
+				<li>apiCallHttpVerb</li>
+				<li>apiCallBrowser</li>
+				<li>apiCallIP</li>
+				<li>apiCallPayload</li>
 			</ul>
+			<h3>schedule</h3>
+			<ul>
+				<li>scheduleDate</li>
+				<li>scheduleTime</li>
+				<li>scheduleLocation</li>
+				<li>scheduleStartingPitcherId</li>
+				<li>scheduleId</li>
+				<li>scheduleId</li>
+				<li>scheduleTeamId</li>
+			</ul>
+
+			<h3>favoritePlayer</h3>
+			<ul>
+				<li>favoriteUserId</li>
+				<li>favoritePlayerId</li>
+			</ul>
+
 			<h3>Relations</h3>
 			<ul>
-				<li>User post about players    m - to - n   Many users can post about many different players</li>
+				<li>User updates about players 1 - to - m   Users can post about many different players</li>
 				<li>User view players          m - to - n   Many users can view many different players</li>
 				<li>Users favorite players     m - to - n   Many users can favorite many different players</li>
 				<li>Users can have teams       m - to - n   Many users can have many different teams</li>
-				<li>Users view schedules       m - to - n   Many users can view many different schedules</li>
+				<li>Users view schedules       1 - to - m   Many users can view many different schedules</li>
 				<li>Teams have players         m - to - n   Many teams can have many different players</li>
+				<li>User has ApiCall	 			 1 - to - m   User can have many ApiCalls</li>
+				<li>User favorites player 		 m - to - m   Many users can favorite many players</li>
+				<li>User has access level 		 1 - to - m   Many users can have one access level</li>
+
+
+
 			</ul>
 		</main>
 	</body>
