@@ -9,17 +9,17 @@
 			<h1>Conceptual Model</h1>
 			<h3>User</h3>
 			<ul>
+				<li>userId </li>
 				<li>userAccessLevelId</li>
-				<li>userHash</li>
-				<li>userSalt</li>
+				<li>userApiKey</li>
 				<li>userActivationToken</li>
 				<li>userEmail</li>
-				<li>userProfileIdPrimaryKey </li>
 				<li>userFirstName</li>
+				<li>userHash</li>
 				<li>userLastName</li>
-				<li>userPhoneNumber</li>
 				<li>userPassword</li>
-				<li>userApiKey</li>
+				<li>userPhoneNumber</li>
+				<li>userSalt</li>
 			</ul>
 			<h3>Access level</h3>
 			<ul>
@@ -28,44 +28,47 @@
 			</ul>
 			<h3>Player</h3>
 			<ul>
-				<li>playerThrowingHand</li>
+				<li>playerId</li>
+				<li>playerUserId</li>
 				<li>playerBatting</li>
-				<li>playerFirstName</li>
-				<li>playerLastName</li>
 				<li>playerCommitment</li>
+				<li>playerFirstName</li>
+				<li>playerHealthStatus</li>
+				<li>playerHeight</li>
+				<li>playerLastName</li>
 				<li>playerLocation</li>
 				<li>playerPosition</li>
-				<li>playerHeight</li>
+				<li>playerThrowingHand</li>
+				<li>playerUpdate</li>
 				<li>playerWeight</li>
-				<li>playerHealthStatus</li>
 			</ul>
 			<h3>Team</h3>
 			<ul>
+				<li>teamId</li>
 				<li>teamName</li>
-				<li>teamType</li>
 				<li>teamStarter</li>
+				<li>teamType</li>
 			</ul>
 			<h3>ApiCall</h3>
 			<ul>
 				<li>apiCallId</li>
-				<li>apiCallDateTime</li>
-				<li>apiCallQueryString</li>
-				<li>apiCallUserId</li>
-				<li>apiCallUrl</li>
-				<li>apiCallHttpVerb</li>
 				<li>apiCallBrowser</li>
+				<li>apiCallDateTime</li>
+				<li>apiCallHttpVerb</li>
 				<li>apiCallIP</li>
 				<li>apiCallPayload</li>
+				<li>apiCallQueryString</li>
+				<li>apiCallUrl</li>
+				<li>apiCallUserId</li>
 			</ul>
 			<h3>schedule</h3>
 			<ul>
-				<li>scheduleDate</li>
-				<li>scheduleTime</li>
-				<li>scheduleLocation</li>
-				<li>scheduleStartingPitcherId</li>
-				<li>scheduleId</li>
 				<li>scheduleId</li>
 				<li>scheduleTeamId</li>
+				<li>scheduleDate</li>
+				<li>scheduleLocation</li>
+				<li>scheduleStartingPitcherId</li>
+				<li>scheduleTime</li>
 			</ul>
 			<h3>favoritePlayer</h3>
 			<ul>
