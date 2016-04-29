@@ -8,6 +8,4 @@ DROP TABLE IF EXISTS schedule;
 
 CREATE TABLE user(
 
-
-
 );
