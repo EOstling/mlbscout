@@ -70,3 +70,28 @@ INDEX(apiCallUserid),
 FOREIGN KEY (apiCallUserId)REFERENCES apiCall(apiCallUserId),
 PRIMARY KEY (apiCallId)
 );
+
+CREATE TABLE team(
+teamId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+teamType VARCHAR(32) NOT NULL,
+teamName VARCHAR (64) NOT NULL,
+teamStarters VARCHAR(64)
+INDEX(teamId),
+UNIQUE (teamId),
+PRIMARY KEY (teamId)
+);
+
+CREATE TABLE AccessLevel(
+accessLevelId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+accessLevelName VARCHAR(2) NOT NULL,
+INDEX(accessLevelId),
+PRIMARY KEY(accessLevelId)
+);
+
+CREATE TABLE favorite(
+favoritePlayerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+favoriteUserId INT NOT NULL,
+INDEX(favoriteUserId),
+PRIMARY KEY(favoritePlayerId),
+FOREIGN KEY(favoriteUserId)REFERENCES favorite(favoriteUserId)
+);
