@@ -19,33 +19,33 @@ CREATE TABLE user(
 	userPhoneNumber INT NOT NULL,
 	userSalt INT,
 	userUpdate VARCHAR UNSIGNED,
-	UNIQUE (EMAIL),
+	UNIQUE (userEmail),
 	INDEX(userId),
 	FOREIGN KEY (userApiCall) REFERENCES ApiCall(userApiCall),
 	FOREIGN KEY (userAccessLevel) REFERENCES AccessLevel(userAccessLevel)
-	PRIMARY KEY(userId),
+	PRIMARY KEY(userId)
 );
 
 CREATE TABLE player (
  playerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
  playerUserId INT UNSIGNED NOT NULL,
  playerBatting INT,
- playerCommitment VARCHAR(128)
- playerFirstName VARCHAR (32)
- playerHealthStatus VARCHAR(64)
- playerHeight INT
- playerHomeTown VARCHAR(64)
- playerLastName VARCHAR (32)
- playerPosition VARCHAR (32)
- playerThrowingHand VARCHAR(16)
- playerUpdate VARCHAR (32)
+ playerCommitment VARCHAR(128),
+ playerFirstName VARCHAR (32),
+ playerHealthStatus VARCHAR(64),
+ playerHeight INT,
+ playerHomeTown VARCHAR(64),
+ playerLastName VARCHAR (32),
+ playerPosition VARCHAR (32),
+ playerThrowingHand VARCHAR(16),
+ playerUpdate VARCHAR (32),
  INDEX(playerUserId),
  FOREIGN KEY(playerUserId) REFERENCES playerUser(playerUserId),
  PRIMARY KEY(playerId)
 );
 
 CREATE TABLE schedule (
- scheduleId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+ scheduleId INT  AUTO_INCREMENT NOT NULL,
  scheduleTeamId INT UNSIGNED NOT NULL,
  scheduleDate DATETIME NOT NULL
  schedulelocation VARCHAR(64)
@@ -89,9 +89,16 @@ PRIMARY KEY(accessLevelId)
 );
 
 CREATE TABLE favorite(
-favoritePlayerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+favoritePlayerId INT UNSIGNED NOT NULL,
 favoriteUserId INT NOT NULL,
 INDEX(favoriteUserId),
 PRIMARY KEY(favoritePlayerId),
 FOREIGN KEY(favoriteUserId)REFERENCES favorite(favoriteUserId)
+);
+
+CREATE TABLE favoritePlayer(
+favoritePlayerId INT UNSIGNED NOT NULL,
+favoriteUserId INT NOT NULL,
+INDEX(favoriteUserId)
+PRIMARY KEY (favoritePlayerId)
 );
