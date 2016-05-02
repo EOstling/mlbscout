@@ -37,7 +37,7 @@ CREATE TABLE player (
  playerHomeTown VARCHAR(64)
  playerLastName VARCHAR (32)
  playerPosition VARCHAR (32)
- playerThrowingHand VARCHAR(32)
+ playerThrowingHand VARCHAR(16)
  playerUpdate VARCHAR (32)
  INDEX(playerUserId),
  FOREIGN KEY(playerUserId) REFERENCES playerUser(playerUserId),
@@ -54,4 +54,19 @@ CREATE TABLE schedule (
  INDEX(scheduleTeamId),
  FOREIGN KEY(scheduleTeamId) REFERENCES scheduleTeam(scheduleTeamId),
  PRIMARY KEY(scheduleId)
+);
+
+CREATE TABLE apiCall(
+apiCallId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+apiCallUserId UNSIGNED NOT NULL,
+apiCallDatetime DATETIME NOT NULL,
+apiCallQueryString VARCHAR(2000),
+apiCallURL VARCHAR(32),
+apiCallHttpVerb VARCHAR (32),
+apiCallBrowser VARCHAR(32),
+apicallIP VARCHAR (32),
+apiCallPayload VARCHAR(64),
+INDEX(apiCallUserid),
+FOREIGN KEY (apiCallUserId)REFERENCES apiCall(apiCallUserId),
+PRIMARY KEY (apiCallId)
 );
