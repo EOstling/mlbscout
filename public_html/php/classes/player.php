@@ -627,7 +627,7 @@ publuc function delete(\PDO $pdo) {
 		$parameters = array("playerUserId" => $playerUserId);
 		$statement->execute($parameters);
 
-		// build an array of playerUser
+		// build an array of players
 		$players = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -636,6 +636,258 @@ publuc function delete(\PDO $pdo) {
 				$players[$players->key()] = $player;
 				$players->next();
 			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerBatting
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerBatting player batting to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerBatting(\PDO $pdo, string $playerBatting) {
+		// sanitize the description before searching
+		$playerBatting = trim($playerBatting);
+		$playerBatting = filter_var($playerBatting, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerBatting) === true) {
+			throw(new \PDOException("player batting is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerBatting LIKE :playerBatting";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerBatting the place holder in the template
+		$playerBatting = "%$playerBatting%";
+		$parameters = array("playerBatting" => $playerBatting);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerCommitment
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerCommitment player commitment to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerCommitment(\PDO $pdo, string $playerCommitment) {
+		// sanitize the description before searching
+		$playerCommitment = trim($playerCommitment);
+		$playerCommitment = filter_var($playerCommitment, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerCommitment) === true) {
+			throw(new \PDOException("player commitment is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerCommitment LIKE :playerCommitment";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerCommitment to the place holder in the template
+		$playerCommitment = "%$playerCommitment%";
+		$parameters = array("playerCommitment" => $playerCommitment);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerFirstName
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerFirstName player first name to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerFirstName(\PDO $pdo, string $playerFirstName) {
+		// sanitize the description before searching
+		$playerFirstName = trim($playerFirstName);
+		$playerFirstName = filter_var($playerFirstName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerFirstName) === true) {
+			throw(new \PDOException("player first name is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerFirstName LIKE :playerFirstName";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerUserId to the place holder in the template
+		$playerFirstName = "%$playerFirstName%";
+		$parameters = array("playerFirstName" => $playerFirstName);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerHealthStatus
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerHealthStatus player user id to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerHealthStatus(\PDO $pdo, string $playerHealthStatus) {
+		// sanitize the description before searching
+		$playerHealthStatus = trim($playerHealthStatus);
+		$playerHealthStatus = filter_var($playerHealthStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerHealthStatus) === true) {
+			throw(new \PDOException("player health status is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHealthStatus LIKE :playerHealthStatus";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerHealthStatus to the place holder in the template
+		$playerHealthStatus = "%$playerHealthStatus%";
+		$parameters = array("playerHealthStatus" => $playerHealthStatus);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerHeight
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerHeight player height to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerHeight(\PDO $pdo, string $playerHeight) {
+		// sanitize the description before searching
+		$playerHeight = trim($playerHeight);
+		$playerHeight = filter_var($playerHeight, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerHeight) === true) {
+			throw(new \PDOException("player height is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHeight LIKE :playerHeight";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerHeight to the place holder in the template
+		$playerHeight = "%$playerHeight%";
+		$parameters = array("playerHeight" => $playerHeight);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
+	}
+
+	/**
+	 * gets player by playerHomeTown
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerHomeTown player user id to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByHomeTown(\PDO $pdo, string $playerHomeTown) {
+		// sanitize the description before searching
+		$playerHomeTown = trim($playerHomeTown);
+		$playerHomeTown = filter_var($playerHomeTown, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerHomeTown) === true) {
+			throw(new \PDOException("player home town is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHomeTown LIKE :playerHomeTown";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerHomeTown to the place holder in the template
+		$playerHomeTown = "%$playerHomeTown%";
+		$parameters = array("playerHomeTown" => $playerHomeTown);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
