@@ -1,11 +1,11 @@
 <?php
 namespace Edu\cnm\jmedley4\mlbscout;
 
+require_once ("autoload.php");
 /**
  * User Class for MLBscout Capstone
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
- * @version 1.0.0
  * @see https://app.asana.com/0/117435671931068/118830311351365
  */
 class User {
@@ -18,6 +18,14 @@ class User {
 	 */
 	private $userAccessLevelId;
 	/**
+	 * activation token for user account
+	 */
+	private $userActivationToken;
+	/**
+	 * api call for user
+	 */
+	private $userApiCall;
+	/**
 	 * email of this user
 	 */
 	private $userEmail;
@@ -26,55 +34,38 @@ class User {
 	 */
 	private $userFirstName;
 	/**
+	 * hash set for the user
+	 */
+	private $userHash;
+	/**
 	 * last name of this user
 	 */
 	private $userLastName;
-	/**
-	 * phone number of this user
-	 */
-	private $userPhoneNumber;
 	/**
 	 * password for this user
 	 */
 	private $userPassword;
 	/**
-	 * api call for user
+	 * phone number of this user
 	 */
-	private $userApiCall;
-	/**
-	 * hash set for the user
-	 */
-	private $userHash;
+	private $userPhoneNumber;
 	/**
 	 * salt set for this user
 	 */
 	private $userSalt;
-	/**
-	 * activation token for user account
-	 */
-	private $userActivationToken;
 
 	/**
 	 * accessor method for user id
-	 *
-	 * @return int value of user id
 	 */
-	public function getUserId () {
-		return($this->userId);
+	public function getUserId() {
+		return $this->userId;
 	}
 
 	/**
 	 * mutator method for user id
 	 */
-	public function setUserId ($newUserId) {
-		// verify the user id is valid
-		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
-		if ($newUserId === false) {
-			throw(new UnexpectedValueException ("user id is not a valid integer"));
-		}
-
-		// convert and store the user id
-		$this->userId = intval($newUserId);
+	public function setUserId($userId) {
+		$this->userId = $userId;
 	}
 
 	/**
@@ -92,8 +83,35 @@ class User {
 	}
 
 	/**
+	 * accessor method for user activation token
+	 */
+	public function getUserActivationToken() {
+		return $this->userActivationToken;
+	}
+
+	/**
+	 * mutator method for user activation token
+	 */
+	public function setUserActivationToken($userActivationToken) {
+		$this->userActivationToken = $userActivationToken;
+	}
+
+	/**
+	 * accessor method for user api call
+	 */
+	public function getUserApiCall() {
+		return $this->userApiCall;
+	}
+
+	/**
+	 * mutator method for user api call
+	 */
+	public function setUserApiCall($userApiCall) {
+		$this->userApiCall = $userApiCall;
+	}
+
+	/**
 	 * accessor method for user email
-	 *
 	 */
 	public function getUserEmail() {
 		return $this->userEmail;
@@ -102,29 +120,36 @@ class User {
 	/**
 	 * mutator method for user email
 	 */
-	public function setUserEmail($newUserEmail) {
+	public function setUserEmail($userEmail) {
 		$this->userEmail = $userEmail;
 	}
 
 	/**
 	 * accessor method for user first name
-	 *
-	 * @return string value of user first name
 	 */
-	public public function getUserFirstName() {
+	public function getUserFirstName() {
 		return $this->userFirstName;
 	}
 
 	/**
 	 * mutator method for user first name
-	 *
-	 * @param string $newUserFirstName
-	 * @throws UnexpectedValueException if $newUserFirstName is not valid
 	 */
-	public function setUserFirstName($newUserFirstName) {
-		// verify the first name is valid
-		
+	public function setUserFirstName($userFirstName) {
 		$this->userFirstName = $userFirstName;
+	}
+
+	/**
+	 * accessor method for user hash
+	 */
+	public function getUserHash() {
+		return $this->userHash;
+	}
+
+	/**
+	 * mutator method for user hash
+	 */
+	public function setUserHash($userHash) {
+		$this->userHash = $userHash;
 	}
 
 	/**
@@ -142,20 +167,6 @@ class User {
 	}
 
 	/**
-	 * accessor method for user phone number
-	 */
-	public function getUserPhoneNumber() {
-		return $this->userPhoneNumber;
-	}
-
-	/**
-	 * mutator method for user phone number
-	 */
-	public public function setUserPhoneNumber($userPhoneNumber) {
-		$this->userPhoneNumber = $userPhoneNumber;
-	}
-
-	/**
 	 * accessor method for user password
 	 */
 	public function getUserPassword() {
@@ -170,31 +181,17 @@ class User {
 	}
 
 	/**
-	 * accessor method for user api call
+	 * accessor method for user phone number
 	 */
-	public function getUserApiCall() {
-		return $this->userApiCall;
+	public function getUserPhoneNumber() {
+		return $this->userPhoneNumber;
 	}
 
 	/**
-	 * mutator method for api call
+	 * mutator method for user phone number
 	 */
-	public function setUserApiCall($userApiCall) {
-		$this->userApiCall = $userApiCall;
-	}
-
-	/**
-	 * accessor method for user hash
-	 */
-	public function getUserHash {
-		return $this->userHash;
-	}
-
-	/**m
-	 * mutator method for user hash
-	 */
-	public function setUserHash($userHash) {
-		$this->userHash = $userHash;
+	public function setUserPhoneNumber($userPhoneNumber) {
+		$this->userPhoneNumber = $userPhoneNumber;
 	}
 
 	/**
@@ -209,20 +206,6 @@ class User {
 	 */
 	public function setUserSalt($userSalt) {
 		$this->userSalt = $userSalt;
-	}
-
-	/**
-	 * accessor method for user activation key
-	 */
-	public function getUserActivationToken() {
-		return $this->userActivationToken;
-	}
-
-	/**
-	 * mutator method for user activation key
-	 */
-	public function setUserActivationToken($userActivationToken) {
-		$this->userActivationToken = $userActivationToken;
 	}
 
 }
