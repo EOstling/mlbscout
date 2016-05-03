@@ -362,7 +362,7 @@ class Player implements \JsonSerializable {
 
 		// verify the playerHomeTown will fit the database
 		if(strlen($newPlayerHomeTown) > 64) {
-			throw(new \RangeException(player home town is too large));
+			throw(new \RangeException("player home town is too large"));
       }
 
 		// store the playerHomeTown
@@ -417,7 +417,7 @@ class Player implements \JsonSerializable {
 	 *
 	 * @param string $newPlayerPosition new value of playerPosition
 	 * @throws \InvalidArgumentException if $newPlayerPosition is not a string or insecure
-	 * @throws \RangeException if $newPlayerPosition is > 32 characters
+	 * @throws \RangeException if $newPlayerPosition is > 8 characters
 	 * @throws \TypeError if $newPlayerPosition is not a string
 	 **/
 	public function setPlayerPosition(string $newPlayerPosition) {
@@ -429,7 +429,7 @@ class Player implements \JsonSerializable {
 		}
 
 		// verify the playerPositionwill fit the database
-		if(strlen($newPlayerPosition) > 32) {
+		if(strlen($newPlayerPosition) > 8) {
 			throw(new \RangeException("player position is too large"));
 		}
 
@@ -452,7 +452,7 @@ class Player implements \JsonSerializable {
 	 *
 	 * @param string $newPlayerThrowingHand new value of playerThrowingHand
 	 * @throws \InvalidArgumentException if $newPlayerThrowingHand is not a string or insecure
-	 * @throws \RangeException if $newPlayerThrowingHand is > 16 characters
+	 * @throws \RangeException if $newPlayerThrowingHand is > 2 characters
 	 * @throws \TypeError if $newPlayerThrowingHand is not a string
 	 **/
 	public function setPlayerThrowingHand(string $newPlayerThrowingHand) {
@@ -464,7 +464,7 @@ class Player implements \JsonSerializable {
 		}
 
 		// verify the playerThrowingHand will fit the database
-		if(strlen($newPlayerThrowingHand) > 16) {
+		if(strlen($newPlayerThrowingHand) > 2) {
 			throw(new \RangeException(" player throwing hand is too large"));
 		}
 
