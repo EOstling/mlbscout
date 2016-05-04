@@ -79,6 +79,7 @@ CREATE TABLE favoritePlayer(
 CREATE TABLE accessLevel(
 	accessLevelId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	accessLevelName VARCHAR(2),
+	INDEX(accessLevelId),
 	PRIMARY KEY(accessLevelId)
 );
 
