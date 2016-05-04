@@ -16,13 +16,18 @@ class Player implements \JsonSerializable {
 	 **/
 	private $playerId;
 	/**
+	 * id of the team that has the player; this is the foreign key
+	 * @var int $playerTeamId
+	 **/
+	private $playerTeamId;
+	/**
 	 * id of the user that has this player; this is the foreign key
 	 * @var int $playerUserId
 	 **/
 	private $playerUserId;
 	/**
 	 * this is the players batting stats
-	 * @var int $playerBatting
+	 * @var string $playerBatting
 	 **/
 	private $playerBatting;
 	/**
@@ -66,11 +71,6 @@ class Player implements \JsonSerializable {
 	 **/
 	private $playerThrowingHand;
 	/**
-	 * this updates the player
-	 * @var string $playerUpdate
-	 **/
-	private $playerUpdate;
-	/**
 	 * this is the players weight
 	 * @var int $playerWeight
 	 **/
@@ -79,11 +79,12 @@ class Player implements \JsonSerializable {
 	/**
 	 * constructor for this Player
 	 *
-	 * @param int|null $newPlayerId id of this player or null if a new playerWeight
-	 * @param int $newPlayerUserId id of the playerUser that has the playerUser
-	 * @param int $newPlayerBatting of the players batting stats_skew
+	 * @param int|null $newPlayerId id of this player or null if a new player
+	 * @param int $newPlayerTeamId id of the playerTeam that has the player
+	 * @param int $newPlayerUserId id of the playerUser that has the player
 	 * @param int $newPlayerHeight of the players height
 	 * @param int $newPlayerWeight of the players weight
+	 * @param string $newPlayerBatting string containing the players batting
 	 * @param string $newPlayerCommitment string containing the player if they have commited or not
 	 * @param string $newPlayerFirstName string containing the players first name
 	 * @param string $newPlayerHealthStatus string containing the players health status
@@ -91,15 +92,15 @@ class Player implements \JsonSerializable {
 	 * @param string $newPlayerLastName string containing the players last name
 	 * @param string $newPlayerPosition string containing the players position
 	 * @param string $newPlayerThrowingHand string containing the players throwing hand
-	 * @param string $newPlayerUpdate string containing the players updated status
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integer)
-	 * @throws \TypeError if data types violate type HttpInflateStream
-	 * @throws \Exception if some other exceptions oci_new_cursor
+	 * @throws \TypeError if data types violate type
+	 * @throws \Exception if some other exceptions occur
 	 **/
-	public function __construct(int $newPlayerId = null, int $newPlayerUserId, int $newPlayerBatting, int $newPlayerHeight, int $newPlayerWeight, string $newPlayerCommitment, string $newPlayerFirstName, string $newPlayerHealthStatus, string $newPlayerHomeTown, string $newPlayerLastName, string $newPlayerPosition, string $newPlayerThrowingHand, string $newPlayerUpdate) {
+	public function __construct(int $newPlayerId = null, int $newPlayerTeamId, int $newPlayerUserId, int $newPlayerHeight, int $newPlayerWeight, string $newPlayerBatting, string $newPlayerCommitment, string $newPlayerFirstName, string $newPlayerHealthStatus, string $newPlayerHomeTown, string $newPlayerLastName, string $newPlayerPosition, string $newPlayerThrowingHand) {
 		try {
 			$this->setPlayerId($newPlayerId);
+			$this->setPlayerTeamId($newPlayerTeamId);
 			$this->setPlayerUserId($newPlayerUserId);
 			$this->setPlayerBatting($newPlayerBatting);
 			$this->setPlayerHeight($newPlayerHeight);
@@ -111,7 +112,6 @@ class Player implements \JsonSerializable {
 			$this->setPlayerLastName($newPlayerLastName);
 			$this->setPlayerPosition($newPlayerPosition);
 			$this->setPlayerThrowingHand($newPlayerThrowingHand);
-			$this->setPlayerUpdate($newPlayerUpdate);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow th exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -137,7 +137,7 @@ class Player implements \JsonSerializable {
 	}
 
 	/**
-	 * mutato method for player id
+	 * mutator method for player id
 	 *
 	 * @param int|null $newPlayerId new value of player id
 	 * @throws \RangeException if $newPlayerId is not positive
@@ -160,16 +160,41 @@ class Player implements \JsonSerializable {
 	}
 
 	/**
-	 * accessor method for playeruser id
+	 * accessor method for playerTeam id
 	 *
-	 * @return int value of playeruser id
+	 * @return int value of playerTeam id
+	 **/
+	public function getPlayerTeamId() {
+		return($this->playerTeamId);
+	}
+
+	/**
+	 * mutator method for playerTeam id
+	 *
+	 * @param int $newPlayerTeamId new value of playerTeam id
+	 * @throws \RangeException if $newPlayerTeamId is not positive
+	 * @throws \TypeError if $newPlayerTeamId is not an integer
+	 **/
+	public function setPlayerTeamId(int $newPlayerTeamId) {
+		// verify the playerTeam id is positve
+		if($newPlayerTeamId <= 0) {
+			throw(new\ RangeException("playerTeam id is not positve"));
+		}
+		// convert and store playerTeam id
+		$this->playerTeamId = $newPlayerTeamId;
+	}
+
+	/**
+	 * accessor method for playerUser id
+	 *
+	 * @return int value of playerUser id
 	 **/
 	public function getPlayerUserId() {
 		return($this->playerUserId);
 	}
 
 	/**
-	 * mutator method for playeUser id
+	 * mutator method for playerUser id
 	 *
 	 * @param int $newPlayerUserId new value of playerUser id
 	 * @throws \RangeException if $newPlayerUserId is not positive
@@ -185,9 +210,9 @@ class Player implements \JsonSerializable {
 	}
 
 	/**
-	 * accessor method for playerBatting
+	 * @ accessor method for playerBatting
 	 *
-	 * @return string value of playerBatting
+	 * @return string value of playerBatting content
 	 **/
 	public function getPlayerBatting() {
 		return($this->playerBatting);
@@ -196,17 +221,25 @@ class Player implements \JsonSerializable {
 	/**
 	 * mutator method for playerBatting
 	 *
-	 * @param int $newPlayerBatting new value of playerBatting
-	 * @throws \RangeException if $newPlayerBatting is not positive
+	 * @param string $newPlayerBatting new value of playerBatting
+	 * @throws \InvalidArgumentException if $newPlayerBatting is not a string or insecure
+	 * @throws \RangeException if $newPlayerBatting is > 1 characters
 	 * @throws \TypeError if $newPlayerBatting is not a string
 	 **/
-	public function setPlayerBatting(int $newPlayerBatting) {
-		// verify playerBatting is positive
-		if($newPlayerBatting <= 0) {
-			throw(new\ RangeException("player batting is not positive"));
+	public function setPlayerBatting(string $newPlayerBatting) {
+		// verify the playerBatting is secure
+		$newPlayerBatting = trim($newPlayerBatting);
+		$newPlayerBatting = filter_var($newPlayerBatting, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newPlayerBatting) === true) {
+			throw(new \InvalidArgumentException("player batting is empty or insecure"));
 		}
 
-		// convert and store the playerBatting
+		// verify the playerBatting will fit the database
+		if(strlen($newPlayerBatting) > 1) {
+			throw(new \RangeException("player batting too large"));
+		}
+
+		// store the player batting
 		$this->playerBatting = $newPlayerBatting;
 	}
 
@@ -228,7 +261,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerCommitment is not a string
 	 **/
 	public function setPlayerCommitment(string $newPlayerCommitment) {
-		// verify the playerCommitment is sqlite_current
+		// verify the playerCommitment is secure
 		$newPlayerCommitment = trim($newPlayerCommitment);
 		$newPlayerCommitment = filter_var($newPlayerCommitment, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newPlayerCommitment) === true) {
@@ -262,7 +295,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerFirstName is not a string
 	 **/
 	public function setPlayerFirstName(string $newPlayerFirstName) {
-		// verify the playerFirstName is sqlite_current
+		// verify the playerFirstName is secure
 		$newPlayerFirstName = trim($newPlayerFirstName);
 		$newPlayerFirstName = filter_var($newPlayerFirstName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newPlayerFirstName) === true) {
@@ -296,7 +329,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerHealthStatus is not a string
 	 **/
 	public function setPlayerHealthStatus(string $newPlayerHealthStatus) {
-		// verify the playerHealthStatus is sqlite_current
+		// verify the playerHealthStatus is secure
 		$newPlayerHealthStatus = trim($newPlayerHealthStatus);
 		$newPlayerHealthStatus = filter_var($newPlayerHealthStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newPlayerHealthStatus) === true) {
@@ -365,7 +398,7 @@ class Player implements \JsonSerializable {
 		// verify the playerHomeTown will fit the database
 		if(strlen($newPlayerHomeTown) > 64) {
 			throw(new \RangeException("player home town is too large"));
-      }
+		}
 
 		// store the playerHomeTown
 		$this->playerHomeTown = $newPlayerHomeTown;
@@ -454,7 +487,7 @@ class Player implements \JsonSerializable {
 	 *
 	 * @param string $newPlayerThrowingHand new value of playerThrowingHand
 	 * @throws \InvalidArgumentException if $newPlayerThrowingHand is not a string or insecure
-	 * @throws \RangeException if $newPlayerThrowingHand is > 2 characters
+	 * @throws \RangeException if $newPlayerThrowingHand is > 1 characters
 	 * @throws \TypeError if $newPlayerThrowingHand is not a string
 	 **/
 	public function setPlayerThrowingHand(string $newPlayerThrowingHand) {
@@ -466,46 +499,12 @@ class Player implements \JsonSerializable {
 		}
 
 		// verify the playerThrowingHand will fit the database
-		if(strlen($newPlayerThrowingHand) > 2) {
+		if(strlen($newPlayerThrowingHand) > 1) {
 			throw(new \RangeException(" player throwing hand is too large"));
 		}
 
 		// store the playerThrowingHand
 		$this->playerThrowingHand = $newPlayerThrowingHand;
-	}
-
-	/**
-	 * accessor method for playerUpdate
-	 *
-	 * @return string value of playerUpdate
-	 **/
-	public function getPlayerUpdate() {
-		return($this->playerUpdate);
-	}
-
-	/**
-	 * mutator method for playerUpdate
-	 *
-	 * @param string $newPlayerUpdate new value of playerUpdate
-	 * @throws \InvalidArgumentException if $newPlayerUpdate is not a string or insecure
-	 * @throws \RangeException if $newPlayerUpdate is > 32 characters
-	 * @throws \TypeError if $newPlayerUpdate is not a string
-	 **/
-	public function setPlayerUpdate(string $newPlayerUpdate) {
-		// verify the playerUpdate is secure
-		$newPlayerUpdate = trim($newPlayerUpdate);
-		$newPlayerUpdate = filter_var($newPlayerUpdate, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newPlayerUpdate) === true) {
-			throw(new \InvalidArgumentException("player update is empty or insecure"));
-		}
-
-		// verify the playerUpdate will fit the database
-		if(strlen($newPlayerUpdate) > 32) {
-			throw(new \RangeException("player update is too large"));
-		}
-
-		// store the playerUpdate
-		$this->playerUpdate = $newPlayerUpdate;
 	}
 
 	/**
@@ -548,11 +547,11 @@ class Player implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO player(playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight) VALUES(:playerUserId, :playerBatting, :playerCommitment, :playerFirstName, :playerHealthStatus, :playerHeight, :playerHomeTown, :playerLastName, :playerPosition, :playerThrowingHand, :playerUpdate, :playerWeight)";
+		$query = "INSERT INTO player(playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight) VALUES(:playerTeamId, :playerUserId, :playerBatting, :playerCommitment, :playerFirstName, :playerHealthStatus, :playerHeight, :playerHomeTown, :playerLastName, :playerPosition, :playerThrowingHand, :playerWeight)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["playerUserId" => $this->playerUserId, "playerBatting" => $this->playerBatting, "playerCommitment" => $this->playerCommitment, "playerFirstName" => $this->playerFirstName, "playerHealthStatus" => $this->playerHealthStatus, "playerHeight" => $this->playerHeight, "playerHomeTown" => $this->playerHomeTown, "playerLastName" => $this->playerLastName, "playerPosition" => $this->playerPosition, "playerThrowingHand" => $this->playerThrowingHand, "playerUpdate" => $this->playerUpdate, "playerWeight" => $this->playerWeight];
+		$parameters = ["playerTeamId" => $this->playerTeamId, "playerUserId" => $this->playerUserId, "playerBatting" => $this->playerBatting, "playerCommitment" => $this->playerCommitment, "playerFirstName" => $this->playerFirstName, "playerHealthStatus" => $this->playerHealthStatus, "playerHeight" => $this->playerHeight, "playerHomeTown" => $this->playerHomeTown, "playerLastName" => $this->playerLastName, "playerPosition" => $this->playerPosition, "playerThrowingHand" => $this->playerThrowingHand, "playerWeight" => $this->playerWeight];
 		$statement->execute($parameters);
 
 		//update the null playerId with what mySQL just gave us
@@ -579,7 +578,7 @@ publuc function delete(\PDO $pdo) {
 	// bind the member variables to the place homder in the template
 	$parameters = ["playerId" => $this->playerId];
 	$statement->execute($parameters);
-	}
+}
 
 	/**
 	 * updates the player in mySQL
@@ -595,12 +594,54 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "UPDATE player SET playerUserId = :playerUserId, playerBatting = :playerBatting, playerCommitment = :playerCommitment, playerFirstName = :playerFirstName, playerHealthStatus = :playerHealthStatus, playerHeight = :playerHeight, playerHomeTown = :playerHomeTown, playerLastName = :playerLastName, playerPosition = :playerPosition, playerThrowingHand = :playerThrowingHand, playerUpdate = :playerUpdate, playerWeight = :playerWeight WHERE playerId = :playerId";
+		$query = "UPDATE player SET playerTeamId = :playerTeamId, playerUserId = :playerUserId, playerBatting = :playerBatting, playerCommitment = :playerCommitment, playerFirstName = :playerFirstName, playerHealthStatus = :playerHealthStatus, playerHeight = :playerHeight, playerHomeTown = :playerHomeTown, playerLastName = :playerLastName, playerPosition = :playerPosition, playerThrowingHand = :playerThrowingHand, playerWeight = :playerWeight WHERE playerId = :playerId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["playerUserId" => $this->playerUserId, "playerBatting" => $this->playerBatting, "playerCommitment" => $this->playerCommitment, "playerFirstName" => $this->playerFirstName, "playerHealthStatus" => $this->playerHealthStatus, "playerHeight" => $this->playerHeight, "playerHomeTown" => $this->playerHomeTown, "playerLastName" => $this->playerLastName, "playerPosition" => $this->playerPosition, "playerThrowingHand" => $this->playerThrowingHand, "playerUpdate" => $this->playerUpdate, "playerWeight" => $this->playerWeight, "playerId" => $this->playerId];
+		$parameters = ["playerTeamId" => $this->playerTeamId, "playerUserId" => $this->playerUserId, "playerBatting" => $this->playerBatting, "playerCommitment" => $this->playerCommitment, "playerFirstName" => $this->playerFirstName, "playerHealthStatus" => $this->playerHealthStatus, "playerHeight" => $this->playerHeight, "playerHomeTown" => $this->playerHomeTown, "playerLastName" => $this->playerLastName, "playerPosition" => $this->playerPosition, "playerThrowingHand" => $this->playerThrowingHand, "playerWeight" => $this->playerWeight, "playerId" => $this->playerId];
 		$statement->execute($parameters);
+	}
+
+	/**
+	 * gets player by playerBatting
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $playerBatting player batting to search for
+	 * @return \SplFixedArray SplFixedArray of players found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerBatting(\PDO $pdo, string $playerBatting) {
+		// sanitize the description before searching
+		$playerBatting = trim($playerBatting);
+		$playerBatting = filter_var($playerBatting, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($playerBatting) === true) {
+			throw(new \PDOException("player batting is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerBatting LIKE :playerBatting";
+		$statement = $pdo->prepare($query);
+
+		//bind the playerCommitment to the place holder in the template
+		$playerBatting = "%$playerBatting%";
+		$parameters = array("playerBatting" => $playerBatting);
+		$statement->execute($parameters);
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($players);
 	}
 
 	/**
@@ -621,7 +662,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerCommitment LIKE :playerCommitment";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerCommitment LIKE :playerCommitment";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerCommitment to the place holder in the template
@@ -634,7 +675,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -663,7 +704,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerFirstName LIKE :playerFirstName";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerFirstName LIKE :playerFirstName";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerUserId to the place holder in the template
@@ -676,7 +717,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -705,7 +746,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHealthStatus LIKE :playerHealthStatus";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerHealthStatus LIKE :playerHealthStatus";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerHealthStatus to the place holder in the template
@@ -718,7 +759,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -747,7 +788,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHomeTown LIKE :playerHomeTown";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerHomeTown LIKE :playerHomeTown";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerHomeTown to the place holder in the template
@@ -760,7 +801,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -789,7 +830,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerLastName LIKE :playerLastName";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerLastName LIKE :playerLastName";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerLastName to the place holder in the template
@@ -802,7 +843,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -831,7 +872,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerPosition LIKE :playerPosition";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerPosition LIKE :playerPosition";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerPosition to the place holder in the template
@@ -844,7 +885,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -873,7 +914,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerThrowingHand LIKE :playerThrowingHand";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerThrowingHand LIKE :playerThrowingHand";
 		$statement = $pdo->prepare($query);
 
 		//bind the playerThrowingHand to the place holder in the template
@@ -886,7 +927,7 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			}catch(\Exception $exception) {
@@ -897,47 +938,6 @@ publuc function delete(\PDO $pdo) {
 		return($players);
 	}
 
-	/**
-	 * gets player by playerUpdate
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $playerUpdate player update to search for
-	 * @return \SplFixedArray SplFixedArray of players found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getPlayerByPlayerUpdate(\PDO $pdo, string $playerUpdate) {
-		// sanitize the description before searching
-		$playerUpdate = trim($playerUpdate);
-		$playerUpdate = filter_var($playerUpdate, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($playerUpdate) === true) {
-			throw(new \PDOException("player update is invalid"));
-		}
-
-		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerUpdate LIKE :playerUpdate";
-		$statement = $pdo->prepare($query);
-
-		//bind the playerUpdate to the place holder in the template
-		$playerUpdate = "%$playerUpdate%";
-		$parameters = array("playerUpdate" => $playerUpdate);
-		$statement->execute($parameters);
-
-		// build an array of players
-		$players = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
-				$players[$players->key()] = $player;
-				$players->next();
-			}catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($players);
-	}
 
 	/**
 	 * gets the player by playerId
@@ -955,7 +955,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerId = :playerId";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerId = :playerId";
 		$statement = $pdo->prepare($query);
 
 		// bind the player id to the place holder in the template
@@ -968,7 +968,45 @@ publuc function delete(\PDO $pdo) {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldnt be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($player);
+	}
+
+	/**
+	 * gets the player by playerTeamId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $playerTeamId player team id to search for
+	 * @return player|null player found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPlayerByPlayerTeamId(\PDO $pdo, int $playerTeamId) {
+		// sanitixe the player team id before searching
+		if($playerTeamId <= 0) {
+			throw(new \PDOException("player team id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerTeamId = :playerTeamId";
+		$statement = $pdo->prepare($query);
+
+		// bind the player team id to the place holder in the template
+		$parameters = array("playerTeamId" => $playerTeamId);
+		$statement->execute($parameters);
+
+		// grab the player from mySQL
+		try {
+			$player = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldnt be converted, rethrow it
@@ -993,7 +1031,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerUserId = :playerUserId";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerUserId = :playerUserId";
 		$statement = $pdo->prepare($query);
 
 		// bind the player user id to the place holder in the template
@@ -1006,45 +1044,7 @@ publuc function delete(\PDO $pdo) {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
-			}
-		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($player);
-	}
-
-	/**
-	 * gets the player by playerBatting
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param int $playerBatting player batting to search for
-	 * @return player|null player found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getPlayerByPlayerBatting(\PDO $pdo, int $playerBatting) {
-		// sanitixe the player batting before searching
-		if($playerBatting <= 0) {
-			throw(new \PDOException("player batting is not positive"));
-		}
-
-		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerBatting = :playerBatting";
-		$statement = $pdo->prepare($query);
-
-		// bind the player batting to the place holder in the template
-		$parameters = array("playerBatting" => $playerBatting);
-		$statement->execute($parameters);
-
-		// grab the player from mySQL
-		try {
-			$player = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldnt be converted, rethrow it
@@ -1069,7 +1069,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerHeight = :playerHeight";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerHeight = :playerHeight";
 		$statement = $pdo->prepare($query);
 
 		// bind the player height to the place holder in the template
@@ -1082,7 +1082,7 @@ publuc function delete(\PDO $pdo) {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldnt be converted, rethrow it
@@ -1107,7 +1107,7 @@ publuc function delete(\PDO $pdo) {
 		}
 
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player WHERE playerWeight = :playerWeight";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerWeight = :playerWeight";
 		$statement = $pdo->prepare($query);
 
 		// bind the player weight to the place holder in the template
@@ -1120,7 +1120,7 @@ publuc function delete(\PDO $pdo) {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldnt be converted, rethrow it
@@ -1139,7 +1139,7 @@ publuc function delete(\PDO $pdo) {
 	 **/
 	public static function getAllPlayers(\PDO $pdo) {
 		// create query template
-		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player";
+		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -1148,11 +1148,11 @@ publuc function delete(\PDO $pdo) {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
 			} catch(\Exception $exception) {
-				// if the row couldnt be onverted, rethrow it
+				// if the row couldnt be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
