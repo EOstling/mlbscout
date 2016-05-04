@@ -20,9 +20,7 @@ CREATE TABLE user(
 	userSalt INT,
 	userUpdate VARCHAR(64),
 	INDEX(userId),
-	INDEX(useraccessLevel),
 	UNIQUE(userEmail),
-	FOREIGN KEY(useraccessLevel)REFERENCES accessLevel(accessLevelId),
 	PRIMARY KEY (userId)
 );
 
@@ -79,7 +77,6 @@ CREATE TABLE favoritePlayer(
 CREATE TABLE accessLevel(
 	accessLevelId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	accessLevelName VARCHAR(2),
-	INDEX(accessLevelId),
 	PRIMARY KEY(accessLevelId)
 );
 
@@ -96,5 +93,5 @@ CREATE TABLE apiCall(
 	INDEX(apiCallUserid),
 	INDEX(apiCallId),
 	FOREIGN KEY (apiCallUserId)REFERENCES user(UserId),
-	PRIMARY KEY (apiCallId)
+	PRIMARY KEY (apiCallId,apiCallUserId)
 );
