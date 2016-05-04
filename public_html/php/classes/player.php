@@ -647,7 +647,7 @@ publuc function delete(\PDO $pdo) {
 	/**
 	 * gets player by playerCommitment
 	 *
-	 * @param \PDO $pdo PDO connection object
+	 * @param \PDO $pdo PDO connection object blah
 	 * @param string $playerCommitment player commitment to search for
 	 * @return \SplFixedArray SplFixedArray of players found
 	 * @throws \PDOException when mySQL related errors occur
