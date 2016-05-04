@@ -44,6 +44,7 @@ CREATE TABLE player (
 	playerLastName VARCHAR(32) NOT NULL,
 	playerPosition VARCHAR(8) NOT NULL,
 	playerThrowingHand CHAR(1) NOT NULL,
+	playerWeight TINYINT UNSIGNED NOT NULL,
 	INDEX(playerTeamId),
 	INDEX(playerUserId),
 	INDEX(playerId),
