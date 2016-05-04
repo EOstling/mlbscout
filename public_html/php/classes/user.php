@@ -1,6 +1,8 @@
 <?php
 namespace Edu\cnm\jmedley4\mlbscout;
 
+use MongoDB\Driver\Exception\UnexpectedValueException;
+
 require_once ("autoload.php");
 /**
  * User Class for MLBscout Capstone
@@ -52,7 +54,7 @@ class User implements \JsonSerializable {
 	private $userPassword;
 	/**
 	 * phone number of this user
-	 * @var string $userPhoneNumber
+	 * @var int $userPhoneNumber
 	 */
 	private $userPhoneNumber;
 	/**
@@ -60,6 +62,11 @@ class User implements \JsonSerializable {
 	 * @var string $userSalt
 	 */
 	private $userSalt;
+	/**
+	 * update function for this user
+	 * @var string $userUpdate
+	 */
+	private $userUpdate;
 	
 	/**
 	 * Constructor for this User
@@ -131,11 +138,11 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user activation token
 	 *
-	 * not entirely sure how to write this one :) will come back, never.
+	 * @param string $newUserActivationToken new value 
 	 */
 	public function setUserActivationToken($newUserActivationToken) {
 
-		if($newUserActivationToken )
+		if($newUserActivationToken)
 		$this->userActivationToken = $newUserActivationToken;
 	}
 
@@ -158,17 +165,17 @@ class User implements \JsonSerializable {
 	public function setUserEmail($newUserEmail) {
 		//verify the user email is secure
 		$newUserEmail = trim($newUserEmail);
-		$newUserEmail - filter_var($newUserEmail, FILTER_VALIDATE_EMAIL);
+		$newUserEmail = filter_var($newUserEmail, FILTER_VALIDATE_EMAIL);
 		if(empty($newUserEmail) === true) {
 			throw(new \InvalidArgumentException("email is empty or insecure"));
 		}
 
-		//verify the email will fit in the database
+		//verify the user email will fit in the database
 		if(strlen($newUserEmail) > 64) {
 			throw(new \RangeException("email is too large"));
 		}
 
-		// store the email
+		// store the user email
 		$this->userEmail = $newUserEmail;
 	}
 
@@ -184,10 +191,24 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user first name
 	 *
-	 * 
+	 * @param string $newUserFirstName
+	 * @throws UnexpectedValueException if $newUserFirstName is not valid
+	 * @throws \RangeException if $newUserFirstName is > 32 characters
 	 */
-	public function setUserFirstName($userFirstName) {
-		$this->userFirstName = $userFirstName;
+	public function setUserFirstName($newUserFirstName) {
+		// verify the first name is valid
+		$newUserFirstName = filter_var($newUserFirstName, FILTER_SANITIZE_STRING);
+		if($newUserFirstName === false) {
+			throw(new \UnexpectedValueException("first name is not a valid string"));
+		}
+
+		//verify the user first name will fit in the database
+		if(strlen($newUserFirstName) > 32) {
+			throw(new \RangeException("first name is too long please change it"));
+		}
+
+		// store the user first name
+		$this->userFirstName = $newUserFirstName;
 	}
 
 	/**
@@ -206,16 +227,33 @@ class User implements \JsonSerializable {
 
 	/**
 	 * accessor method for user last name
+	 *
+	 * @return string value of user last name
 	 */
 	public function getUserLastName() {
-		return $this->userLastName;
+		return ($this->userLastName);
 	}
 
 	/**
 	 * mutator method for user last name
+	 * @param string $newUserLastName
+	 * @throws UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
-	public function setUserLastName($userLastName) {
-		$this->userLastName = $userLastName;
+	public function setUserLastName($newUserLastName) {
+		// verify the Last name is valid
+		$newUserLastName = filter_var($newUserLastName, FILTER_SANITIZE_STRING);
+		if($newUserLastName === false) {
+			throw(new \UnexpectedValueException("last name is not a valid string"));
+		}
+
+		//verify the user last name will fit in the database
+		if(strlen($newUserLastName) > 32) {
+			throw(new \RangeException("last name is too long please change it"));
+		}
+
+		// store the user last name
+		$this->userLastName = $newUserLastName;
 	}
 
 	/**
@@ -234,23 +272,36 @@ class User implements \JsonSerializable {
 
 	/**
 	 * accessor method for user phone number
+	 *
+	 * @return int value of user phone number
 	 */
 	public function getUserPhoneNumber() {
-		return $this->userPhoneNumber;
+		return ($this->userPhoneNumber);
 	}
 
 	/**
 	 * mutator method for user phone number
+	 *
+	 * @throws \InvalidArgumentException if $newUserPhoneNumer is not a integer
+	 * @throws \TypeError if $newUserPhoneNumber is not a string
 	 */
-	public function setUserPhoneNumber($userPhoneNumber) {
-		$this->userPhoneNumber = $userPhoneNumber;
+	public function setUserPhoneNumber($newUserPhoneNumber) {
+		// verify the user phone number is secure
+		$newUserPhoneNumber = trim($newUserPhoneNumber);
+		$newUserPhoneNumber = filter_var($newUserPhoneNumber, FILTER_VALIDATE_INT);
+		if(empty($newUserPhoneNumber) === true) {
+			throw(new \InvalidArgumentException("user phone number is empty or insecure"));
+		}
+
+		// store the user phone number
+		$this->userPhoneNumber = $newUserPhoneNumber;
 	}
 
 	/**
 	 * accessor method for user salt
 	 */
 	public function getUserSalt() {
-		return $this->userSalt;
+		return ($this->userSalt);
 	}
 
 	/**
@@ -258,6 +309,40 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserSalt($userSalt) {
 		$this->userSalt = $userSalt;
+	}
+
+	/**
+	 * accessor method for user update
+	 *
+	 * @return string value of user update
+	 */
+	public function getUserUpdate() {
+		return ($this->userUpdate);
+	}
+
+	/**
+	 * mutator method for user update
+	 *
+	 * @param string $newUserUpdate new value of user update
+	 * @throws \InvalidArgumentException if $newUserUpdate is not a string or insecure
+	 * @throws \RangeException if $newUserUpdate is > 64
+	 * @throws \TypeError if $newUserUpdate is not a string
+	 */
+	public function setUserUpdate($newUserUpdate) {
+		// verify the user update is secure
+		$newUserUpdate = trim($newUserUpdate);
+		$newUserUpdate = filter_var($newUserUpdate, FILTER_SANITIZE_STRING);
+		if(empty($newUserUpdate) === true) {
+			throw(new \InvalidArgumentException("user update is empty or insecure"));
+		}
+
+		//verify the user update will fit in the database
+		if(strlen($newUserUpdate) > 64) {
+			throw(new \RangeException("user update too large"));
+		}
+
+		// store the user update
+		$this->userUpdate = $newUserUpdate;
 	}
 
 }
