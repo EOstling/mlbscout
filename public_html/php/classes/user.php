@@ -8,131 +8,183 @@ require_once ("autoload.php");
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  * @see https://app.asana.com/0/117435671931068/118830311351365
  */
-class User {
+class User implements \JsonSerializable {
+	
 	/**
 	 * id for the user who owns this profile; this is the primary key
+	 * @var int $userId
 	 */
 	private $userId;
 	/**
 	 * access level id set for user; this is the foreign key
+	 * @var int $userAccessLevelId
 	 */
 	private $userAccessLevelId;
 	/**
 	 * activation token for user account
+	 * @var string $userActivationToken
 	 */
 	private $userActivationToken;
 	/**
-	 * api call for user
-	 */
-	private $userApiCall;
-	/**
 	 * email of this user
+	 * @var string $userEmail
 	 */
 	private $userEmail;
 	/**
 	 * first name of this user
+	 * @var string $userFirstName
 	 */
 	private $userFirstName;
 	/**
 	 * hash set for the user
+	 * @var string $userHash
 	 */
 	private $userHash;
 	/**
 	 * last name of this user
+	 * @var string $userLastName
 	 */
 	private $userLastName;
 	/**
 	 * password for this user
+	 * @var string $userPassword
 	 */
 	private $userPassword;
 	/**
 	 * phone number of this user
+	 * @var string $userPhoneNumber
 	 */
 	private $userPhoneNumber;
 	/**
 	 * salt set for this user
+	 * @var string $userSalt
 	 */
 	private $userSalt;
-
+	
+	/**
+	 * Constructor for this User
+	 *
+	 * 
+	 */
 	/**
 	 * accessor method for user id
+	 *
+	 * @return int value of user id
 	 */
 	public function getUserId() {
-		return $this->userId;
+		return ($this->userId);
 	}
 
 	/**
 	 * mutator method for user id
+	 *
+	 * @param int $newUserId new value of user id
+	 * @throws \RangeException if $newUserId is not positive
+	 * @throws \TypeError if $newUserId is not an integer
 	 */
-	public function setUserId($userId) {
-		$this->userId = $userId;
+	public function setUserId($newUserId) {
+		//verify the profile id is positive
+		if($newUserId <=0) {
+			throw(new \RangeException("profile id is not positive"));
+
+		}
+
+		//convert and store the user id
+		$this->userId = $newUserId;
 	}
 
 	/**
 	 * accessor method for user access level id
+	 *
+	 * return int values of user access level id
 	 */
 	public function getUserAccessLevelId() {
-		return $this->userAccessLevelId;
+		return ($this->userAccessLevelId);
 	}
 
 	/**
 	 * mutator method for user access level id
+	 *
+	 * @param int $newUserAccessLevelId new value of user access level id
+	 * @throws \RangeException if $newUserAccessLevelId is not positive
+	 * @throws \TypeError if $newUserAccessLevelId is not an integer
 	 */
-	public function setUserAccessLevelId($userAccessLevelId) {
-		$this->userAccessLevelId = $userAccessLevelId;
+	public function setUserAccessLevelId($newUserAccessLevelId) {
+		// verify the  user access level id is positive
+		if($newUserAccessLevelId <= 0) {
+			throw(new \RangeException("access level id is not positive"));
+		}
+
+		// convert and store the access level id
+		$this->userAccessLevelId = $newUserAccessLevelId;
 	}
 
 	/**
 	 * accessor method for user activation token
+	 *
+	 * @return string value of activation token
 	 */
 	public function getUserActivationToken() {
-		return $this->userActivationToken;
+		return ($this->userActivationToken);
 	}
 
 	/**
 	 * mutator method for user activation token
+	 *
+	 * not entirely sure how to write this one :) will come back, never.
 	 */
-	public function setUserActivationToken($userActivationToken) {
-		$this->userActivationToken = $userActivationToken;
-	}
+	public function setUserActivationToken($newUserActivationToken) {
 
-	/**
-	 * accessor method for user api call
-	 */
-	public function getUserApiCall() {
-		return $this->userApiCall;
-	}
-
-	/**
-	 * mutator method for user api call
-	 */
-	public function setUserApiCall($userApiCall) {
-		$this->userApiCall = $userApiCall;
+		if($newUserActivationToken )
+		$this->userActivationToken = $newUserActivationToken;
 	}
 
 	/**
 	 * accessor method for user email
+	 *
+	 * @return string value of email
 	 */
 	public function getUserEmail() {
-		return $this->userEmail;
+		return ($this->userEmail);
 	}
 
 	/**
 	 * mutator method for user email
+	 * @param string $newUserEmail new value of email
+	 * @throws \InvalidArgumentException if $newUserEmail is not a valid email or insecure
+	 * @throws \RangeException if $newUserEmail is > 64 characters
+	 * @throws \TypeError if $newUserEmail is not a string
 	 */
-	public function setUserEmail($userEmail) {
-		$this->userEmail = $userEmail;
+	public function setUserEmail($newUserEmail) {
+		//verify the user email is secure
+		$newUserEmail = trim($newUserEmail);
+		$newUserEmail - filter_var($newUserEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newUserEmail) === true) {
+			throw(new \InvalidArgumentException("email is empty or insecure"));
+		}
+
+		//verify the email will fit in the database
+		if(strlen($newUserEmail) > 64) {
+			throw(new \RangeException("email is too large"));
+		}
+
+		// store the email
+		$this->userEmail = $newUserEmail;
 	}
 
 	/**
 	 * accessor method for user first name
+	 *
+	 * @return string value of user first name
 	 */
 	public function getUserFirstName() {
-		return $this->userFirstName;
+		return ($this->userFirstName);
 	}
 
 	/**
 	 * mutator method for user first name
+	 *
+	 * 
 	 */
 	public function setUserFirstName($userFirstName) {
 		$this->userFirstName = $userFirstName;
