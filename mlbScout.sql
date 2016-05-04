@@ -48,6 +48,7 @@ CREATE TABLE player (
 	INDEX(playerTeamId),
 	INDEX(playerUserId),
 	INDEX(playerId),
+	FOREIGN KEY (playerTeamId)REFERENCES team(teamId),
 	FOREIGN KEY (playerUserId)REFERENCES user(userId),
 	PRIMARY KEY(playerId)
 );
