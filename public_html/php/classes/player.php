@@ -1,6 +1,8 @@
 <?php
 namespace Edu\Cnm\llaudick\mlbscout;
 
+require_once("autoload.php");
+
 /**
  *
  *
@@ -19,57 +21,57 @@ class Player implements \JsonSerializable {
 	 **/
 	private $playerUserId;
 	/**
-	 *
+	 * this is the players batting stats
 	 * @var int $playerBatting
 	 **/
 	private $playerBatting;
 	/**
-	 *
+	 * this is if the player has commited to a school or another team
 	 * @var string $playerCommitment
 	 **/
 	private $playerCommitment;
 	/**
-	 *
+	 * this is the particular players name
 	 * @var string $playerFirstName
 	 **/
 	private $playerFirstName;
 	/**
-	 *
+	 * this is if the player is active or not
 	 * @var string $playerHealthStatus
 	 **/
 	private $playerHealthStatus;
 	/**
-	 *
+	 * this is the players height
 	 * @var int $playerHeight
 	 **/
 	private $playerHeight;
 	/**
-	 *
+	 * this is where the player is from
 	 * @var string $playerHomeTown
 	 **/
 	private $playerHomeTown;
 	/**
-	 *
+	 * this is the particular players last name
 	 * @var string $playerLastName
 	 **/
 	private $playerLastName;
 	/**
-	 *
+	 * this is which position the player plays
 	 * @var string $playerPosition
 	 **/
 	private $playerPosition;
 	/**
-	 *
+	 * this identifies the players throwing hand
 	 * @var string $playerThrowingHand
 	 **/
 	private $playerThrowingHand;
 	/**
-	 *
+	 * this updates the player
 	 * @var string $playerUpdate
 	 **/
 	private $playerUpdate;
 	/**
-	 *
+	 * this is the players weight
 	 * @var int $playerWeight
 	 **/
 	private $playerWeight;
@@ -160,10 +162,10 @@ class Player implements \JsonSerializable {
 	/**
 	 * accessor method for playeruser id
 	 *
-	 * @return in value of playeruser id
+	 * @return int value of playeruser id
 	 **/
 	public function getPlayerUserId() {
-		return($this->PlayerUserId);
+		return($this->playerUserId);
 	}
 
 	/**
@@ -185,7 +187,7 @@ class Player implements \JsonSerializable {
 	/**
 	 * accessor method for playerBatting
 	 *
-	 * @return value of playerBatting
+	 * @return string value of playerBatting
 	 **/
 	public function getPlayerBatting() {
 		return($this->playerBatting);
@@ -325,7 +327,7 @@ class Player implements \JsonSerializable {
 	 * @throws \RangeException if $newPlayerHeight is not positive
 	 * @throws \TypeError if $newPlayerHeight is not an integer
 	 **/
-	public function setPlayerHeight(int $playerHeight) {
+	public function setPlayerHeight(int $newPlayerHeight) {
 		// verify the playerHeight is positive
 		if($newPlayerHeight <= 0) {
 			throw(new \RangeException("player height is not positve"));
@@ -341,7 +343,7 @@ class Player implements \JsonSerializable {
 	 * @return string value of playerHomeTown
 	 **/
 	public function getPlayerHomeTown() {
-		return($this->$newPlayerHomeTown);
+		return($this->playerHomeTown);
 	}
 
 	/**
@@ -444,7 +446,7 @@ class Player implements \JsonSerializable {
 	 * @return string value of playerThrowingHand
 	 **/
 	public function getPlayerThrowingHand() {
-		return($this->$newPlayerThrowingHand);
+		return($this->playerThrowingHand);
 	}
 
 	/**
@@ -1125,6 +1127,36 @@ publuc function delete(\PDO $pdo) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($player);
+	}
+
+	/**
+	 * gets all players
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of players found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllPlayers(\PDO $pdo) {
+		// create query template
+		$query = "SELECT playerId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerUpdate, playerWeight FROM player";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$player = new Player($row["playerId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerUpdate"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			} catch(\Exception $exception) {
+				// if the row couldnt be onverted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($players);
 	}
 
 	/**
