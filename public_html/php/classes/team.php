@@ -36,7 +36,7 @@ class Team implements \JsonSerializable {
 		 * @param string $newTeamName string containing Team name
 		 * @param string $newTeamType string containing Team type
 		 * @throws \InvalidArgumentException if data types are not valid
-		 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative intergers)
+		 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 		 * @throws \TypeError if data types violate type hints
 		 * @throws \Exception if some other exception occurs
 		 **/
