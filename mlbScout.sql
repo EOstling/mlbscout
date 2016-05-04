@@ -20,7 +20,9 @@ CREATE TABLE user(
 	userSalt INT,
 	userUpdate VARCHAR(64),
 	INDEX(userId),
+	INDEX(useraccessLevel),
 	UNIQUE(userEmail),
+	FOREIGN KEY(useraccessLevel)REFERENCES accessLevel(accessLevelId),
 	PRIMARY KEY (userId)
 );
 
@@ -43,8 +45,6 @@ CREATE TABLE player (
 	PRIMARY KEY(playerId)
 );
 
-
-
 CREATE TABLE team(
 	teamId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	teamType VARCHAR(32) NOT NULL,
@@ -53,6 +53,7 @@ CREATE TABLE team(
 	INDEX(teamId),
 	PRIMARY KEY (teamId)
 );
+
 CREATE TABLE schedule (
 	scheduleId INT  UNSIGNED AUTO_INCREMENT NOT NULL,
 	scheduleTeamId INT UNSIGNED NOT NULL  ,
@@ -64,7 +65,6 @@ CREATE TABLE schedule (
 	FOREIGN KEY(scheduleTeamId)REFERENCES team(TeamId),
 	PRIMARY KEY(scheduleId,scheduleTeamId)
 );
-
 
 CREATE TABLE favoritePlayer(
 	favoritePlayerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -81,6 +81,7 @@ CREATE TABLE accessLevel(
 	accessLevelName VARCHAR(2),
 	PRIMARY KEY(accessLevelId)
 );
+
 CREATE TABLE apiCall(
 	apiCallId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	apiCallUserId INT UNSIGNED NOT NULL,
