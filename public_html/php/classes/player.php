@@ -75,6 +75,10 @@ class Player implements \JsonSerializable {
 	 * @var int $playerWeight
 	 **/
 	private $playerWeight;
+	/**
+	 * @var int|null
+	 */
+	private $newPlayerId;
 
 	/**
 	 * constructor for this Player
@@ -125,6 +129,7 @@ class Player implements \JsonSerializable {
 			//rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
+		$this->newPlayerId = $newPlayerId;
 	}
 
 	/**
