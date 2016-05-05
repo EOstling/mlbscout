@@ -11,9 +11,15 @@ require_once("MlbScoutTest.php");
 //require_once(apiClass(__DIR__) . "/mlbscout/php/classes/apiCall/autoload.php");
 
 class apiClass extends MlbScoutTest {
-
+	/**
+	 * @var null
+	 * Content2
+	 */
 	protected $VALID_APICLASSCONTENT2=null;
-
+	/**
+	 * @var null
+	 * Content
+	 */
 	protected $VALID_APICLASSCONTENT=null;
 	/**
 	 * Timestamp of the API Date time; this starts as null and is assigned later
@@ -138,8 +144,8 @@ class apiClass extends MlbScoutTest {
 		public function testUpdateInvalidApiCall() {
 		// create a Tweet with a non null tweet id and watch it fail
 		$apiCall = new apiCall(null, $this->VALID_APIDATETIME, $this->APIQUERYCONTENT,
-			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
-			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
+										$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
 		$apiCall->update($this->getPDO());
 	}
 
@@ -147,8 +153,8 @@ class apiClass extends MlbScoutTest {
 
 		$numRows = $this->getConnection()->getRowCount("ApiCall");
 		$apiCall = new apiCall(null, $this->VALID_APIDATETIME, $this->APIQUERY,
-			$this->APIURL, $this->APIHTTPVERB, $this->APIBROWSER,
-			$this->APIIP, $this->APIPAYLOAD, $this->ApiUserId);
+										$this->APIURL, $this->APIHTTPVERB, $this->APIBROWSER,
+										$this->APIIP, $this->APIPAYLOAD, $this->ApiUserId);
 		$apiCall->insert($this->getPDO());
 
 		// delete the ApiCall from mySQL
@@ -166,17 +172,17 @@ class apiClass extends MlbScoutTest {
 	public function testDeleteInvalidApiCall() {
 		// create a ApiCall and try to delete it without actually inserting it
 		$ApiCall = new ApiCall(null,$this->VALID_APIDATETIME, $this->APIQUERYCONTENT,
-									$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
-									$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
+										$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
 		$ApiCall->delete($this->getPDO());
 	}
 
 	public function testGetValidApiCallbyCallId(){
-		$numRows = $this->getConnection()->getRowCount("ApiCallUserId");
+		$numRows = $this->getConnection()->getRowCount("ApiCallCallId");
 		//Create a new ApiCall and insert into mySQL
 		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
-			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
-			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+										$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
@@ -201,12 +207,37 @@ class apiClass extends MlbScoutTest {
 
 
 	public function testGetValidApiCallbyUserId(){
+		$numRows = $this->getConnection()->getRowCount("ApiCallUserId");
+		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
+										$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+		$apiCall->insert($this->getPDO());
+		//Grab data from mySQl
+		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUserId"));
+		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
+		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+		$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+		$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+		$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+		$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
+		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+	}
+
+	public function testGetInvalidApiCallbyUserId(){
+
+
+		//Stub method
+	}
+
+	public function testGetValidApiCallbyDateTime(){
+
+
 
 
 	}
-
-
-
 
 
 
