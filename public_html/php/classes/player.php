@@ -541,7 +541,7 @@ class Player implements \JsonSerializable {
 	/**
 	 * inserts the player into mySQL
 	 *
-	 * @param \PDO $pdo PDO conncetion oci_fetch_object
+	 * @param \PDO $pdo PDO conncetion object
 	 * @throws \PDOException when mySQl related errors oci_new_cursor
 	 * @throws \TypeError if $pdo is not a PDO conncetion object
 	 **/
@@ -570,7 +570,7 @@ class Player implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-publuc function delete(\PDO $pdo) {
+public function delete(\PDO $pdo) {
 	// enforce the playerId is not null (dont delete players that haevnt been inserted)
 	if($this->playerId === null) {
 		throw(new \PDOException("unable to delete a player that does not exist"));
@@ -1165,7 +1165,7 @@ publuc function delete(\PDO $pdo) {
 	}
 
 	/**
-	 *formats the state variables for jSON serialization
+	 * formats the state variables for jSON serialization
 	 *
 	 * @return array resulting state variables to serialize
 	 **/
