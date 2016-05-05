@@ -12,6 +12,9 @@ require_once("MlbScoutTest.php");
 
 class apiClass extends MlbScoutTest {
 
+	protected $VALID_APICLASSCONTENT2=null;
+
+	protected $VALID_APICLASSCONTENT=null;
 	/**
 	 * Timestamp of the API Date time; this starts as null and is assigned later
 	 * @var DateTime $VALID_APIDATETIME
@@ -21,7 +24,7 @@ class apiClass extends MlbScoutTest {
 	 * Content for Query String
 	 * @var string $VALID_APIQUERYCONTENT
 	 **/
-	protected $VALID_APIQUERYCONTENT = "PHPUnit test passing";
+	protected $VALID_APIQUERY = "PHPUnit test passing";
 	/**
 	 * Valid URL
 	 * @var string $VALID_APIURL
@@ -65,12 +68,15 @@ class apiClass extends MlbScoutTest {
 		$this->VALID_APIDATETIME = new \DateTime();
 	}
 
-	public function testInsertValidAPIDATETIME(){
+	/**
+	 *
+	 */
+	public function testInsertValidApiCall(){
 		/**
 		 count the number of rows and save it for later
 		**/
 
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("ApiCall");
 
 		// create a Datetime and insert it into mySQL
 		$apiCall = new apiCall (null,$this->VALID_APIDATETIME, $this->APIQUERYCONTENT,
@@ -78,11 +84,125 @@ class apiClass extends MlbScoutTest {
 										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoApiCall = apicall::getDateTimebyUserId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoTweet->getProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		$this->assertEquals($pdoTweet->getTweetDate(), $this->VALID_TWEETDATE);
+		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUser"));
+		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_APICALL);
+		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+		$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+		$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+		$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+	}
+	/**
+	 * test inserting a DateTime that already exists
+	 *
+	 * @expectedException PDOException
+	 **/
+		public function testInsertInvalidApiCall(){
+			// create a DateTime with a non null Date id and watch it fail
+			$apiCall = new apiCall(MlbScoutTest::INVALID_KEY, $this->VALID_APIDATETIME, $this->APIQUERY,
+											$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+											$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+			$apiCall->insert($this->getPDO());
+		}
+
+		public function testUpdateValidApiCall(){
+
+			$numRows = $this->getConnection()->getRowCount("ApiCall");
+			$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
+											$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+											$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+			$apiCall->insert($this->getPDO());
+
+// edit the ApiCall and update it in mySQL
+			$apiCall->setTweetContent($this->VALID_APIQUERYCONTENT2);
+			$apiCall->update($this->getPDO());
+
+			// grab the data from mySQL and enforce the fields match our expectations
+			$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUser"));
+			$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+			$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
+			$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+			$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+			$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+			$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+			$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+			$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
+			$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+
+		}
+
+		public function testUpdateInvalidApiCall() {
+		// create a Tweet with a non null tweet id and watch it fail
+		$apiCall = new apiCall(null, $this->VALID_APIDATETIME, $this->APIQUERYCONTENT,
+			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
+		$apiCall->update($this->getPDO());
+	}
+
+	public function testDeleteValidApiCall() {
+
+		$numRows = $this->getConnection()->getRowCount("ApiCall");
+		$apiCall = new apiCall(null, $this->VALID_APIDATETIME, $this->APIQUERY,
+			$this->APIURL, $this->APIHTTPVERB, $this->APIBROWSER,
+			$this->APIIP, $this->APIPAYLOAD, $this->ApiUserId);
+		$apiCall->insert($this->getPDO());
+
+		// delete the ApiCall from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCall"));
+		$apiCall->delete($this->getPDO());
+
+		// grab the data from mySQL and enforce the ApiCall does not exist
+		$pdoApiCall = apiCall::getApiCallByUserId($this->getPDO(), $apiCall->getApiCallId());
+		$this->assertNull($pdoApiCall);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("ApiCall"));
+
+	}
+
+
+	public function testDeleteInvalidApiCall() {
+		// create a ApiCall and try to delete it without actually inserting it
+		$ApiCall = new ApiCall(null,$this->VALID_APIDATETIME, $this->APIQUERYCONTENT,
+									$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+									$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId );
+		$ApiCall->delete($this->getPDO());
+	}
+
+	public function testGetValidApiCallbyCallId(){
+		$numRows = $this->getConnection()->getRowCount("ApiCallUserId");
+		//Create a new ApiCall and insert into mySQL
+		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
+			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+		$apiCall->insert($this->getPDO());
+		//Grab data from mySQl
+		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallId"));
+		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
+		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+		$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+		$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+		$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+		$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
+		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+	}
+
+	public function testGetInvalidApiCallbyCallId(){
+
+//Stub Method yo
+
+	}
+
+
+
+	public function testGetValidApiCallbyUserId(){
+
+
 	}
 
 
