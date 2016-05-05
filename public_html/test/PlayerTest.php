@@ -134,9 +134,9 @@ class PlayerTest extends MlbScoutTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a playerUser to own the test playerUser todo:attributes
-		$this->user = new User(null, "MlbScoutTest", "test@phpunit.de");
-		$this->team = new Team(null, "MlbScoutTest", "test@phpunit.de");
+		// create and insert a playerUser to own the test playerUser
+		$this->user = new User(null, "userId", "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
+		$this->team = new Team(null, "teamId", "teamName", "teamType");
 		$this->user->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
 	}
@@ -244,7 +244,7 @@ class PlayerTest extends MlbScoutTest {
 
 		// delete the player form mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$player->delete($this->getPDO);
+		$player->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the Player does not exist
 		$pdoPlayer = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerId());
