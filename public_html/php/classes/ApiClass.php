@@ -1,22 +1,40 @@
 <?php
 class apiCall {
-
+	/*
+	 * @var INT Primary key
+	 */
 	private $apiCallId;
-
+	/*
+	 * @varINT DateTime
+	 */
 	private $apiCallDateTime;
-
+	/*
+	 * @var INT Query
+	 */
 	private $callQueryString;
-
+	/*
+	 * @var INT
+	 */
 	private $apiCallUserId;
-
+	/*
+	 * @var
+	 */
 	private $apiCallUrl;
-
+	/*
+	 * @var
+	 */
 	private $apiHttpVerb;
-
+	/*
+	 * @var
+	 */
 	private $apiCallBrowser;
-
+	/*
+	 * @var
+	 */
 	private $apiCallip;
-
+	/*
+	 * @var
+	 */
 	private $apiCallPayload;
 
 	public function __construct( $newApiCallId, $newApiCallDateTime, $newApiCallQueryString,
