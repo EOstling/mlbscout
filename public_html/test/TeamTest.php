@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\TeamTest\Test;
 
-use
+use Edu
 
 // grab the project test parameters
 use Edu\Cnm\Fgarcia132\MlbScout\Team;require_once("TeamTest.php");
