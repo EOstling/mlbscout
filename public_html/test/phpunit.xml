@@ -1,0 +1,12 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="Mlb Scout Test">
+			<file>PlayerTest.php</file>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhiteList="true">
+			<directory suffix=".php">../phpclasses</directory>
+		</whitelist>
+	</filter>
+</phpunit>
