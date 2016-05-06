@@ -75,10 +75,6 @@ class Player implements \JsonSerializable {
 	 * @var int $playerWeight
 	 **/
 	private $playerWeight;
-	/**
-	 * @var int|null
-	 */
-	private $newPlayerId;
 
 	/**
 	 * constructor for this Player
@@ -1005,19 +1001,20 @@ public function delete(\PDO $pdo) {
 		$parameters = array("playerTeamId" => $playerTeamId);
 		$statement->execute($parameters);
 
-		// grab the player from mySQL
-		try {
-			$player = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($player);
+		return($players);
 	}
 
 	/**
@@ -1043,19 +1040,20 @@ public function delete(\PDO $pdo) {
 		$parameters = array("playerUserId" => $playerUserId);
 		$statement->execute($parameters);
 
-		// grab the player from mySQL
-		try {
-			$player = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($player);
+		return($players);
 	}
 
 	/**
@@ -1081,19 +1079,20 @@ public function delete(\PDO $pdo) {
 		$parameters = array("playerHeight" => $playerHeight);
 		$statement->execute($parameters);
 
-		// grab the player from mySQL
-		try {
-			$player = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($player);
+		return($players);
 	}
 
 	/**
@@ -1119,19 +1118,20 @@ public function delete(\PDO $pdo) {
 		$parameters = array("playerWeight" => $playerWeight);
 		$statement->execute($parameters);
 
-		// grab the player from mySQL
-		try {
-			$player = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build an array of players
+		$players = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
+				$players[$players->key()] = $player;
+				$players->next();
+			}catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($player);
+		return($players);
 	}
 
 	/**
