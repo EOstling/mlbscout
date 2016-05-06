@@ -19,19 +19,16 @@ class apiCall {
 
 	private $apiCallPayload;
 
-	public function __construct($newApiCall, $newApiCallId, $newApiCallDateTime, $newApiCallQueryString,
+	public function __construct( $newApiCallId, $newApiCallDateTime, $newApiCallQueryString,
 										 $newApiCallUserId, $newApiCallUrl, $newApiGET, $newApiPOST, $newApiPUT,
 										 $newApiDELETE, $newApiCallBrowser,
 										 $newApiCallip, $newApiCallPayload) {
 		try {
-			$this->setApiCall($newApiCall);
 			$this->setApicallId($newApiCallId);
 			$this->setApiCallDateTime($newApiCallDateTime);
 			$this->setApiCallQueryString($newApiCallQueryString);
 			$this->setApiCallUserId($newApiCallUserId);
 			$this->setApiCallUrl($newApiCallUrl);
-
-
 			$this->setApiGET($newApiGET);
 			$this->setApiPOST($newApiPOST);
 			$this->setApiPUT($newApiPUT);
