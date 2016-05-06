@@ -116,7 +116,7 @@ class apiClass extends MlbScoutTest {
 
 		public function testUpdateValidApiCall(){
 
-			$numRows = $this->getConnection()->getRowCount("ApiCall");
+			$numRows = $this->getConnection()->getRowCount("ApiCallId");
 			$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
 											$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
 											$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
@@ -128,7 +128,7 @@ class apiClass extends MlbScoutTest {
 
 			// grab the data from mySQL and enforce the fields match our expectations
 			$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
-			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUser"));
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUserId"));
 			$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
 			$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
 			$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
@@ -214,7 +214,7 @@ class apiClass extends MlbScoutTest {
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUserId"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallUserId"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
 		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
 		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
@@ -232,19 +232,102 @@ class apiClass extends MlbScoutTest {
 		//Stub method
 	}
 
-	public function testGetValidApiCallbyDateTime(){
+	public function testGetValidApiCallByDateTime(){
+
+		$numRows = $this->getConnection()->getRowCount("ApiCallDateTime");
+		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
+			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+		$apiCall->insert($this->getPDO());
+		//Grab data from mySQl
+		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallDateTime"));
+		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
+		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+		$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+		$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+		$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+		$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
+		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+	}
+
+	public function testGetInvalidApiCallByDateTime(){
+
+		//Stub method yo
+	}
 
 
+	public function testGetValidApiCallByQueryString(){
+		$numRows = $this->getConnection()->getRowCount("ApiCallQueryString");
+		//Create a new ApiCall and insert into mySQL
+		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
+			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
+			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
+		$apiCall->insert($this->getPDO());
+		//Grab data from mySQl
+		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallQueryString"));
+		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
+		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
+		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);
+		$this->assertEquals($pdoApiCall->getUrl(),$this->VALID_APIURL);
+		$this->assertEquals($pdoApiCall->getHTTPVerb(),$this->VALID_APIHTTPVERB);
+		$this->assertEquals($pdoApiCall->getBrowser(),$this->VALID_APIBROWSER);
+		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
+		$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
+		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
+	}
+
+	public function testGetInvalidApiCallByQueryString(){
+		//Stub method
+		//#stubhub
+	}
+
+	public function testGetValidApiCallURL(){
 
 
 	}
 
 
 
+	public function testGetInvalidApiCallURL(){
+
+		//stub method
+	}
+
+	public function testGetValidApiCallHTTPVerb(){
 
 
+	}
+
+	public function tetsGetInvalidApiCallBrowswer(){
+		//stub method
+
+	}
+
+	public function testGetValidApiCallIP(){
 
 
+	}
+
+	public function testGetInvalidApiCallIP(){
+
+		//stub method
+	}
+
+	public function testGetValidApiCallPayload(){
+
+
+	}
+
+	public function testGetInvalidApiCallPayload(){
+
+		//stub method
+	}
+
+	//public function testGetValid
 
 
 
