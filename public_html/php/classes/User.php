@@ -118,7 +118,7 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserAccessLevelId($newUserAccessLevelId) {
 		// verify the  user access level id is positive
-		if($newUserAccessLevelId <= 0) {
+		if($newUserAccessLevelId <=0) {
 			throw(new \RangeException("access level id is not positive"));
 		}
 
@@ -138,11 +138,18 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user activation token
 	 *
-	 * @param string $newUserActivationToken new value 
+	 * @param string $newUserActivationToken new value
+	 * @throws \RangeException if $newUserActivationToken is not positive
+	 * @throws \TypeError if $newUserActivation in not an integer
 	 */
 	public function setUserActivationToken($newUserActivationToken) {
 
-		if($newUserActivationToken)
+		// verify the user activation token is positive
+		if($newUserActivationToken <=0) {
+			throw(new \RangeException("user activation token is not positive"));
+		}
+
+		//convert and store the user activation token
 		$this->userActivationToken = $newUserActivationToken;
 	}
 
@@ -191,7 +198,7 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user first name
 	 *
-	 * @param string $newUserFirstName
+	 * @param string $newUserFirstName new value of first name
 	 * @throws UnexpectedValueException if $newUserFirstName is not valid
 	 * @throws \RangeException if $newUserFirstName is > 32 characters
 	 */
@@ -213,16 +220,36 @@ class User implements \JsonSerializable {
 
 	/**
 	 * accessor method for user hash
+	 *
+	 * @return string value of user hash
 	 */
 	public function getUserHash() {
-		return $this->userHash;
+		return ($this->userHash);
 	}
 
 	/**
 	 * mutator method for user hash
+	 *
+	 * @param string $newUserHash new value of user hash
+	 * @throws \InvalidArgumentException if $newUser hash is not a string or insecure
+	 * @throws \RangeException if $newUserHash is > 128 characters
+	 * @throws \TypeError if $newUserHash is not a string
 	 */
-	public function setUserHash($userHash) {
-		$this->userHash = $userHash;
+	public function setUserHash($newUserHash) {
+		// verify the user hash is secure
+		$newUserHash = trim($newUserHash);
+		$newUserHash = filter_var($newUserHash, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newUserHash === true)) {
+			throw(new \InvalidArgumentException("user hash is empty or insecure"));
+		}
+
+		// verify hash will fit in the database
+		if(strlen($newUserHash) > 128) {
+			throw(new \RangeException("user hash is too large"));
+		}
+
+		// store the user hash
+		$this->userHash = $newUserHash;
 	}
 
 	/**
@@ -236,7 +263,7 @@ class User implements \JsonSerializable {
 
 	/**
 	 * mutator method for user last name
-	 * @param string $newUserLastName
+	 * @param string $newUserLastName new value of user last name
 	 * @throws UnexpectedValueException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
@@ -258,16 +285,35 @@ class User implements \JsonSerializable {
 
 	/**
 	 * accessor method for user password
+	 *
+	 * @return string value of user password
 	 */
 	public function getUserPassword() {
-		return $this->userPassword;
+		return ($this->userPassword);
 	}
 
 	/**
 	 * mutator method for user password
+	 *
+	 * @throws \InvalidArgumentException if $newUserPassword is not a string or insecure
+	 * @throws \RangeException if $newUserPassword is > 64 characters
+	 * @throws \TypeError if $newUserPassword is not a string
 	 */
-	public function setUserPassword($userPassword) {
-		$this->userPassword = $userPassword;
+	public function setUserPassword ($newUserPassword) {
+		// verify the user password is secure
+		$newUserPassword = trim($newUserPassword);
+		$newUserPassword = filter_var($newUserPassword, FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newUserPassword) === true) {
+			throw(new \InvalidArgumentException("user password is empty or insecure"));
+		}
+
+		//verify the password will fit in the database
+		if(strlen($newUserPassword) > 64) {
+			throw(new \RangeException("user password is too large"));
+		}
+
+		// store the user password
+		$this->userPassword = $newUserPassword;
 	}
 
 	/**
@@ -282,6 +328,7 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user phone number
 	 *
+	 * @param int $newUserPhoneNumber new value of user phone number
 	 * @throws \InvalidArgumentException if $newUserPhoneNumer is not a integer
 	 * @throws \TypeError if $newUserPhoneNumber is not a string
 	 */
@@ -299,6 +346,8 @@ class User implements \JsonSerializable {
 
 	/**
 	 * accessor method for user salt
+	 *
+	 * @return string value for user salt
 	 */
 	public function getUserSalt() {
 		return ($this->userSalt);
@@ -306,9 +355,28 @@ class User implements \JsonSerializable {
 
 	/**
 	 * mutator method for user salt
+	 *
+	 * @param string $newUserSalt new value of user salt
+	 * @throws \InvalidArgumentException if $newUserSalt is not a string or insecure
+	 * @throws \RangeException if $newUserSalt is > 64 characters
+	 * @throws \TypeError if $newUserSalt is not a string
 	 */
-	public function setUserSalt($userSalt) {
-		$this->userSalt = $userSalt;
+	public function setUserSalt($newUserSalt) {
+		//verify the user salt is secure
+		$newUserSalt = trim($newUserSalt);
+		$newUserSalt = filter_var($newUserSalt, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newUserSalt) === true) {
+			throw(new \InvalidArgumentException("users salt is empty or insecure"));
+		}
+
+		// verify the user salt will fit in the database
+		if(strlen($newUserSalt) > 64) {
+			throw(new \RangeException ("user salt it too large"));
+		}
+
+
+		//store the user salt
+		$this->userSalt = $newUserSalt;
 	}
 
 	/**
@@ -344,5 +412,13 @@ class User implements \JsonSerializable {
 		// store the user update
 		$this->userUpdate = $newUserUpdate;
 	}
+
+	/**
+	 * inserts this User into mySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
 
 }
