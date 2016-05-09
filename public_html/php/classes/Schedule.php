@@ -16,7 +16,7 @@ class Schedule implements \JsonSerializable {
 	 **/
 	private $scheduleId;
 	/**
-	 * id of the team that has the schedue; this is the foreign key
+	 * id of the team that has the schedule; this is the foreign key
 	 * @var int $scheduleTeamId
 	 **/
 	private $scheduleTeamId;
@@ -87,7 +87,7 @@ class Schedule implements \JsonSerializable {
 	 * @throws \RangeException if $newScheduleId is not positive
 	 * @throws \TypeError if $newScheduleId is not an integer
 	 **/
-	public function setScheduleId() {
+	public function setScheduleId(int $newScheduleId) {
 		// base case: if the schedule id is null, this a new schedule without mySQL assigned id
 		if($newScheduleId === null) {
 			$this->scheduleId = null;
@@ -109,7 +109,7 @@ class Schedule implements \JsonSerializable {
 	 * @return int value of scheduleTeam id
 	 **/
 	public function getScheduleTeamId() {
-		return($this->$scheduleTeamId);
+		return($this->scheduleTeamId);
 	}
 
 	/**
@@ -402,7 +402,7 @@ class Schedule implements \JsonSerializable {
 
 		// create query template
 		$query = "SELECT scheduleId, scheduleTeamId, scheduleLocation, scheduleStartingPosition, scheduleTime FROM schedule WHERE scheduleId LIKE :scheduleId";
-		$statemnt = $pdo->prepare($query);
+		$statement = $pdo->prepare($query);
 
 		// bind the schedule id to the place holder in the template
 		$parameters = array("scheduleId" => $scheduleId);
