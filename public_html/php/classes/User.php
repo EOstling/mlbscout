@@ -299,7 +299,7 @@ class User implements \JsonSerializable {
 	 * @throws \RangeException if $newUserPassword is > 64 characters
 	 * @throws \TypeError if $newUserPassword is not a string
 	 */
-	public function setUserPassword ($newUserPassword) {
+	public function setUserPassword($newUserPassword) {
 		// verify the user password is secure
 		$newUserPassword = trim($newUserPassword);
 		$newUserPassword = filter_var($newUserPassword, FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -420,5 +420,44 @@ class User implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 */
+	public function insert(\PDO $pdo) {
+		// enforce the user is null
+		if($this->userId !==null) {
+			throw(new \PDOException("user already exist"));
+		}
+
+		// create query template
+		$query = "INSERT INTO user(userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userId, :userAccessLevel, userActivatioonToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :user:astName, :userHash, :userFirstName)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userUpdate" => $this->userUpdate, "userSalt" => $this->userSalt, "userPhoneNumber" => $this->userPhoneNumber, "userPassword" => $this->userPassword, "userLastName" => $this->userLastName, "userHash" => $this->userHash, "userFirstName" => $this->userFirstName];
+		$statement -> execute($parameters);
+
+		//update the null userId with what mySQL just game us
+		$this->userId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 *deletes this User from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object 
+	 * */
+	public function delete(\PDO $pdo) {
+		//enforce the userId is not null
+		if($this->userId === null) {
+			throw(new \PDOException("unable to delete a user that does not exist"));
+		}
+
+		// create a query template
+		$query = "DELETE FROM user WHERE userId = :userId";
+		$statement = $pdo ->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["userId" => $this->userId];
+		$statement->execute($parameters);
+	}
 
 }
