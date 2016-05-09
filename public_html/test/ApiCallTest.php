@@ -78,9 +78,9 @@ class apiClass extends MlbScoutTest {
 	 *
 	 */
 	public function testInsertValidApiCall(){
-		/**
-		 count the number of rows and save it for later
-		**/
+			/**
+			 count the number of rows and save it for later
+			**/
 
 		$numRows = $this->getConnection()->getRowCount("ApiCall");
 
@@ -123,7 +123,7 @@ class apiClass extends MlbScoutTest {
 			$apiCall->insert($this->getPDO());
 
 // edit the ApiCall and update it in mySQL
-			$apiCall->setTweetContent($this->VALID_APIQUERYCONTENT2);
+			$apiCall->setQueryContent($this->VALID_APIQUERYCONTENT2);
 			$apiCall->update($this->getPDO());
 
 			// grab the data from mySQL and enforce the fields match our expectations
@@ -180,6 +180,7 @@ class apiClass extends MlbScoutTest {
 	public function testGetValidApiCallbyCallId(){
 		$numRows = $this->getConnection()->getRowCount("ApiCallCallId");
 		//Create a new ApiCall and insert into mySQL
+
 		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
 										$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
 										$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
@@ -304,7 +305,6 @@ class apiClass extends MlbScoutTest {
 		$this->assertEquals($pdoApiCall->getIP(),$this->VALID_APIIP);
 		$this->assertEquals($pdoApiCall->getQueryContent(),$this->VALID_APIQUERYCONTENT);
 		$this->assertEquals($pdoApiCall->getPayload(),$this->VALID_APIPAYLOAD);
-
 	}
 
 
@@ -322,6 +322,7 @@ class apiClass extends MlbScoutTest {
 			$this->APIIP,$this->APIPAYLOAD,$this->ApiUserId);
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
+
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallQueryString"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
@@ -351,7 +352,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	public function testGetValidApiCallPayload(){
-		$numRows = $this->getConnection()->getRowCount("ApiCallQueryString");
+		$numRows = $this->getConnection()->getRowCount("ApiCallPayload");
 		//Create a new ApiCall and insert into mySQL
 		$apiCall = new apiCall(null,$this->VALID_APIDATETIME, $this->APIQUERY,
 			$this->APIURL,$this->APIHTTPVERB, $this->APIBROWSER,
@@ -359,7 +360,7 @@ class apiClass extends MlbScoutTest {
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getCallId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallQueryString"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiCallPayload"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->UserId->getUserId());
 		$this->assertEquals($pdoApiCall->getVALID_APICALLCONTENT2(), $this->VALID_APICALLCONTENT2);
 		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_APIDATETIME);

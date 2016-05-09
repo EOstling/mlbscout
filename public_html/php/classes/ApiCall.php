@@ -17,23 +17,23 @@ class apiCall {
 	 */
 	private $apiCallUserId;
 	/*
-	 * @var
+	 * @varINT
 	 */
 	private $apiCallUrl;
 	/*
-	 * @var
+	 * @var string
 	 */
 	private $apiHttpVerb;
 	/*
-	 * @var
+	 * @var string
 	 */
 	private $apiCallBrowser;
 	/*
-	 * @var
+	 * @var string
 	 */
 	private $apiCallip;
 	/*
-	 * @var
+	 * @var VarBinary()
 	 */
 	private $apiCallPayload;
 
@@ -57,7 +57,44 @@ class apiCall {
 
 		} catch(UnexpectedValueException $exception) {
 			// rethrow to the USER
-			throw(new UnexpectedValueException("Unable to construct APICALL", 0, $exception));
+			throw(new UnexpectedValueException("Unable to construct API", 0, $exception));
 		}
 	}
+//ApiCallId
+	public function getApicallId(){
+	return($this->ApicallId);
+}
+	public function setApicallId(int $newApiCallId){
+		$newApiCallId = filter_var($newApiCallId, FILTER_VALIDATE_INT);
+		if($newApiCallId === false) {
+			throw(new UnexpectedValueException("Apicall id is not a valid integer"));
+		}
+
+		// convert and store the profile id
+		$this->ApicallId = intval($newApiCallId);
+	}
+//DateTime
+	public function getApiCallDateTime(){
+	return($this->apiCallDateTime);
+	}
+
+	public function setApiCallDateTime($newApiCallDateTime=null){
+		//DateTime
+		if($newApiCallDateTime === null) {
+			$this->ApiCallDateTime = new \DateTime();
+			return;
+
+			try {
+				$newApiCallDateTime = $this->validateDate($newApiCallDateTime);
+			} catch(\InvalidArgumentException $invalidArgument) {
+				throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+			} catch(\RangeException $range) {
+				throw(new \RangeException($range->getMessage(), 0, $range));
+			}
+			$this->ApiCallDateTime = $newApiCallDateTime;
+	}
+
+
+
+
 }
