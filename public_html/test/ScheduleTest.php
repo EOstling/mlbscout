@@ -224,7 +224,7 @@ class ScheduleTest extends MlbScoutTest {
 	}
 
 	/**
-	 * test grabbing a schedule bu schedule starting position
+	 * test grabbing a schedule by schedule starting position
 	 **/
 	public function testGetValidScheduleByScheduleStartingPosition() {
 		// count the number of rows and save it for later
