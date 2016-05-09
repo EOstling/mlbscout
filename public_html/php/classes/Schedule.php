@@ -385,4 +385,82 @@ class Schedule implements \JsonSerializable {
 		return($schedules);
 	}
 
+	/**
+	 * gets the schedule by scheduleId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $scheduleId schedule id to search for
+	 * @return Schedule|null Schedule found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getScheduleByScheduleId(\PDO $pdo, int $scheduleId) {
+		// sanitize the scheduleId before searching
+		if($scheduleId <= 0) {
+			throw(new \PDOException("schedule id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT scheduleId, scheduleTeamId, scheduleLocation, scheduleStartingPosition, scheduleTime FROM schedule WHERE scheduleId LIKE :scheduleId";
+		$statemnt = $pdo->prepare($query);
+
+		// bind the schedule id to the place holder in the template
+		$parameters = array("scheduleId" => $scheduleId);
+		$statement->execute($parameters);
+
+		// grab the schedule from mySQL
+		try {
+			$schedule = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleTeamId"], $row["scheduleLocation"], $row["scheduleStartingPosition"], $row["scheduleTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($schedule);
+	}
+
+	/**
+	 * gets all schedules
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of schedules found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllSchedules(\PDO $pdo) {
+		// create query template
+		$query = "SELECT scheduleId, scheduleTeamId, scheduleLocation, scheduleStartingPosition, scheduleTime FROM schedule";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of schedules
+		$schedules = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleTeamId"], $row["scheduleLocation"], $row["scheduleStartingPosition"], $row["scheduleTime"]);
+				$schedules[$schedules->key()] = $schedule;
+				$schedules->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($schedules);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["scheduleTime"] = intval($this->scheduleTime->format("U")) * 1000;
+		return($fields);
+	}
 }
