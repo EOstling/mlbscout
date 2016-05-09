@@ -70,8 +70,49 @@ class User implements \JsonSerializable {
 	/**
 	 * Constructor for this User
 	 *
-	 * 
+	 * @param int $newUserId new value of user id
+	 * @param int $newUserAccessLevelId new value of user access level id
+	 * @param string $newUserActivationToken new value
+	 * @param string $newUserEmail new value of email
+	 * @param string $newUserFirstName new value of first name
+	 * @param string $newUserHash new value of user hash
+	 * @param string $newUserLastName new value of user last name
+	 * @param string $newUserPassword new value of user password
+	 * @param int $newUserPhoneNumber new value of user phone number
+	 * @param string $newUserSalt new value of user salt
+	 * @param string $newUserUpdate new value of user update
+	 * @throws \RangeException if data values are out of bounds
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \Exception if some other exception occurs
 	 */
+	public function _construct(int $newUserId, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPassword, int $newUserPhoneNumber, string $newUserSalt, string, $newUserUpdate = null) {
+		try {
+			$this->setUserId($newUserId);
+			$this->setUserAccessLevelId($newUserAccessLevelId);
+			$this->setUserActivationToken($newUserActivationToken);
+			$this->setUserEmail($newUserEmail);
+			$this->setUserFirstName($newUserFirstName);
+			$this->setUserHash($newUserHash);
+			$this->setUserLastName($newUserLastName);
+			$this->setUserPassword($newUserPassword);
+			$this->setUserPhoneNumber($newUserPhoneNumber);
+			$this->setUserSalt($newUserSalt);
+			$this->setUserUpdate($newUserUpdate);
+		}catch(\InvalidArgumentException $invalidArgument) {
+			//rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		}catch(\RangeException $range) {
+			// rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		}catch(\TypeError $typeError) {
+			//rethrow the exception to the caller
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		}catch(\Exception $exception) {
+			// rethrow the exception to the caller
+			throw(new \Exception($exception->getMessage(), 0, $exception));
+		}
+	}
 	/**
 	 * accessor method for user id
 	 *
@@ -262,6 +303,7 @@ class User implements \JsonSerializable {
 
 	/**
 	 * mutator method for user last name
+	 *
 	 * @param string $newUserLastName new value of user last name
 	 * @throws UnexpectedValueException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
@@ -294,6 +336,7 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user password
 	 *
+	 * @param string $newUserPassword new value of user password
 	 * @throws \InvalidArgumentException if $newUserPassword is not a string or insecure
 	 * @throws \RangeException if $newUserPassword is > 64 characters
 	 * @throws \TypeError if $newUserPassword is not a string
