@@ -89,7 +89,7 @@ CREATE TABLE apiCall(
 	apiCallURL VARCHAR(128) NOT NULL,
 	apiCallHttpVerb VARCHAR(6) NOT NULL,
 	apiCallBrowser VARCHAR(128) NOT NULL,
-	apicallIP VARBINARY(16) NOT NULL,
+	apiCallIP VARBINARY(16) NOT NULL,
 	apiCallPayload VARCHAR(2000),
 	INDEX(apiCallUserId),
 	INDEX(apiCallId),
