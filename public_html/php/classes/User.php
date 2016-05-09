@@ -11,7 +11,6 @@ require_once ("autoload.php");
  * @see https://app.asana.com/0/117435671931068/118830311351365
  */
 class User implements \JsonSerializable {
-	
 	/**
 	 * id for the user who owns this profile; this is the primary key
 	 * @var int $userId
@@ -536,7 +535,7 @@ class User implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userId = :userId";
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userAccessLevelId = :userAccessLevelId";
 		$statement = $pdo -> prepare($query);
 
 		// bind the user access level id to the place holder template
@@ -556,6 +555,372 @@ class User implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($user);
+	}
+
+	/**
+	 * gets the User by userActivationToken
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userActivationtoken user activation token to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserActivationToken(\PDO $pdo, string $userActivationToken) {
+		// sanitize the description before searching
+		$userActivationToken = trim($userActivationToken);
+		$userActivationToken = filter_var($userActivationToken, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userActivationToken) === true) {
+			throw(new \PDOException ("user activation token is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userActivationToken LIKE :userActivationToken";
+		$statement = $pdo->prepare($query);
+
+		// bind the user activation token to the place holder in the template
+		$userActivationToken = "%userActivationToken%";
+		$parameters = array("userActivationToken" => $userActivationToken);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userEmail
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userEmail user email to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserEmail(\PDO $pdo, string $userEmail) {
+		// sanitize the description before searching
+		$userEmail = trim($userEmail);
+		$userEmail = filter_var($userEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userEmail) === true) {
+			throw(new \PDOException ("user email is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userEmail LIKE :userEmail";
+		$statement = $pdo->prepare($query);
+
+		// bind the user Email to the place holder in the template
+		$userEmail = "%userEmail%";
+		$parameters = array("userEmail" => $userEmail);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userUpdate
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userUpdate user update to to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserUpdate(\PDO $pdo, string $userUpdate) {
+		// sanitize the description before searching
+		$userUpdate = trim($userUpdate);
+		$userUpdate = filter_var($userUpdate, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userUpdate) === true) {
+			throw(new \PDOException ("user Update is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userUpdate LIKE :userUpdate";
+		$statement = $pdo->prepare($query);
+
+		// bind the user Update to the place holder in the template
+		$userUpdate = "%userUpdate%";
+		$parameters = array("userUpdate" => $userUpdate);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userSalt
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userSalt user salt to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserSalt(\PDO $pdo, string $userSalt) {
+		// sanitize the description before searching
+		$userSalt = trim($userSalt);
+		$userSalt = filter_var($userSalt, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userSalt) === true) {
+			throw(new \PDOException ("user salt is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userSalt LIKE :userSalt";
+		$statement = $pdo->prepare($query);
+
+		// bind the user Salt to the place holder in the template
+		$userSalt = "%userSalt%";
+		$parameters = array("userUpdate" => $userSalt);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userPhoneNumber
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $userPhoneNumber User phone number to search for
+	 * @return User|null User found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getUserByUserPhoneNumber(\PDO $pdo, int $userPhoneNumber) {
+		// sanitize the userId before searching
+		if($userPhoneNumber <= 0) {
+			throw(new \PDOException("user phone number is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userPhoneNumber = :userPhoneNumber";
+		$statement = $pdo->prepare($query);
+
+		// bind the user phone number to the place holder template
+		$parameters = array("userPhoneNumber" => $userPhoneNumber);
+		$statement->execute($parameters);
+
+		// grab the user from mySQL
+		try {
+			$user = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($user);
+	}
+
+	/**
+	 * gets the User by userPassword
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userPassword user password to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserPassword(\PDO $pdo, string $userPassword) {
+		// sanitize the description before searching
+		$userPassword = trim($userPassword);
+		$userPassword = filter_var($userPassword, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userPassword) === true) {
+			throw(new \PDOException ("user password is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userPassword LIKE :userPassword";
+		$statement = $pdo->prepare($query);
+
+		// bind the user password to the place holder in the template
+		$userPassword = "%userPassword%";
+		$parameters = array("userPassword" => $userPassword);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userLastName
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userLastName user last name to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserLastName(\PDO $pdo, string $userLastName) {
+		// sanitize the description before searching
+		$userLastName = trim($userLastName);
+		$userLastName = filter_var($userLastName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userLastName) === true) {
+			throw(new \PDOException ("user last name is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userLastName LIKE :userLastname";
+		$statement = $pdo->prepare($query);
+
+		// bind the user last name to the place holder in the template
+		$userLastName = "%userLastName%";
+		$parameters = array("userLastName" => $userLastName);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userHash
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userHash user hash to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserHash(\PDO $pdo, string $userHash) {
+		// sanitize the description before searching
+		$userHash = trim($userHash);
+		$userHash = filter_var($userHash, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userHash) === true) {
+			throw(new \PDOException ("user hash is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userHash LIKE :userHash";
+		$statement = $pdo->prepare($query);
+
+		// bind the user hash to the place holder in the template
+		$userHash = "%userHash%";
+		$parameters = array("userHash" => $userHash);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	/**
+	 * gets the User by userFirstName
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userFirstName user first name to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserFirstName(\PDO $pdo, string $userFirstName) {
+		// sanitize the description before searching
+		$userFirstName = trim($userFirstName);
+		$userFirstName = filter_var($userFirstName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userFirstName) === true) {
+			throw(new \PDOException ("user first name is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName FROM user WHERE userFirstName LIKE :userFirstName";
+		$statement = $pdo->prepare($query);
+
+		// bind the user first name to the place holder in the template
+		$userFirstName = "%userFirstName%";
+		$parameters = array("userFirstName" => $userFirstName);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userUpdate"], $row["userSalt"], $row["userPhoneNumber"], $row["userPassword"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
 	}
 	/**
 	 * gets all Users
