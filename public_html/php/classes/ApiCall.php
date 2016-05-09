@@ -225,16 +225,18 @@ class ApiCall {
 		$statement->execute($parameters);
 		//Give me the lastInsert Id:
 		$this->apiCall = intval($pdo->lastInsertId());
-
-
 	}
-
 
 	public function delete(\Pdo $pdo){
 
 		if($this->apiCallUserId === null){
-
+			throw(new \PDOException("Well we can't delte something that isn't there now can we"));
 		}
+		$query = "DELETE FROM ApiCall where apiCallId = :apiCallId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["apiCallId" => $this->apiCallId];
+		$statement->execute($parameters);
+
 	}
 
 	public function update(\Pdo $pdo){
