@@ -1,5 +1,6 @@
 <?php
 class apiCall {
+	use ValidateDate;
 	/*
 	 * @var INT Primary key
 	 */
@@ -37,10 +38,10 @@ class apiCall {
 	 */
 	private $apiCallPayload;
 
-	public function __construct( $newApiCallId, $newApiCallDateTime, $newApiCallQueryString,
-										 $newApiCallUserId, $newApiCallUrl, $newApiGET, $newApiPOST, $newApiPUT,
-										 $newApiDELETE, $newApiCallBrowser,
-										 $newApiCallip, $newApiCallPayload) {
+	public function __construct( int $newApiCallId, TIMESTAMP $newApiCallDateTime, string $newApiCallQueryString,
+										int $newApiCallUserId,string  $newApiCallUrl, string $newApiGET,string $newApiPOST,string $newApiPUT,
+										string $newApiDELETE,string $newApiCallBrowser,
+										int $newApiCallip, string $newApiCallPayload) {
 		try {
 			$this->setApicallId($newApiCallId);
 			$this->setApiCallDateTime($newApiCallDateTime);
@@ -78,23 +79,21 @@ class apiCall {
 	return($this->apiCallDateTime);
 	}
 
-	public function setApiCallDateTime($newApiCallDateTime=null){
+	public function setApiCallDateTime($newApiCallDateTime=null) {
 		//DateTime
 		if($newApiCallDateTime === null) {
 			$this->ApiCallDateTime = new \DateTime();
 			return;
-
-			try {
-				$newApiCallDateTime = $this->validateDate($newApiCallDateTime);
-			} catch(\InvalidArgumentException $invalidArgument) {
-				throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-			} catch(\RangeException $range) {
-				throw(new \RangeException($range->getMessage(), 0, $range));
-			}
-			$this->ApiCallDateTime = $newApiCallDateTime;
+		}
 	}
+	public function getApiCallQueryString(){
+			return($this->callQueryString);
+		}
+
+	public function setApiCallQueryString($newApiCallQueryString){
+
+		}
 
 
 
-
-}
+}}
