@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Llaudick\Mlbscout\Test;
+namespace Edu\Cnm\Mlbscout\Test;
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
