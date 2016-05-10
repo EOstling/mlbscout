@@ -368,7 +368,7 @@ class Team implements \JsonSerializable {
 					while(($row = $statement->fetch()) !== false) {
 								try {
 											$team = new team($row["teamID"], $row["teamName"], $row["teamType"]);
-											$teams[$team->key()] = $team;
+											$teams[$teams->key()] = $team;
 											$teams->next();
 								} catch(\Exception $exception) {
 											// if the row couldn't be converted, rethrow it
