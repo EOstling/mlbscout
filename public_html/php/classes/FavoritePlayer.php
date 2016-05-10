@@ -140,6 +140,10 @@ class FavoritePlayer implements \JsonSerializable {
 		// create query template
 		$query = "DELETE FROM favoritePlayer WHERE userId = :userId AND playerId = :playerId";
 		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["userId" => $this->userId, "playerId" => $this->playerId];
+		$statement->execute($parameters);
 	}
 
 	/**
