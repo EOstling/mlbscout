@@ -367,8 +367,8 @@ class Team implements \JsonSerializable {
 					$statement->setFetchMode(\PDO::FETCH_ASSOC);
 					while(($row = $statement->fetch()) !== false) {
 								try {
-											$team = new team($row["teamID"], $row["teamName"], $row["teamType"]);
-											$teams[$teams->key()] = $team;
+											$teams = new team($row["teamID"], $row["teamName"], $row["teamType"]);
+											$teams[$team->key()] = $team;
 											$teams->next();
 								} catch(\Exception $exception) {
 											// if the row couldn't be converted, rethrow it
