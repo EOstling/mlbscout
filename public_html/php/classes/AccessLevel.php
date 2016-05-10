@@ -1,5 +1,5 @@
 <?php
-namespace Edu\cnm\jmedley4\mlbscout;
+namespace Edu\Cnm\Mlbscout;
 
 require_once ("autoload.php");
 /**
