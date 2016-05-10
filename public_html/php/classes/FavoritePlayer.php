@@ -10,7 +10,7 @@ require_once("autoload.php");
  * @author Francisco Garcia <fgarcia132@cnm.edu>
  * @version 2.0.0
  **/
-class favoritePlayer implements \JsonSerializable {
+class FavoritePlayer implements \JsonSerializable {
 	/**
 	 * id for the user that favorited the player; this is a foreign key
 	 * @var int $userId
