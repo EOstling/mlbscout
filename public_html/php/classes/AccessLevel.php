@@ -7,7 +7,7 @@ require_once ("autoload.php");
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  */
-class accessLevel implements \JsonSerializable {
+class AccessLevel implements \JsonSerializable {
 
 	/*
 	 * access level id for user; this is the primary key
