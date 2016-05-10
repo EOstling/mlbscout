@@ -255,4 +255,12 @@ class ApiCall {
 		$statement->execute($parameters);
 
 	}
+
+	public function getapiCallbyApiUserId(\PDO $pdo, string $ApiUserId){
+
+
+	}
+
+
+
 }
