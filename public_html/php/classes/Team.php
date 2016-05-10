@@ -254,7 +254,7 @@ class Team implements \JsonSerializable {
 
 					// build an array of teams
 					$teams = new \SplFixedArray($statement->rowCount());
-					$statement->setFetchMode(\PDO::Fetch_Assoc);
+					$statement->setFetchMode(\PDO::FETCH_ASSOC);
 					while(($row = $statement->fetch()) !== false) {
 								try {
 										$team = new Team($row["teamId"], $row["teamName"], $row["teamType"]);
@@ -296,7 +296,7 @@ class Team implements \JsonSerializable {
 
 					// build an array of teams
 					$teams = new \SplFixedArray($statement->rowcount());
-					$statement->setFetchMode(\PDO::Fetch_Assoc);
+					$statement->setFetchMode(\PDO::FETCH_ASSOC);
 					while(($row = $statement->fetch()) !== false) {
 								try {
 											$team = new Team($row["teamId"], $row["teamType"], $row["teamName"], 											$row["teamRoster"]);
@@ -336,7 +336,7 @@ class Team implements \JsonSerializable {
 					// grab the team from mySQL
 					try {
 								$team = null;
-								$statement->setFetchMode(\PDO::Fetch_Assoc);
+								$statement->setFetchMode(\PDO::FETCH_ASSOC);
 								$row = $statement->fetch();
 								if($row !== false) {
 											$team = new Team($row["teamId"], $row["teamName"], $row["teamType"]);
@@ -364,12 +364,12 @@ class Team implements \JsonSerializable {
 
 					// build an array of teams
 					$teams = new \SplFixedArray($statement->rowCount());
-					$statement->setFetchMode(\PDO::Fetch_Assoc);
+					$statement->setFetchMode(\PDO::FETCH_ASSOC);
 					while(($row = $statement->fetch()) !== false) {
 								try {
 											$team = new team($row["teamID"], $row["teamName"], $row["teamType"]);
 											$teams[$team->key()] = $team;
-											$team->next();
+											$teams->next();
 								} catch(\Exception $exception) {
 											// if the row couldn't be converted, rethrow it
 											throw(new \PDOException($exception->getMessage(), 0, $exception));
