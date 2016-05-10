@@ -175,7 +175,7 @@ class Team implements \JsonSerializable {
 					}
 
 					// create a query template
-					$query = "INSERT INTO team(teamName, teamRoster, teamType) VALUES( :teamName, :teamType)";
+					$query = "INSERT INTO team(teamName, teamType) VALUES(:teamName, :teamType)";
 					$statement = $pdo->prepare($query);
 
 					// bind the member variables to the place holders in the template
@@ -219,7 +219,7 @@ class Team implements \JsonSerializable {
 
 					// create query template
 					$query = "UPDATE team SET teamName = :teamName, teamType = :teamType WHERE teamId = :teamId";
-					$statement = $pdo->prepare(query);
+					$statement = $pdo->prepare($query);
 
 					// bind the member variables to the place holders in the template
 					$parameters = ["teamName" => $this->teamName, "teamType" => $this->teamType];
