@@ -1,64 +1,57 @@
 <?php
 namespace Edu\Cnm\MlbScout;
-class ApiCall {
+class ApiCall implements \JsonSerializable {
 	use \Edu\Cnm\MlbScout\ValidateDate;
-	/**
-	 * @var INT Primary key
-	 **/
+
 	private $apiCallId;
-	/**
-	 * @varINT DateTime
-	 **/
-	private $apiCallDateTime;
-	/**
-	 * @var INT Query
-	 **/
-	private $apiCallQueryString;
-	/**
-	 * @var INT
-	 **/
+
 	private $apiCallUserId;
-	/**
-	 * @varINT
-	 **/
-	private $apiCallURL;
-	/**
-	 * @var string
-	 **/
-	private $apiCallHttpVerb;
-	/**
-	 * @var string
-	 **/
+
 	private $apiCallBrowser;
-	/**
-	 * @var string
-	 **/
+
+	private $apiCallDateTime;
+
+	private $apiCallHttpVerb;
+
 	private $apiCallIp;
-	/**
-	 * @var String()
-	 **/
+
+	private $apiCallQueryString;
+
 	private $apiCallPayload;
 
-	public function __construct(int $newApiCallId, $newApiCallDateTime, string $newApiCallQueryString,
-										 int $newApiCallUserId, string $newApiCallURL, string $newApiCallHttpVerb, string $newApiCallBrowser,
-										 string $newApiCallIp, string $newApiCallPayload) {
+	private $apiCallURL;
+
+
+	public function __construct(int $newApiCallId, int $newApiCallUserId, string $newApiCallBrowser,
+										 \DateTime $newApiCallDateTime, string $newApiCallHttpVerb, string $newApiCallIp,
+										string $newApiCallQueryString, string $newApiCallPayload, string $newApiCallURL) {
 		try {
 			$this->setapiCallId($newApiCallId);
-			$this->setApiCallDateTime($newApiCallDateTime);
-			$this->setApiCallQueryString($newApiCallQueryString);
 			$this->setApiCallUserId($newApiCallUserId);
-			$this->setApiCallURL($newApiCallURL);
-			$this->setApicallHttpVerb($newApiCallHttpVerb);
 			$this->setApiCallBrowser($newApiCallBrowser);
+			$this->setApiCallDateTime($newApiCallDateTime);
+			$this->setApicallHttpVerb($newApiCallHttpVerb);
 			$this->setApiCallip($newApiCallIp);
+			$this->setApiCallQueryString($newApiCallQueryString);
 			$this->setApiCallPayload($newApiCallPayload);
+			$this->setApiCallURL($newApiCallURL);
 
-		} catch(UnexpectedValueException $exception) {
-			// rethrow to the USER
-			throw(new UnexpectedValueException("Unable to construct API", 0, $exception));
+		} catch (\InvalidArgumentException $invalidArgument) {
+			// rethrow the exception to the caller
+			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(\RangeException $range) {
+			// rethrow the exception to the caller
+			throw(new \RangeException($range->getMessage(), 0, $range));
+		} catch(\TypeError $typeError) {
+			// rethrow the exception to the caller
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		} catch(\Exception $exception) {
+			// rethrow the exception to the caller
+			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
-	}
 
+
+}
 //ApiCallId
 	public function getApiCallId() {
 		return($this->apiCallId);
@@ -79,6 +72,24 @@ class ApiCall {
 
 	}
 
+	public function getApiCallBrowser() {
+		return ($this->apiCallBrowser);
+	}
+
+	public function setApiCallBrowser(string $newApiCallBrowser) {
+		$newApiCallBrowser = trim($newApiCallBrowser);
+		$newApiCallBrowser = filter_var($newApiCallBrowser, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newApiCallBrowser) === TRUE) {
+			throw(new\InvalidArgumentException("Api Browser can't be empty"));
+		}
+		if( strlen( $newApiCallBrowser ) > 128) {
+			throw(new\RangeException("Browser is out of my range"));
+		}
+		$this->getApiCallBrowser = $newApiCallBrowser;
+
+	}
+
 //DateTime
 	public function getApiCallDateTime() {
 		return ($this->apiCallDateTime);
@@ -95,6 +106,47 @@ class ApiCall {
 			return;
 		}
 	}
+
+	public function getApiCallHttpVerb() {
+		return ($this->apiCallHttpVerb);
+	}
+
+	public function setApiCallHttpVerb(string $newApiCallHttpVerb) {
+
+		$verb = $newApiCallHttpVerb;
+		if($verb !== "GET" && $verb !== "POST" && $verb !== "PUT" && $verb!=="DELETE"){
+			throw(new\InvalidArgumentException("Api Verb must be Get, Put, Post or Delete"));
+
+		}
+		$this->ApiCallHttpVerb=$newApiCallHttpVerb;
+
+	}
+
+
+
+	public function getApiCallIp() {
+		return ($this->apiCallIp);
+	}
+
+	public function setApiCallIp(string $newApiCallIp) {
+		$newApiCallIp = trim($newApiCallIp);
+		$newApiCallIp = filter_var($newApiCallIp, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newApiCallIp) === TRUE) {
+			throw(new\InvalidArgumentException("Api IP can't be empty"));
+		}
+		if(strlen($newApiCallIp) > 128) {
+			throw(new\RangeException("Browser is out of my range"));
+		}
+		$this->getApiCallIp = $newApiCallIp;
+
+
+	}
+
+
+
+
+
 
 	public function getApiCallQueryString() {
 		return ($this->apiCallQueryString);
@@ -117,6 +169,30 @@ class ApiCall {
 		$this->getApiCallQueryString = $newApiCallQueryString;
 	}
 
+	public function getApiCallPayload() {
+		return ($this->apiCallPayload);
+	}
+
+	public function setApiCallPayload(int $newApiCallPayload) {
+		$newApiCallPayload = trim($newApiCallPayload);
+		$newApiCallPayload = filter_var($newApiCallPayload, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newApiCallPayload) === TRUE) {
+			throw(new\InvalidArgumentException("Payload cant be empty"));
+		}
+		if(strlen($newApiCallPayload) > 128) {
+			throw(new\RangeException(""));
+		}
+		$this->getApiCallPayload = $newApiCallPayload;
+
+
+	}
+
+
+
+
+
+
 
 	public function getApiCallURL() {
 		return ($this->apiCallURL);
@@ -136,80 +212,14 @@ class ApiCall {
 
 	}
 
-	public function getApiCallHttpVerb() {
-		return ($this->apiCallHttpVerb);
-	}
-
-	public function setApiCallHttpVerb(string $newApiCallHttpVerb) {
-
-		$verb = $newApiCallHttpVerb;
-		if($verb !== "GET" && $verb !== "POST" && $verb !== "PUT" && $verb!=="DELETE"){
-			throw(new\InvalidArgumentException("Api Verb must be Get, Put, Post or Delete"));
-
-		}
-		$this->ApiCallHttpVerb=$newApiCallHttpVerb;
-
-	}
-
-
-	public function getApiCallBrowser() {
-		return ($this->apiCallBrowser);
-	}
-
-	public function setApiCallBrowser(string $newApiCallBrowser) {
-		$newApiCallBrowser = trim($newApiCallBrowser);
-		$newApiCallBrowser = filter_var($newApiCallBrowser, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-		if(empty($newApiCallBrowser) === TRUE) {
-			throw(new\InvalidArgumentException("Api Browser can't be empty"));
-		}
-			if( strlen( $newApiCallBrowser ) > 128) {
-				throw(new\RangeException("Browser is out of my range"));
-			}
-			$this->getApiCallBrowser = $newApiCallBrowser;
 
 
 
-	}
-
-	public function getApiCallIp() {
-		return ($this->apiCallIp);
-	}
-
-	public function setApiCallIp(string $newApiCallIp) {
-		$newApiCallIp = trim($newApiCallIp);
-		$newApiCallIp = filter_var($newApiCallIp, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-		if(empty($newApiCallIp) === TRUE) {
-			throw(new\InvalidArgumentException("Api IP can't be empty"));
-		}
-			if(strlen($newApiCallIp) > 128) {
-				throw(new\RangeException("Browser is out of my range"));
-			}
-			$this->getApiCallIp = $newApiCallIp;
 
 
-	}
 
 
-	public function getApiCallPayload() {
-		return ($this->apiCallPayload);
-	}
 
-	public function setApiCallPayload(int $newApiCallPayload) {
-		$newApiCallPayload = trim($newApiCallPayload);
-		$newApiCallPayload = filter_var($newApiCallPayload, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-		if(empty($newApiCallPayload) === TRUE) {
-			throw(new\InvalidArgumentException("Payload cant be empty"));
-		}
-			if(strlen($newApiCallPayload) > 128) {
-				throw(new\RangeException(""));
-			}
-			$this->getApiCallPayload = $newApiCallPayload;
-
-
-	}
 
 	public function insert(\Pdo $pdo){
 		if ($this->apiCallId!==null){
@@ -257,11 +267,20 @@ class ApiCall {
 
 	}
 
-	public function getapiCallbyApiUserId(\PDO $pdo, string $ApiUserId){
+	public function getApiCallByApiUserId(\PDO $pdo, string $ApiUserId){
+		if($ApiUserId <= 0) {
+			throw(new \PDOException("User Id isn't positive"));
+		}
 
+		// create query template
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$statement = $pdo->prepare($query);
 
 	}
 
 
-
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return ($fields);
+	}
 }
