@@ -172,7 +172,7 @@ class favoritePlayer implements \JsonSerializable {
 	// grab the favoritePlayer from mySQL
 	try {
 		$favoritePlayer = null;
-		$statement->setFetchMode(\PDO::Fetch_Assoc);
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		$row = $statement->fetch();
 		if($row !== false) {
 			$favorite = new FavoritePlayer($row["playerId"], $row["userId"]);
@@ -209,7 +209,7 @@ class favoritePlayer implements \JsonSerializable {
 
 		// build an array of FavoritePlayers
 		$favoritePlayers = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::Fetch_Assoc);
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$favoritePlayer = new FavoritePlayer($row["playerId"], $row["userId"]);
@@ -249,7 +249,7 @@ public static function getFavoritePlayerByPlayerId(\PDO $pdo, int $playerId) {
 
 	// build an array of favoritePlayers
 	$favoritePlayers = new \SplFixedArray($statement->rowCount());
-	$statement->setFetchMode(\PDO::Fetch_Assoc);
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
 	while(($row = $statement->fetch()) !== false) {
 		try {
 			$favoritePlayer = new FavoritePlayer($row["playerId"], $row["userId"]);
