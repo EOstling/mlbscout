@@ -215,7 +215,8 @@ class ApiCall {
 			throw(new\PDOException("This is incorrect"));
 		}
 		//Lets create $query;
-		$query = "INSERT INTO apiCall(apiCallUserId, apiCallDateTime, apiCallQueryString, apiCallURL, apiCallHttpVerb, apiCallBrowser, apicallIP, apiCallPayload) VALUES(:apiCallId, :apiCallUserId, :apiCallDateTime, :apiCallQueryString, :apiCallURL, :apiCallHttpVerb, :apiCallBrowser, :apicallIP, :apiCallPayload)";
+		$query = "INSERT INTO apiCall(apiCallUserId, apiCallDateTime, apiCallQueryString, apiCallURL, apiCallHttpVerb, apiCallBrowser, apicallIP, apiCallPayload)
+ 					 VALUES(:apiCallId, :apiCallUserId, :apiCallDateTime, :apiCallQueryString, :apiCallURL, :apiCallHttpVerb, :apiCallBrowser, :apicallIP, :apiCallPayload)";
 		$statement = $pdo->prepare($query);
 		//Bind the data
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
@@ -240,8 +241,18 @@ class ApiCall {
 	}
 
 	public function update(\Pdo $pdo){
-
+		if($this->apiCallId === null){
+			throw(new \PDOException("Well we can't update anything that doesn't exist now can we"));
+		}
+		$query = "UPDATE apiCall SET apiCallId = :apiCallId, apiCallUserId = :apiCallUserId, apiCallURL = :apiCallURL,
+					apiCallBrowser = :apiCallBrowser, apicallIP = :apiCallIp,";
+		$statement = $pdo->prepare($query);
+		//Bind the variable members
+		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->setApiCallQueryString,
+			"apiCallURL"=>$this->apiCallURL,"apiCallHttpVerb"=>$this->apiHttpVerb,"apiCallBrowser"=>$this->apiCallBrowser,
+			"apicallIP"=>$this->apiCallIp,"apiCallPayload"=>$this->apiCallPayload];
+		$statement->execute($parameters);
 
 	}
-
 }
