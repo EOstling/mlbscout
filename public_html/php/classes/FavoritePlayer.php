@@ -175,7 +175,7 @@ class FavoritePlayer implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		$row = $statement->fetch();
 		if($row !== false) {
-			$favorite = new FavoritePlayer($row["playerId"], $row["userId"]);
+			$favoritePlayer = new FavoritePlayer($row["playerId"], $row["userId"]);
 		}
 	} catch(\Exception $exception) {
 		// if the row couldn't be converted, rethrow it
@@ -213,8 +213,8 @@ class FavoritePlayer implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$favoritePlayer = new FavoritePlayer($row["playerId"], $row["userId"]);
-				$favoritePlayers[$favoritePlayers->key()] - $favoritePlayer;
-				$favoritePlayers-next();
+				$favoritePlayers[$favoritePlayers->key()] = $favoritePlayer;
+				$favoritePlayers->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
@@ -234,7 +234,6 @@ class FavoritePlayer implements \JsonSerializable {
  **/
 public static function getFavoritePlayerByPlayerId(\PDO $pdo, int $playerId) {
 	// sanitize the player id
-	$playerId = filter_var($playerId, FILTER_VAR_INT);
 	if($playerId <= 0) {
 		throw(new \PDOException("player id is not positive"));
 	}
