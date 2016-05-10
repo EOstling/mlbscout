@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Mlbscout;
+namespace Edu\Cnm\MlbScout;
 
 use MongoDB\Driver\Exception\UnexpectedValueException;
 
