@@ -271,7 +271,7 @@ class Team implements \JsonSerializable {
 		/**
  		 * gets the team by team type
  		 *
- 		 * @param \PDO $pso PDO connection object
+ 		 * @param \PDO $pdo PDO connection object
  		 * @param string $teamType team type to search for
  		 * @return \SplFixedArray SplFixedArray of teams found
  		 * @throws \PDOException when mySQL related errors occur
@@ -367,8 +367,8 @@ class Team implements \JsonSerializable {
 					$statement->setFetchMode(\PDO::FETCH_ASSOC);
 					while(($row = $statement->fetch()) !== false) {
 								try {
-											$teams = new team($row["teamID"], $row["teamName"], $row["teamType"]);
-											$teams[$teams->key()] = $teams;
+											$team = new Team($row["teamID"], $row["teamName"], $row["teamType"]);
+											$teams[$teams->key()] = $team;
 											$teams->next();
 								} catch(\Exception $exception) {
 											// if the row couldn't be converted, rethrow it
