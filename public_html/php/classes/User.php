@@ -1,14 +1,12 @@
 <?php
 namespace Edu\Cnm\MlbScout;
 
-use MongoDB\Driver\Exception\UnexpectedValueException;
 
 require_once ("autoload.php");
 /**
  * User Class for MLBscout Capstone
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
- * @see https://app.asana.com/0/117435671931068/118830311351365
  */
 class User implements \JsonSerializable {
 	/**
