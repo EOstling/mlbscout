@@ -85,7 +85,7 @@ class ScheduleTest extends MlbScoutTest {
 	/**
 	 * test inserting a schedule that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidSchedule() {
 		// create a schedule with a non null schedule id and watch it fail
@@ -121,7 +121,7 @@ class ScheduleTest extends MlbScoutTest {
 	/**
 	 * test updating a schedule that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testUpdateInvalidSchedule() {
 		// create a schedule with a non null schedule id and watch it fail
@@ -153,7 +153,7 @@ class ScheduleTest extends MlbScoutTest {
 	/**
 	 * test deleting a schedule that does not exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 	public function testDeleteInvaldiSchedule() {
 		// create a schedule and try to delete it without actually inserting it

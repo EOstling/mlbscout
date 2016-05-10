@@ -211,7 +211,7 @@ class Player implements \JsonSerializable {
 	}
 
 	/**
-	 * @ accessor method for playerBatting
+	 * accessor method for playerBatting
 	 *
 	 * @return string value of playerBatting content
 	 **/

@@ -171,7 +171,7 @@ class PlayerTest extends MlbScoutTest {
 	/**
 	 * test inserting a player that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 */
 	public function testInsertInvalidPlayer() {
 		// create a player with a non null player id and watch it fail
