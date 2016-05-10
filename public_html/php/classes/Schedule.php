@@ -9,7 +9,7 @@ require_once("autoload.php");
  * @author Lucas Laudick
  **/
 class Schedule implements \JsonSerializable {
-	use ValidateDate;
+	use \Edu\Cnm\MlbScout\ValidateDate;
 	/**
 	 * id for this schedule; this is the primary key
 	 * @var int $scheduleId
@@ -64,7 +64,7 @@ class Schedule implements \JsonSerializable {
 			throw(new \RangeException($range->getMessage(), 0, $range));
 		} catch(\TypeError $typeError) {
 			// rethrow the exception to the caller
-			throw(\TypeError($typeError->getMessage(), 0, $typeError));
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
 		} catch(\Exception $excepion) {
 			// rethrow the exception to the caller
 			throw(new \Exception($excepion->getMessage(), 0, $excepion));
@@ -151,7 +151,7 @@ class Schedule implements \JsonSerializable {
 		$newScheduleLocation = trim($newScheduleLocation);
 		$newScheduleLocation = filter_var($newScheduleLocation, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newScheduleLocation) === true) {
-			throw(new \InvalidArgumentExceptions("schedule location is empty or insecure"));
+			throw(new \InvalidArgumentException("schedule location is empty or insecure"));
 		}
 
 		// verify the schedule location will fit in the database
