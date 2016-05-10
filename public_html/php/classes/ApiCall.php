@@ -1,6 +1,7 @@
 <?php
+namespace Edu\Cnm\MlbScout;
 class ApiCall {
-	Use \Edu\Cnm\MlbScout\ValidateDate;
+	use \Edu\Cnm\MlbScout\ValidateDate;
 	/**
 	 * @var INT Primary key
 	 **/
@@ -12,7 +13,7 @@ class ApiCall {
 	/**
 	 * @var INT Query
 	 **/
-	private $callQueryString;
+	private $apiCallQueryString;
 	/**
 	 * @var INT
 	 **/
@@ -24,7 +25,7 @@ class ApiCall {
 	/**
 	 * @var string
 	 **/
-	private $apiHttpVerb;
+	private $apiCallHttpVerb;
 	/**
 	 * @var string
 	 **/
@@ -96,7 +97,7 @@ class ApiCall {
 	}
 
 	public function getApiCallQueryString() {
-		return ($this->callQueryString);
+		return ($this->apiCallQueryString);
 	}
 
 	public function setApiCallQueryString(string $newApiCallQueryString) {
@@ -136,7 +137,7 @@ class ApiCall {
 	}
 
 	public function getApiCallHttpVerb() {
-		return ($this->apiHttpVerb);
+		return ($this->apiCallHttpVerb);
 	}
 
 	public function setApiCallHttpVerb(string $newApiCallHttpVerb) {
@@ -221,7 +222,7 @@ class ApiCall {
 		//Bind the data
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->setApiCallQueryString,
-							"apiCallURL"=>$this->apiCallURL,"apiCallHttpVerb"=>$this->apiHttpVerb,"apiCallBrowser"=>$this->apiCallBrowser,
+							"apiCallURL"=>$this->apiCallURL,"apiCallHttpVerb"=>$this->apiCallHttpVerb,"apiCallBrowser"=>$this->apiCallBrowser,
 							"apicallIP"=>$this->apiCallIp,"apiCallPayload"=>$this->apiCallPayload];
 		$statement->execute($parameters);
 		//Give me the lastInsert Id:
@@ -250,7 +251,7 @@ class ApiCall {
 		//Bind the variable members
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->setApiCallQueryString,
-			"apiCallURL"=>$this->apiCallURL,"apiCallHttpVerb"=>$this->apiHttpVerb,"apiCallBrowser"=>$this->apiCallBrowser,
+			"apiCallURL"=>$this->apiCallURL,"apiCallHttpVerb"=>$this->apiCallHttpVerb,"apiCallBrowser"=>$this->apiCallBrowser,
 			"apicallIP"=>$this->apiCallIp,"apiCallPayload"=>$this->apiCallPayload];
 		$statement->execute($parameters);
 
