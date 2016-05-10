@@ -264,6 +264,8 @@ public static function getFavoritePlayerByPlayerId(\PDO $pdo, int $playerId) {
 }
 
 /**
+ * formats the state variables for JSON Serializable
+ *
  * @return array resulting state variable to serialize
  **/
 public function jsonSerialize() {

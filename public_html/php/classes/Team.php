@@ -72,7 +72,7 @@ class Team implements \JsonSerializable {
 		/**
  		 * mutator method for team id
  		 *
- 		 * @param int|null $newTeamdId new value of team id
+ 		 * @param int|null $newTeamId new value of team id
  		 * @throws \RangeException if $newTeamId is not positive
  		 * @throws \TypeError if $newTeamId is not an integer
  		 **/
