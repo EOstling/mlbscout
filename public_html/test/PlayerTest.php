@@ -119,6 +119,11 @@ class PlayerTest extends MlbScoutTest {
 	 **/
 	protected $VALID_PLAYERWEIGHT2 = "180";
 	/**
+	 * userAccessLevel access level for the users; this is a foreign key
+	 * @var accessLevel
+	 **/
+	protected $accessLevel;
+	/**
 	 * playerTeam who the players play for; this is for foreign key relations
 	 * @var Team PlayerTeam
 	 **/
@@ -139,8 +144,7 @@ class PlayerTest extends MlbScoutTest {
 		// create and insert a playerUser to own the test playerUser
 		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
 		$this->team = new Team(null, "teamName", "teamType");
-
-		
+		$this->accessLevel->insert($this->getPDO());
 		$this->user->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
 	}
