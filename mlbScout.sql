@@ -1,14 +1,20 @@
 DROP TABLE IF EXISTS apiCall;
-DROP TABLE IF EXISTS accessLevel;
 DROP TABLE IF EXISTS favoritePlayer;
 DROP TABLE IF EXISTS schedule;
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS team;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS accessLevel;
+
+CREATE TABLE accessLevel(
+	accessLevelId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	accessLevelName VARCHAR(24),
+	PRIMARY KEY(accessLevelId)
+);
 
 CREATE TABLE user(
 	userId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	userAccessLevel INT UNSIGNED NOT NULL,
+	userAccessLevelId INT UNSIGNED NOT NULL,
 	userActivationToken CHAR(32),
 	userEmail VARCHAR(64) NOT NULL,
 	userFirstName VARCHAR(32) NOT NULL,
@@ -73,12 +79,6 @@ CREATE TABLE favoritePlayer(
 	FOREIGN KEY (favoriteUserId)REFERENCES user(userId),
 	FOREIGN KEY (favoritePlayerId) REFERENCES player(playerId),
 	PRIMARY KEY (favoriteUserId,favoritePlayerId)
-);
-
-CREATE TABLE accessLevel(
-	accessLevelId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	accessLevelName VARCHAR(24),
-	PRIMARY KEY(accessLevelId)
 );
 
 CREATE TABLE apiCall(

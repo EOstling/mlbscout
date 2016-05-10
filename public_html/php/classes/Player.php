@@ -26,7 +26,7 @@ class Player implements \JsonSerializable {
 	 **/
 	private $playerUserId;
 	/**
-	 * this is the players batting stats
+	 * this is the player batting
 	 * @var string $playerBatting
 	 **/
 	private $playerBatting;

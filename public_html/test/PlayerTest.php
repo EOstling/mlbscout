@@ -1,5 +1,7 @@
 <?php
-namespace Edu\Cnm\Mlbscout\Test;
+namespace Edu\Cnm\MlbScout\Test;
+
+use Edu\Cnm\MlbScout\{Team, User};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -135,8 +137,10 @@ class PlayerTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a playerUser to own the test playerUser
-		$this->user = new User(null, "userId", "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
-		$this->team = new Team(null, "teamId", "teamName", "teamType");
+		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
+		$this->team = new Team(null, "teamName", "teamType");
+
+		
 		$this->user->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
 	}

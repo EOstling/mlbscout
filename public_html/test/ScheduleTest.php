@@ -1,5 +1,7 @@
 <?php
-namespace Edu\Cnm\Mlbscout\Test;
+namespace Edu\Cnm\MlbScout\Test;
+
+use Edu\Cnm\MlbScout\{Schedule, Team};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");

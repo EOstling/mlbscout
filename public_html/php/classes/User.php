@@ -84,7 +84,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function _construct(int $newUserId, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPassword, int $newUserPhoneNumber, string $newUserSalt, string $newUserUpdate = null) {
+	public function _construct(int $newUserId = null, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPassword, int $newUserPhoneNumber, string $newUserSalt, string $newUserUpdate = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
@@ -467,11 +467,11 @@ class User implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userAccessLevel, :userActivationToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :userLastName, :userHash, :userFirstName)";
+		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userAccessLevelId, :userActivationToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :userLastName, :userHash, :userFirstName)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userUpdate" => $this->userUpdate, "userSalt" => $this->userSalt, "userPhoneNumber" => $this->userPhoneNumber, "userPassword" => $this->userPassword, "userLastName" => $this->userLastName, "userHash" => $this->userHash, "userFirstName" => $this->userFirstName];
+		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userUpdate" => $this->userUpdate, "userSalt" => $this->userSalt, "userPhoneNumber" => $this->userPhoneNumber, "userPassword" => $this->userPassword, "userLastName" => $this->userLastName, "userHash" => $this->userHash, "userFirstName" => $this->userFirstName];
 		$statement -> execute($parameters);
 
 		//update the null userId with what mySQL just game us
