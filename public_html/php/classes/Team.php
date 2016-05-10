@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Fgarcia132\MlbScout;
+namespace Edu\Cnm\MlbScout;
 
 require_once("autoload.php");
 
