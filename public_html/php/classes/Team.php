@@ -326,7 +326,7 @@ class Team implements \JsonSerializable {
 					}
 
 					// create query template
-					$query = "SELECT teamId, teamName, teamType FROM team WWHERE teamId = :teamId";
+					$query = "SELECT teamId, teamName, teamType FROM team WHERE teamId = :teamId";
 					$statement = $pdo->prepare($query);
 
 					// bind the team id to the place holder in the template
