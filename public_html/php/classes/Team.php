@@ -341,7 +341,7 @@ class Team implements \JsonSerializable {
 								if($row !== false) {
 											$team = new Team($row["teamId"], $row["teamName"], $row["teamType"]);
                 }
-					} catch(Exception $exception) {
+					} catch(\Exception $exception) {
 					// if the row couldn't be converted, rethrow it
 					throw(new \PDOException($exception->getMessage(), 0, $exception));
 					}
