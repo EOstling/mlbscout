@@ -8,7 +8,7 @@ require_once("MlbScoutTest.php");
 require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 /*
- * Full PHPUnit test for the Scedule class
+ * Full PHPUnit test for the Schedule class
  *
  *
  *
@@ -38,9 +38,9 @@ class ScheduleTest extends MlbScoutTest {
 	protected $VALID_SCHEDULESTARTINGPOSITION2 = "Right Field";
 	/**
 	 * timestamp of the schedule; this starts as null and is assigned later
-	 * @var \DateTime $VALID_SCHEDULEDATE
+	 * @var \DateTime $VALID_SCHEDULETIME
 	 **/
-	protected $VALID_SCHEDULEDATE = null;
+	protected $VALID_SCHEDULETIME = null;
 	/**
 	 * Team that has the schedule: this is the foreign key relations
 	 * @var Team
