@@ -467,7 +467,7 @@ class User implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO user(userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userId, :userAccessLevel, userActivationToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :userLastName, :userHash, :userFirstName)";
+		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userId, :userAccessLevel, userActivationToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :userLastName, :userHash, :userFirstName)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
