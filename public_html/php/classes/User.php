@@ -86,7 +86,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function _construct(int $newUserId, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPassword, int $newUserPhoneNumber, string $newUserSalt, string, $newUserUpdate = null) {
+	public function _construct(int $newUserId, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPassword, int $newUserPhoneNumber, string $newUserSalt, string $newUserUpdate = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
@@ -469,7 +469,7 @@ class User implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO user(userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userId, :userAccessLevel, userActivatioonToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :user:astName, :userHash, :userFirstName)";
+		$query = "INSERT INTO user(userId, userAccessLevelId, userActivationToken, userEmail, userUpdate, userSalt, userPhoneNumber, userPassword, userLastName, userHash, userFirstName) VALUES(:userId, :userAccessLevel, userActivationToken, :userEmail, :userUpdate, :userSalt, :userPhoneNumber, :userPassword, :userLastName, :userHash, :userFirstName)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
@@ -1004,6 +1004,4 @@ class User implements \JsonSerializable {
 		$fields = get_object_vars($this);
 		return ($fields);
 	}
-
-
 }
