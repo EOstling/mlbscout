@@ -181,6 +181,9 @@ class Team implements \JsonSerializable {
 					// bind the member variables to the place holders in the template
 					$parameters = ["teamName" => $this->teamName,  "teamType" => $this->teamType];
 					$statement->execute($parameters);
+
+					// update the null playerId with what mySQL just gave us
+					$this->teamId = intval($pdo->lastInsertId());
 		}
 
 		/**
