@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\Test;
 
-use Edu\Cnm\MlbScout\{Team, User};
+use Edu\Cnm\MlbScout\{AccessLevel, Team, User};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -324,7 +324,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerBatting());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -366,7 +366,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerCommitment());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -408,7 +408,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerFirstName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -450,7 +450,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHealthStatus());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -492,7 +492,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -534,7 +534,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHomeTown());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -576,7 +576,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerLastName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -618,7 +618,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerPosition());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -660,7 +660,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerThrowingHand());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
@@ -702,7 +702,7 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerWeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Player", $results);
+		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
