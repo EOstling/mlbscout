@@ -14,19 +14,44 @@ class ApiCall implements \JsonSerializable {
 
 	private $apiCallUserId;
 	/**
-	 *
+	 *Browser of the client
+	 * @var string
 	 */
 	private $apiCallBrowser;
+	/**
+	 * Time stamp of when the client connected
+	 * @var TIMESTAMP
+	 */
 
 	private $apiCallDateTime;
+	/**
+	 * Gives PUT, POST, DELETE, UPDATE for authorized users
+	 * @var string
+	 */
 
 	private $apiCallHttpVerb;
+	/**
+	 * The Clients IP
+	 * @var VarBinary
+	 */
 
 	private $apiCallIp;
+	/**
+	 * The Content of the Clients String
+	 * @var string
+	 */
 
 	private $apiCallQueryString;
+	/**
+	 * Content of the payload
+	 * @var string
+	 */
 
 	private $apiCallPayload;
+	/**
+	 * The clients URL
+	 * @var string
+	 */
 
 	private $apiCallURL;
 
@@ -343,7 +368,7 @@ class ApiCall implements \JsonSerializable {
 		$parameters = array("ApiCallIp" => $ApiCallIp);
 		$statement->execute($parameters);
 
-		// build an array of IP
+
 		$apiCalls = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
