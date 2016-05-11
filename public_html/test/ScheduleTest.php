@@ -47,7 +47,7 @@ class ScheduleTest extends MlbScoutTest {
 	 * Team that has the schedule: this is the foreign key relations
 	 * @var Team
 	 **/
-	protected $Team = null;
+	protected $team = null;
 
 	/**
 	 * create dependent objects before running each test

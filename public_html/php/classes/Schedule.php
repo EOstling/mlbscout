@@ -39,15 +39,15 @@ class Schedule implements \JsonSerializable {
 	/**
 	 * constructor for the schedule
 	 *
-	 * @param int|Null $newSchduleId id of this schedule or null if new schedule
-	 * @param int $newScheudleTeamId id of the schedule team that sent the schedule
-	 * @param string $scheduleLocation string containing loaction of game
-	 * @param string $scheduleStartingPosition string containing starting position of the players
-	 * @param \DateTime|string|null $newScheduletime date and time of the game or null if set to current time
+	 * @param int|null $newScheduleId id of this schedule or null if new schedule
+	 * @param int $newScheduleTeamId id of the schedule team that sent the schedule
+	 * @param string $newScheduleLocation string containing location of game
+	 * @param string $newScheduleStartingPosition string containing starting position of the players
+	 * @param \DateTime|string|null $newScheduleTime date and time of the game or null if set to current time
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (too long, negative...)
 	 * @throws \TypeError if data types violate type hints
-	 * @throws \Exception if some other excpetions occur
+	 * @throws \Exception if some other exceptions occur
 	 **/
 	public function __construct(int $newScheduleId = null, int $newScheduleTeamId, string $newScheduleLocation, string $newScheduleStartingPosition, $newScheduleTime = null) {
 		try {
@@ -115,7 +115,7 @@ class Schedule implements \JsonSerializable {
 	/**
 	 * mutator method for scheduleTeam id
 	 *
-	 * @param int $newScheduleTeamId new value of scheduel team id
+	 * @param int $newScheduleTeamId new value of schedule team id
 	 * @throws \RangeException if $newScheduleTeamId is not positive
 	 * @throws \TypeError if $newScheduleTeamId is not an integer
 	 **/
