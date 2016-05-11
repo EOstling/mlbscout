@@ -17,7 +17,7 @@ class ApiCall implements \JsonSerializable {
 	private $apiCallUserId;
 	/**
 	 *Browser of the client
-	 * @var string
+	 * @var string.
 	 */
 	private $apiCallBrowser;
 	/**
