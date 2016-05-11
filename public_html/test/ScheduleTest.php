@@ -79,9 +79,9 @@ class ScheduleTest extends MlbScoutTest {
 		$pdoSchedule = Schedule::getScheduleByScheduleID($this->getPDO(), $schedule->getScheduleId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
 		$this->assertEquals($pdoSchedule->getScheduleTeamId(), $this->team->getTeamId());
-		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION());
-		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION());
-		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME());
+		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION);
+		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION);
+		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME);
 	}
 
 	/**
@@ -115,9 +115,9 @@ class ScheduleTest extends MlbScoutTest {
 		$pdoSchedule = Schedule::getScheduleByScheduleID($this->getPDO(), $schedule->getScheduleId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
 		$this->assertEquals($pdoSchedule->getScheduleTeamId(), $this->team->getTeamId());
-		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION());
-		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION());
-		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME());
+		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION2);
+		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION2);
+		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME);
 	}
 
 	/**
@@ -177,9 +177,9 @@ class ScheduleTest extends MlbScoutTest {
 		$pdoSchedule = Schedule::getScheduleByScheduleID($this->getPDO(), $schedule->getScheduleId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
 		$this->assertEquals($pdoSchedule->getScheduleTeamId(), $this->team->getTeamId());
-		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION());
-		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION());
-		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME());
+		$this->assertEquals($pdoSchedule->getScheduleLocation(), $this->VALID_SCHEDULELOCATION);
+		$this->assertEquals($pdoSchedule->getScheduleStartingPosition(), $this->VALID_SCHEDULESTARTINGPOSITION);
+		$this->assertEquals($pdoSchedule->getScheduleTime(), $this->VALID_SCHEDULETIME);
 	}
 
 	/**
@@ -192,7 +192,7 @@ class ScheduleTest extends MlbScoutTest {
 	}
 
 	/**
-	 * test grabbing a schedule bu schedule location
+	 * test grabbing a schedule by schedule location
 	 **/
 	public function testGetValidScheduleByScheduleLocation() {
 		// count the number of rows and save it for later
@@ -206,7 +206,7 @@ class ScheduleTest extends MlbScoutTest {
 		$results = Schedule::getScheduleByScheduleLocation($this->getPDO(), $schedule->getScheduleLocation());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Schedule", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Schedule", $results);
 
 		// grab the result from the array and validate it
 		$pdoSchedule = $results[0];
@@ -234,13 +234,15 @@ class ScheduleTest extends MlbScoutTest {
 
 		// create a new schedule and insert to into mySQL
 		$schedule = new Schedule(null, $this->team->getTeamId(), $this->VALID_SCHEDULELOCATION, $this->VALID_SCHEDULESTARTINGPOSITION, $this->VALID_SCHEDULETIME);
+		//var_dump($schedule);
 		$schedule->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Schedule::getScheduleByScheduleStartingPosition($this->getPDO(), $schedule->getScheduleStartingPosition());
+		//var_dump($results);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("schedule"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Llaudick\\MlbScout\\Schedule", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Schedule", $results);
 
 		// grab the result from the array and validate it
 		$pdoSchedule = $results[0];
@@ -254,7 +256,7 @@ class ScheduleTest extends MlbScoutTest {
 	 * test grabbing a schedule by schedule location that does not exist
 	 **/
 	public function testGetInvalidScheduleByScheduleStartingPosition() {
-		// grab a schedule by searchin for schedule starting position that does not exist
+		// grab a schedule by searching for schedule starting position that does not exist
 		$schedule = Schedule::getScheduleByScheduleStartingPosition($this->getPDO(), "nothing will be found");
 		$this->assertCount(0, $schedule);
 	}

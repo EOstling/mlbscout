@@ -176,10 +176,11 @@ class Schedule implements \JsonSerializable {
 	 * mutator method for schedule starting position
 	 *
 	 * @param string $newScheduleStartingPosition new value of schedule starting position
-	 * @throws \InvalidArgumentException if $newScheduleStartingPosition is not a string or inscure
+	 * @throws \InvalidArgumentException if $newScheduleStartingPosition is not a string or insecure
 	 * @throws \RangeException if $newScheduleStartingPosition is > 32 characters
 	 * @throws \TypeError if $newScheduleStartingPosition is not a string
 	 **/
+
 	public function setScheduleStartingPosition(string $newScheduleStartingPosition) {
 		// verify the schedule starting position is secure
 		$newScheduleStartingPosition = trim($newScheduleStartingPosition);
@@ -365,7 +366,7 @@ class Schedule implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the schedule starting position to the place holder in the template
-		$scheduleStartingPosition = "%scheduleStartingPosition%";
+		$scheduleStartingPosition = "%$scheduleStartingPosition%";
 		$parameters = array("scheduleStartingPosition" => $scheduleStartingPosition);
 		$statement->execute($parameters);
 
