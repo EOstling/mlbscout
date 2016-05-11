@@ -57,7 +57,7 @@ class ScheduleTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a team to own the test schedule
-		$this->team = new Team(null, "teamId", "teamName", "teamType");
+		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
 
 		// calculate the date

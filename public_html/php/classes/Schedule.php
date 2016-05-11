@@ -87,7 +87,7 @@ class Schedule implements \JsonSerializable {
 	 * @throws \RangeException if $newScheduleId is not positive
 	 * @throws \TypeError if $newScheduleId is not an integer
 	 **/
-	public function setScheduleId(int $newScheduleId) {
+	public function setScheduleId(int $newScheduleId = null) {
 		// base case: if the schedule id is null, this a new schedule without mySQL assigned id
 		if($newScheduleId === null) {
 			$this->scheduleId = null;
@@ -139,12 +139,12 @@ class Schedule implements \JsonSerializable {
 	}
 
 	/**
-	 * mutator method for schedulelocation
+	 * mutator method for scheduleLocation
 	 *
 	 * @param string $newScheduleLocation new value of schedule location
 	 * @throws \InvalidArgumentException if $newScheduleLocation is not a string of insecure
 	 * @throws \RangeException if $newScheduleLocation is > 64 characters
-	 * @throws \TypeError if $newSchedulelocation is not a string
+	 * @throws \TypeError if $newScheduleLocation is not a string
 	 **/
 	public function setScheduleLocation(string $newScheduleLocation) {
 		// verify the schedule location is secure
