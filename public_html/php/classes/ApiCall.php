@@ -2,11 +2,20 @@
 namespace Edu\Cnm\MlbScout;
 class ApiCall implements \JsonSerializable {
 	use \Edu\Cnm\MlbScout\ValidateDate;
-
+	/**
+	 * ApiCall ID this is the Primary key
+	 * @var INT $apiCallId
+	 */
 	private $apiCallId;
+	/**
+	 * User Id this is the Foreign key
+	 * @var INT $apiCallUserId
+	 */
 
 	private $apiCallUserId;
-
+	/**
+	 *
+	 */
 	private $apiCallBrowser;
 
 	private $apiCallDateTime;
@@ -59,16 +68,20 @@ class ApiCall implements \JsonSerializable {
 	}
 
 	public function setApicallId(int $newApiCallId) {
-
+		if($newApiCallId === null) {
+			$this->apiCallId = null;
+			return;
+		}
 		$this->apiCallId = $newApiCallId;
 	}
-
 	public function getApiCallUserId() {
 		return ($this->apiCallUserId);
 	}
 
 	public function setApiCallUserId(int $newApiCallUserId) {
-
+		if($newApiCallUserId <= 0) {
+			throw(new \RangeException("profile id is not positive"));
+		}
 		$this->apiCallUserId = $newApiCallUserId;
 
 	}
@@ -256,7 +269,7 @@ class ApiCall implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
 // bind the UserId to the place holder in the template
 		$parameters = array("UserId" => $ApiUserId);
@@ -282,7 +295,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiBrowser) === true) {
 			throw(new \PDOException("Browser is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallDateTime, apiCallHttpVerb, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallBrowser = :apiCallBrowser";
 		$statement = $pdo->prepare($query);
 // bind the  to the place holder in the template
 		$parameters = array("Browser" => $ApiBrowser);
@@ -316,7 +329,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallIp) === true) {
 			throw(new \PDOException("Browser is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, apiCallURL FROM apiCall WHERE apiCallIp = :apiCallIp";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("Ip" => $ApiCallIp);
@@ -351,7 +364,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallQueryString) === true) {
 			throw(new \PDOException("Browser is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP, ,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallQueryString = :apiCallQueryString";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("Query String" => $ApiCallQueryString);
@@ -385,7 +398,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallPayload) === true) {
 			throw(new \PDOException("Payload is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apicallIP,  apiCallQueryString, apiCallURL FROM apiCall WHERE apiCallPayload = :apiCallPayload";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("Payload" => $ApiCallPayload);
@@ -421,7 +434,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallURL) === true) {
 			throw(new \PDOException("URL is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, FROM apiCall WHERE apiCallURL = :apiCallURL";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("URL" => $ApiCallURL);
