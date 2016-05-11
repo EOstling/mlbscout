@@ -164,8 +164,11 @@ class ApiCall implements \JsonSerializable {
 	}
 
 
-	public function getApiCallIp() {
-		return ($this->apiCallIp);
+	public function getApiCallIp($userIp =false) {
+		if($userIp === TRUE){
+			return($this->apiCallIp);
+		}
+		return (inet_ntop($this->apiCallIp));
 	}
 
 	public function setApiCallIp(string $newApiCallIp) {
@@ -175,10 +178,12 @@ class ApiCall implements \JsonSerializable {
 		if(empty($newApiCallIp) === TRUE) {
 			throw(new\InvalidArgumentException("Api IP can't be empty"));
 		}
-		if(strlen($newApiCallIp) > 128) {
-			throw(new\RangeException("Browser is out of my range"));
+		if(inet_pton($newApiCallIp)!==FALSE){
+			$this->apiCallIp = $newApiCallIp;
+		}else if(inet_ntop($newApiCallIp)!==FALSE){
+			$this->apiCallIp = $newApiCallIp;
 		}
-		$this->getApiCallIp = $newApiCallIp;
+
 
 
 	}
@@ -279,7 +284,7 @@ class ApiCall implements \JsonSerializable {
 		if($this->apiCallId === null) {
 			throw(new \PDOException("Well we can't update anything that doesn't exist now can we"));
 		}
-		
+
 		$query = "UPDATE ApiCall SET apiCallId = :apiCallId, apiCallUserId = :apiCallUserId, apiCallBrowser=:apiCallBrowser,
 								apiCallDateTime= :apiCallDateTime, apiCallHttpVerb= :apiCallHttpVerb,apiCallIP= :apiCallIp,
 								apiCallQueryString= :apiCallQueryString, apiCallPayload= :apiCallPayload, apiCallURL= :apiCallURL";
@@ -287,15 +292,19 @@ class ApiCall implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		//Bind the variable members
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
-		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->piCallQueryString,
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
 			"apicallIP" => $this->apiCallIp, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
 
 	}
 
-	public function getApiCallByApiUserId(\PDO $pdo, string $ApiUserId) {
-		if($ApiUserId <= 0) {
+
+
+
+
+	public function getApiCallByApiCallId(\PDO $pdo, string $ApiCallId) {
+		if($ApiCallId <= 0) {
 			throw(new \PDOException("User Id isn't positive"));
 		}
 
@@ -303,7 +312,7 @@ class ApiCall implements \JsonSerializable {
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
 // bind the UserId to the place holder in the template
-		$parameters = array("UserId" => $ApiUserId);
+		$parameters = array("CallId" => $ApiCallId);
 		$statement->execute($parameters);
 
 		try {
@@ -320,20 +329,20 @@ class ApiCall implements \JsonSerializable {
 		return ($apiCall);
 	}
 
-	public function getApiCallByApiBrowser(\Pdo $pdo, string $ApiBrowser) {
-		$ApiBrowser = trim($ApiBrowser);
-		$ApiBrowser = filter_var($ApiBrowser, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($ApiBrowser) === true) {
-			throw(new \PDOException("Browser is invalid"));
+	public function getApiCallByUserId(\Pdo $pdo, string $ApiUserId) {
+		$ApiUserId = trim($ApiUserId);
+		$ApiUserId = filter_var($ApiUserId, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($ApiUserId) === true) {
+			throw(new \PDOException("User Id is invalid"));
 		}
 		$query = "SELECT apiCallId, apiCallUserId, apiCallDateTime, apiCallHttpVerb, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallBrowser = :apiCallBrowser";
 		$statement = $pdo->prepare($query);
 // bind the  to the place holder in the template
-		$parameters = array("Browser" => $ApiBrowser);
+		$parameters = array("UserId" => $ApiUserId);
 		$statement->execute($parameters);
 
-		$ApiBrowser = "%$ApiBrowser%";
-		$parameters = array("ApiBrowser" => $ApiBrowser);
+		$ApiUserId = "%$ApiUserId%";
+		$parameters = array("UserId" => $ApiUserId);
 		$statement->execute($parameters);
 
 		// build an array of Browsers
@@ -353,147 +362,6 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
-	public function getApiCallByIp(\Pdo $pdo, $ApiCallIp) {
-
-		$ApiCallIp = trim($ApiCallIp);
-		$ApiCallIp = filter_var($ApiCallIp, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($ApiCallIp) === true) {
-			throw(new \PDOException("Browser is invalid"));
-		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, apiCallURL FROM apiCall WHERE apiCallIp = :apiCallIp";
-		$statement = $pdo->prepare($query);
-// bind the  id to the place holder in the template
-		$parameters = array("Ip" => $ApiCallIp);
-		$statement->execute($parameters);
-
-		$ApiCallIp = "%$ApiCallIp%";
-		$parameters = array("ApiCallIp" => $ApiCallIp);
-		$statement->execute($parameters);
-
-
-		$apiCalls = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$apiCall = new apiCall($row["UserId"], $row["CallId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
-				$apiCalls[$apiCalls->key()] = $apiCall;
-				$apiCalls->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($apiCalls);
-
-	}
-
-
-	public function getApiCallByQueryString(\Pdo $pdo, $ApiCallQueryString) {
-
-		$ApiCallQueryString = trim($ApiCallQueryString);
-		$ApiCallQueryString = filter_var($ApiCallQueryString, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($ApiCallQueryString) === true) {
-			throw(new \PDOException("Browser is invalid"));
-		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallQueryString = :apiCallQueryString";
-		$statement = $pdo->prepare($query);
-// bind the  id to the place holder in the template
-		$parameters = array("Query String" => $ApiCallQueryString);
-		$statement->execute($parameters);
-
-		$ApiCallQueryString = "%$ApiCallQueryString%";
-		$parameters = array("Query String" => $ApiCallQueryString);
-		$statement->execute($parameters);
-
-		// build an array of Query String
-		$apiCalls = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$apiCall = new apiCall($row["UserId"], $row["CallId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
-				$apiCalls[$apiCalls->key()] = $apiCall;
-				$apiCalls->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($apiCalls);
-
-	}
-
-	public function getApiCallByPayload(\Pdo $pdo, $ApiCallPayload){
-
-		$ApiCallPayload = trim($ApiCallPayload);
-		$ApiCallPayload = filter_var($ApiCallPayload, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($ApiCallPayload) === true) {
-			throw(new \PDOException("Payload is invalid"));
-		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apicallIP,  apiCallQueryString, apiCallURL FROM apiCall WHERE apiCallPayload = :apiCallPayload";
-		$statement = $pdo->prepare($query);
-// bind the  id to the place holder in the template
-		$parameters = array("Payload" => $ApiCallPayload);
-		$statement->execute($parameters);
-
-		$ApiCallPayload = "%$ApiCallPayload%";
-		$parameters = array("Payload" => $ApiCallPayload);
-		$statement->execute($parameters);
-
-		// build an array of Query String
-		$apiCalls = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$apiCall = new apiCall($row["UserId"], $row["CallId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
-				$apiCalls[$apiCalls->key()] = $apiCall;
-				$apiCalls->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($apiCalls);
-
-	}
-
-
-	public function getApiCallByURL(\PDO $pdo, $ApiCallURL){
-
-
-		$ApiCallURL = trim($ApiCallURL);
-		$ApiCallURL = filter_var($ApiCallURL, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($ApiCallURL) === true) {
-			throw(new \PDOException("URL is invalid"));
-		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload FROM apiCall WHERE apiCallURL = :apiCallURL";
-		$statement = $pdo->prepare($query);
-// bind the  id to the place holder in the template
-		$parameters = array("URL" => $ApiCallURL);
-		$statement->execute($parameters);
-
-		$ApiCallURL = "%$ApiCallURL%";
-		$parameters = array("URL" => $ApiCallURL);
-		$statement->execute($parameters);
-
-		// build an array of Query String
-		$apiCalls = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$apiCall = new apiCall($row["CallId"], $row["UserId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
-				$apiCalls[$apiCalls->key()] = $apiCall;
-				$apiCalls->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return ($apiCalls);
-
-	}
-
-
-
 	public function getAllApiCall(\Pdo $pdo){
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
@@ -512,13 +380,6 @@ class ApiCall implements \JsonSerializable {
 		}
 
 	}
-
-
-
-
-
-
-
 
 
 	public function jsonSerialize() {
