@@ -22,7 +22,7 @@ class ApiCall implements \JsonSerializable {
 	private $apiCallBrowser;
 	/**
 	 * Time stamp of when the client connected
-	 * @var \DateTime;
+	 * @var. \DateTime;
 	 */
 
 	private $apiCallDateTime;
