@@ -3,7 +3,7 @@ namespace Edu\Cnm\MlbScout;
 require_once("autoload.php");
 
 class ApiCall implements \JsonSerializable {
-	use \Edu\Cnm\MlbScout\ValidateDate;
+	use ValidateDate;
 	/**
 	 * ApiCall ID this is the Primary key
 	 * @var INT $apiCallId
@@ -22,7 +22,7 @@ class ApiCall implements \JsonSerializable {
 	private $apiCallBrowser;
 	/**
 	 * Time stamp of when the client connected
-	 * @var TIMESTAMP
+	 * @var \DateTime;
 	 */
 
 	private $apiCallDateTime;
@@ -34,7 +34,7 @@ class ApiCall implements \JsonSerializable {
 	private $apiCallHttpVerb;
 	/**
 	 * The Clients IP
-	 * @var VarBinary
+	 * @var $apiCallIp string;
 	 */
 
 	private $apiCallIp;
@@ -292,7 +292,7 @@ class ApiCall implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		//Bind the variable members
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
-		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->apiCallQueryString,
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
 			"apicallIP" => $this->apiCallIp, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);

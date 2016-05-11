@@ -8,6 +8,7 @@
 
 require_once("MlbScoutTest.php");
 
+
 //require_once(apiClass(__DIR__) . "/mlbscout/php/classes/apiCall/autoload.php");
 
 class apiClass extends MlbScoutTest {
@@ -30,6 +31,14 @@ class apiClass extends MlbScoutTest {
 
 	protected $VALID_ApiCallUserId = null;
 
+	private $hash;
+
+	private $salt;
+
+	private $password="hello";
+
+	private $user;
+
 
 	//Creating the setup objects before testing
 
@@ -40,9 +49,11 @@ class apiClass extends MlbScoutTest {
 		//setup method first
 		parent::setUp();
 		//Create state variables of string & integer
-		$this->User = new apiUser(null, "userAccessLevelId", "userActivationToken", "userEmail,userFirstName,userHash,userLastName
-			userPassword,userPhoneNumber,userSalt,userUpdate");
-		$this->User->insert($this->getPDO());
+		$this->salt = bin2hex(random_bytes(32));
+		$this->hash = hash_pbkdf2("sha512",$this->password, $this->salt,4096);
+		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail","userFirstName","userHash","userLastName",
+			"userPassword","userPhoneNumber","userSalt","userUpdate");
+		$this->user->insert($this->getPDO());
 		//Timestamp of Test being ran
 		$this->VALID_ApiDateTime = new \DateTime();
 	}
