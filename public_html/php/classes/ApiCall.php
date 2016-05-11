@@ -1,5 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout;
+require_once("autoload.php");
+
 class ApiCall implements \JsonSerializable {
 	use \Edu\Cnm\MlbScout\ValidateDate;
 	/**
