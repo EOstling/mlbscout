@@ -245,7 +245,7 @@ class Player implements \JsonSerializable {
 	}
 
 	/**
-	 * @ accessor method for playerCommitment
+	 * accessor method for playerCommitment
 	 *
 	 * @return string value of playerCommitment content
 	 **/

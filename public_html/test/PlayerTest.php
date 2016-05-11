@@ -142,8 +142,10 @@ class PlayerTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a playerUser to own the test playerUser
+		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
 		$this->team = new Team(null, "teamName", "teamType");
+
 		$this->accessLevel->insert($this->getPDO());
 		$this->user->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
@@ -157,7 +159,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null,$this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
