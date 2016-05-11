@@ -240,7 +240,8 @@ class ApiCall implements \JsonSerializable {
 		if($this->apiCallUserId === null) {
 			throw(new \PDOException("Well we can't delte something that isn't there now can we"));
 		}
-		$query = "DELETE FROM ApiCall where apiCallId = :apiCallId";
+		//Delete By primary key
+		$query = "DELETE FROM apiCall where apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
 		$parameters = ["apiCallId" => $this->apiCallId];
 		$statement->execute($parameters);
@@ -251,12 +252,15 @@ class ApiCall implements \JsonSerializable {
 		if($this->apiCallId === null) {
 			throw(new \PDOException("Well we can't update anything that doesn't exist now can we"));
 		}
-		$query = "UPDATE ApiCall SET apiCallId = :apiCallId, apiCallUserId = :apiCallUserId, apiCallURL = :apiCallURL,
-					apiCallBrowser = :apiCallBrowser, apicallIP = :apiCallIp,";
+		
+		$query = "UPDATE ApiCall SET apiCallId = :apiCallId, apiCallUserId = :apiCallUserId, apiCallBrowser=:apiCallBrowser,
+								apiCallDateTime= :apiCallDateTime, apiCallHttpVerb= :apiCallHttpVerb,apiCallIP= :apiCallIp,
+								apiCallQueryString= :apiCallQueryString, apiCallPayload= :apiCallPayload, apiCallURL= :apiCallURL";
+
 		$statement = $pdo->prepare($query);
 		//Bind the variable members
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
-		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->setApiCallQueryString,
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->piCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
 			"apicallIP" => $this->apiCallIp, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
@@ -364,7 +368,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallQueryString) === true) {
 			throw(new \PDOException("Browser is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP, ,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallQueryString = :apiCallQueryString";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallQueryString = :apiCallQueryString";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("Query String" => $ApiCallQueryString);
@@ -434,7 +438,7 @@ class ApiCall implements \JsonSerializable {
 		if(empty($ApiCallURL) === true) {
 			throw(new \PDOException("URL is invalid"));
 		}
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, FROM apiCall WHERE apiCallURL = :apiCallURL";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload FROM apiCall WHERE apiCallURL = :apiCallURL";
 		$statement = $pdo->prepare($query);
 // bind the  id to the place holder in the template
 		$parameters = array("URL" => $ApiCallURL);
@@ -463,7 +467,24 @@ class ApiCall implements \JsonSerializable {
 
 
 
+	public function getAllApiCall(\Pdo $pdo){
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		$apiCalls = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$apiCall = new apiCall($row["CallId"], $row["UserId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
+				$apiCalls[$apiCalls->key()] = $apiCall;
+				$apiCalls->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
 
+	}
 
 
 
