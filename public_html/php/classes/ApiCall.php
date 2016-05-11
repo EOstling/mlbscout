@@ -258,7 +258,7 @@ class ApiCall implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		//Bind the data
 
-		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
+		$formattedDate = $this->apiCallDateTime-> format ("Y-m-d H:i:s");
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
 			"apicallIP" => $this->apiCallIp, "apiCallPayload" => $this->apiCallPayload];
