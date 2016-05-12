@@ -1,5 +1,6 @@
 <?php
-
+namespace  Edu\Cnm\MlbScout\Test;
+use Edu\Cnm\MlbScout\{User};
 /**
  * Full Unit test for Api Call Class.
  *	@see apiCall class
