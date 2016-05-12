@@ -125,7 +125,6 @@ class Player implements \JsonSerializable {
 			//rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
-		$this->newPlayerId = $newPlayerId;
 	}
 
 	/**
@@ -145,7 +144,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerId is not an integer
 	 **/
 	public function setPlayerId(int $newPlayerId = null) {
-		// if the player id is null, this a new tweet wihtout a mysql assigned id
+		// if the player id is null, this a new tweet without a mysql assigned id
 		if($newPlayerId === null) {
 			$this->playerId = null;
 			return;
@@ -177,7 +176,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerTeamId is not an integer
 	 **/
 	public function setPlayerTeamId(int $newPlayerTeamId) {
-		// verify the playerTeam id is positve
+		// verify the playerTeam id is positive
 		if($newPlayerTeamId <= 0) {
 			throw(new\ RangeException("playerTeam id is not positve"));
 		}
@@ -202,7 +201,7 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if $newPlayerUserId is not an integer
 	 **/
 	public function setPlayerUserId(int $newPlayerUserId) {
-		// verify the playerUser id is positve
+		// verify the playerUser id is positive
 		if($newPlayerUserId <= 0) {
 			throw(new\ RangeException("playerUser id is not positve"));
 		}
@@ -292,7 +291,7 @@ class Player implements \JsonSerializable {
 	 *
 	 * @param string $newPlayerFirstName new value of playerFirstName
 	 * @throws \InvalidArgumentException if $newPlayerFirstName is not a string or insecure
-	 * @throws \RangeException if $newPlayerFirstName is > 32 charachters
+	 * @throws \RangeException if $newPlayerFirstName is > 32 characters
 	 * @throws \TypeError if $newPlayerFirstName is not a string
 	 **/
 	public function setPlayerFirstName(string $newPlayerFirstName) {
@@ -326,7 +325,7 @@ class Player implements \JsonSerializable {
 	 *
 	 * @param string $newPlayerHealthStatus new value of playerHealthStatus
 	 * @throws \InvalidArgumentException if $newPlayerHealthStatus is not a string or insecure
-	 * @throws \RangeException if $newPlayerHealthStatus is > 64 charachters
+	 * @throws \RangeException if $newPlayerHealthStatus is > 64 characters
 	 * @throws \TypeError if $newPlayerHealthStatus is not a string
 	 **/
 	public function setPlayerHealthStatus(string $newPlayerHealthStatus) {
@@ -464,7 +463,7 @@ class Player implements \JsonSerializable {
 			throw(new \InvalidArgumentException("player position is empty or insecure"));
 		}
 
-		// verify the playerPositionwill fit the database
+		// verify the playerPosition will fit the database
 		if(strlen($newPlayerPosition) > 8) {
 			throw(new \RangeException("player position is too large"));
 		}
@@ -537,9 +536,9 @@ class Player implements \JsonSerializable {
 	/**
 	 * inserts the player into mySQL
 	 *
-	 * @param \PDO $pdo PDO conncetion object
+	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQl related errors oci_new_cursor
-	 * @throws \TypeError if $pdo is not a PDO conncetion object
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) {
 		// enforce the player id is null (dont need to insert the player if its already in the system)
@@ -637,7 +636,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -679,7 +678,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -708,7 +707,7 @@ public function delete(\PDO $pdo) {
 		$query = "SELECT playerId, playerTeamId, playerUserId, playerBatting, playerCommitment, playerFirstName, playerHealthStatus, playerHeight, playerHomeTown, playerLastName, playerPosition, playerThrowingHand, playerWeight FROM player WHERE playerFirstName LIKE :playerFirstName";
 		$statement = $pdo->prepare($query);
 
-		//bind the playerUserId to the place holder in the template
+		//bind the playerFirstName to the place holder in the template
 		$playerFirstName = "%$playerFirstName%";
 		$parameters = array("playerFirstName" => $playerFirstName);
 		$statement->execute($parameters);
@@ -721,7 +720,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -763,7 +762,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -805,7 +804,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -847,7 +846,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -889,7 +888,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -931,7 +930,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -950,7 +949,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getPlayerByPlayerId(\PDO $pdo, int $playerId) {
-		// sanitixe the player id before searching
+		// sanitize the player id before searching
 		if($playerId <= 0) {
 			throw(new \PDOException("player id is not positive"));
 		}
@@ -972,7 +971,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 			}
 		} catch(\Exception $exception) {
-			// if the row couldnt be converted, rethrow it
+			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($player);
@@ -988,7 +987,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getPlayerByPlayerTeamId(\PDO $pdo, int $playerTeamId) {
-		// sanitixe the player team id before searching
+		// sanitize the player team id before searching
 		if($playerTeamId <= 0) {
 			throw(new \PDOException("player team id is not positive"));
 		}
@@ -1009,7 +1008,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -1048,7 +1047,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -1066,7 +1065,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getPlayerByPlayerHeight(\PDO $pdo, int $playerHeight) {
-		// sanitixe the player height before searching
+		// sanitize the player height before searching
 		if($playerHeight <= 0) {
 			throw(new \PDOException("player height is not positive"));
 		}
@@ -1087,7 +1086,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
@@ -1105,7 +1104,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getPlayerByPlayerWeight(\PDO $pdo, int $playerWeight) {
-		// sanitixe the player weight before searching
+		// sanitize the player weight before searching
 		if($playerWeight <= 0) {
 			throw(new \PDOException("player weight is not positive"));
 		}
@@ -1126,7 +1125,7 @@ public function delete(\PDO $pdo) {
 				$player = new Player($row["playerId"], $row["playerTeamId"], $row["playerUserId"], $row["playerBatting"], $row["playerCommitment"], $row["playerFirstName"], $row["playerHealthStatus"], $row["playerHeight"], $row["playerHomeTown"], $row["playerLastName"], $row["playerPosition"], $row["playerThrowingHand"], $row["playerWeight"]);
 				$players[$players->key()] = $player;
 				$players->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
