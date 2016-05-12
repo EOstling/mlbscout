@@ -43,7 +43,7 @@ class AccessLevel implements \JsonSerializable {
 			throw(new \RangeException($range->getMessage(), 0, $range));
 		} catch(\TypeError $typeError) {
 			//rethrow the exception to the caller
-			throw(new \TypeError($typeError->getMessage(), 0. $typeError));
+			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
 		} catch(\Exception $exception) {
 			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
