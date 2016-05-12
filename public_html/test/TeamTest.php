@@ -76,19 +76,81 @@ class TeamTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("team");
 
 		// create a new Team and insert to into mySQL
-		$team = new Team(null, $this->VALID_TEAMCONTENT);
+		$team = new Team(null, $this->VALID_TEAMNAME);
 		$team->insert($this->getPDO());
 
 		// edit the Team and update it in mySQL
-		$team->setTeamContent($this->VALID_TEAMCONTENT2);
+		$team->setTeamContent($this->VALID_TEAMNAME2);
 		$team->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), 4team->getTeamId());
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
-		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMCONTENT2);
-		$this->assertEquals($pdoTeam->getTeamType(), $this)
+		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME2);
+		$this->assertEquals($pdoTeam->getTeamType(), $this);
 	}
+
+	/**
+	 * test updating a Team that already exists
+	 *
+	 * @expectedException \PDOException
+	 */
+	public function testUpdateInvalidTeam() {
+		// create a Team with a non null team id and watch it fail
+		$team = new Team(null, $this->user-> $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
+		$team->update($this->getPDO());
+	}
+
+	/**
+	 * test creating a Team and then deleting
+	 */
+	public function testDeleteValidTeam() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("team");
+
+		// create a new Team and insert into mySQL
+		$team = new Team(null, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
+		$team->insert($this->getPDO());
+
+		// delete the Team from mySQL
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("team"));
+		$team->delete($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $$team->getTeamId);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
+		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
+		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
+	}
+	/**
+	 * test deleting a Team that does not exist
+	 *
+	 * @expectedException
+	 */
+	public function testDeleteInvalidTeam() {
+		// create a Team and try to delete it without actually inserting it
+		$team = new Team(null, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
+		$team->delete($this->getPDO());
+	}
+
+	/**
+	 * test inserting a Team and regrabbing it from mySQL
+	 */
+	public function testGetValidTeamByTeamId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("team");
+
+		// create a new Team and insert into mySQL
+		$team = new Team(null, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
+		$team->insert($this->getPDO());
+
+		// grab the data from mySQL
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
+		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
+		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
+	}
+
 
 
 }
