@@ -22,9 +22,8 @@ class ApiCall implements \JsonSerializable {
 	private $apiCallBrowser;
 	/**
 	 * Time stamp of when the client connected
-	 * @var. \DateTime;
+	 * @var \DateTime $apiCallDateTime
 	 */
-
 	private $apiCallDateTime;
 	/**
 	 * Gives PUT, POST, DELETE, UPDATE for authorized users
@@ -127,7 +126,7 @@ class ApiCall implements \JsonSerializable {
 		if(strlen($newApiCallBrowser) > 128) {
 			throw(new\RangeException("Browser is out of my range"));
 		}
-		$this->getApiCallBrowser = $newApiCallBrowser;
+		$this->apiCallBrowser = $newApiCallBrowser;
 
 	}
 
@@ -143,7 +142,7 @@ class ApiCall implements \JsonSerializable {
 		}
 
 		if($newApiCallDateTime === null) {
-			$this->ApiCallDateTime = new \DateTime();
+			$this->apiCallDateTime = new \DateTime();
 			return;
 		}
 	}
@@ -159,7 +158,7 @@ class ApiCall implements \JsonSerializable {
 			throw(new\InvalidArgumentException("Api Verb must be Get, Put, Post or Delete"));
 
 		}
-		$this->ApiCallHttpVerb = $newApiCallHttpVerb;
+		$this->apiCallHttpVerb = $newApiCallHttpVerb;
 
 	}
 
@@ -207,7 +206,7 @@ class ApiCall implements \JsonSerializable {
 		}
 
 
-		$this->getApiCallQueryString = $newApiCallQueryString;
+		$this->apiCallQueryString = $newApiCallQueryString;
 	}
 
 	public function getApiCallPayload() {
@@ -224,7 +223,7 @@ class ApiCall implements \JsonSerializable {
 		if(strlen($newApiCallPayload) > 128) {
 			throw(new\RangeException("Too long"));
 		}
-		$this->getApiCallPayload = $newApiCallPayload;
+		$this->apiCallPayload = $newApiCallPayload;
 
 
 	}
@@ -244,7 +243,7 @@ class ApiCall implements \JsonSerializable {
 		if(strlen($newApiCallURL) > 128) {
 			throw(new\RangeException("URL is too long"));
 		}
-		$this->getApiCallURL = $newApiCallURL;
+		$this->apiCallURL = $newApiCallURL;
 
 	}
 
@@ -258,13 +257,13 @@ class ApiCall implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		//Bind the data
 
-		$formattedDate = $this->apiCallDateTime-> format ("Y-m-d H:i:s");
-		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $this->apiCallDateTime, "apiCallQueryString" => $this->apiCallQueryString,
+		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
 			"apicallIP" => $this->apiCallIp, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
 		//Give me the lastInsert Id:
-		$this->apiCall = intval($pdo->lastInsertId());
+		$this->apiCallId	 = intval($pdo->lastInsertId());
 	}
 
 	public function delete(\Pdo $pdo) {

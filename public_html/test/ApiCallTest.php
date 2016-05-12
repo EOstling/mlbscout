@@ -13,9 +13,7 @@ require_once("MlbScoutTest.php");
 
 class apiClass extends MlbScoutTest {
 
-	protected $VALID_ApiCallId = null;
-
-	protected $VALID_ApiCallBrowser = null;
+	protected $VALID_ApiCallBrowser = "Safari";
 
 	protected $VALID_ApiCallDateTime = null;
 
@@ -96,6 +94,9 @@ class apiClass extends MlbScoutTest {
 		$apiCall = new apiCall(MlbScoutTest::INVALID_KEY, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallQueryString,
 			$this->VALID_ApiCallURL, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallBrowser,
 			$this->ApiCallIp, $this->VALID_ApiCallPayload, $this->ApiCallUserId);
+
+		$apiCall->insert($this->getPDO());
+		// try to insert a second time and watch it fail
 		$apiCall->insert($this->getPDO());
 	}
 
