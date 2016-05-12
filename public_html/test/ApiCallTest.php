@@ -161,7 +161,7 @@ class apiClass extends MlbScoutTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("ApiCall"));
 
 	}
-
+//
 	/**
 	 * Test invalid delete Invalid ApiCall
 	 */
