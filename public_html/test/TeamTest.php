@@ -1,13 +1,14 @@
 <?php
 namespace Edu\Cnm\MlbScout\TeamTest\Test;
 
-use Edu
+use Edu\Cnm\MlbScout\Team;
 
 // grab the project test parameters
-use Edu\Cnm\Fgarcia132\MlbScout\Team;require_once("TeamTest.php");
+require_once("MlbScoutTest.php");
 
 // grab the class under scrutiny
-require_once()
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
+
 
 /**
  * Full PHPUnit test for Team class
@@ -19,20 +20,24 @@ require_once()
  */
 class TeamTest extends MlbScoutTest {
 	/**
-	 * Content of the Team
-	 * @var string $VALID_TEAMCONTENT
+	 * Name of the Team
+	 * @var string $VALID_TEAMNAME
 	 */
-	protected $VALID_TEAMCONTENT = "PHPUnit test passing";
+	protected $VALID_TEAMNAME = "PHPUnit test passing";
 	/**
-	 * content of the updated Team
-	 * @var string $VALID_TEAMCONTENT2
+	 * Name of the updated Team
+	 * @var string $VALID_TEAMNAME2
 	 */
-	protected $VALID_TEAMCONTENT2 = "PHPUnit test still passing";
-
+	protected $VALID_TEAMNAME2 = "PHPUnit test still passing";
 	/**
-	 * create dependent objects before running each test
+	 * Type of the Team
+	 * @var string $TEAM_TYPE
 	 */
-	public final function
+	protected $VALID_TEAMTYPE = "PHPUnit test passing";
+	/**
+	 * Name of updated Team
+	 * @var string $VALID_TEAMTYPE2
+	 */
 
 	/**
 	 * test inserting a valid Team and verify that the actual mySQL data matches
@@ -42,15 +47,14 @@ class TeamTest extends MlbScoutTest {
 		$numRows= $this->getConnection()-getRowCount("team");
 
 		// create a new Team and insert into mySQL
-		$team = new Team(null, $this->user->getUserId), $this->VALID_TEAMCONTENT,
+		$team = new Team(null, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
 		$team->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId);
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
-		$this->assertEquals($pdoTeam->getTeamId(), $this->VALID_TEAMCONTENT);
-		$this->assertEquals($pdoTeam->getTeamName()), $this->VALID_TEAMCONTENT;
-		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMCONTENT);
+		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
+		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMNAME);
 	}
 
 	/**
@@ -60,7 +64,7 @@ class TeamTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidTeam() {
 		// create a Team with a non null team id and watch it fail
-		$team = new Team(MlbScoutTest::INVALID_KEY, $this->VALID_TEAMCONTENT);
+		$team = new Team(MlbScoutTest::INVALID_KEY, $this->VALID_TEAMNAME);
 		$team->insert($this->getPDO());
 	}
 
