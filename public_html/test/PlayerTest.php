@@ -99,7 +99,7 @@ class PlayerTest extends MlbScoutTest {
 	 **/
 	protected $VALID_PLAYERPOSITION2 = "right field";
 	/**
-	 * players thorwing hand
+	 * players throwing hand
 	 * @var string $VALID_PLAYERTHROWINGHAND
 	 **/
 	protected $VALID_PLAYERTHROWINGHAND = "L";
@@ -122,7 +122,7 @@ class PlayerTest extends MlbScoutTest {
 	 * userAccessLevel access level for the users;
 	 * @var AccessLevel $accessLevel
 	 **/
-	protected $accessLevel = null;
+	protected $accessLevel;
 	/**
 	 * playerTeam who the players play for; this is for foreign key relations
 	 * @var Team PlayerTeam
@@ -145,8 +145,8 @@ class PlayerTest extends MlbScoutTest {
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
-		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
 		$this->team->insert($this->getPDO());
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
 		$this->user->insert($this->getPDO());
 	}
 
@@ -166,7 +166,7 @@ class PlayerTest extends MlbScoutTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
-		$this->assertEquals($pdoPlayer->getPlayerBatting(). $this->VALID_PLAYERBATTING);
+		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
 		$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
 		$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
@@ -184,7 +184,8 @@ class PlayerTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidPlayer() {
 		// create a player with a non null player id and watch it fail
-		$player = new Player(MlbScoutTest::INVALID_KEY, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(MlbScoutTest::INVALID_KEY, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player->insert($this->getPDO());
 		$player->insert($this->getPDO());
 	}
 
@@ -217,7 +218,7 @@ class PlayerTest extends MlbScoutTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
-		$this->assertEquals($pdoPlayer->getPlayerBatting(). $this->VALID_PLAYERBATTING);
+		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
 		$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
 		$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
@@ -236,7 +237,7 @@ class PlayerTest extends MlbScoutTest {
 	 */
 	public function testUpdatedInvalidPlayer() {
 		// create a player with a non null player id and watch it fail
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->update($this->getPDO());
 	}
 
@@ -248,7 +249,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// delete the player form mySQL
@@ -268,7 +269,7 @@ class PlayerTest extends MlbScoutTest {
 	 */
 	public function testDeleteInvalidPlayer() {
 		// create a player and try to delete it without actually inserting it
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);;
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->delete($this->getPDO());
 	}
 
@@ -280,7 +281,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert into mySQL
-		$player= new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player= new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -288,7 +289,7 @@ class PlayerTest extends MlbScoutTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
-		$this->assertEquals($pdoPlayer->getPlayerBatting(). $this->VALID_PLAYERBATTING);
+		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
 		$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
 		$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
@@ -317,7 +318,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -359,7 +360,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -401,7 +402,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -443,7 +444,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -485,7 +486,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -527,7 +528,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -569,7 +570,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -611,7 +612,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -653,7 +654,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -695,7 +696,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert it into mySQL
-		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
