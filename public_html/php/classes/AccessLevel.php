@@ -125,7 +125,7 @@ class AccessLevel implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSER INTO accessLevel(accessLevelName) VALUES(:accessLevelName)";
+		$query = "INSERT INTO accessLevel(accessLevelName) VALUES(:accessLevelName)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
