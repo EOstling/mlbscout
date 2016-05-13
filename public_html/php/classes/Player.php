@@ -363,7 +363,7 @@ class Player implements \JsonSerializable {
 	public function setPlayerHeight(int $newPlayerHeight) {
 		// verify the playerHeight is positive
 		if($newPlayerHeight <= 0) {
-			throw(new \RangeException("player height is not positve"));
+			throw(new \RangeException("player height is not positive"));
 		}
 
 		//convert and store playerHeight
@@ -588,7 +588,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) {
-		// enforce the playerId is not null (dont update a player that hasn't been inserted)
+		// enforce the playerId is not null (don't update a player that hasn't been inserted)
 		if($this->playerId === null) {
 			throw(new \PDOException("unable to update a player that does not exist"));
 		}
@@ -1026,7 +1026,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getPlayerByPlayerUserId(\PDO $pdo, int $playerUserId) {
-		// sanitixe the player user id before searching
+		// sanitize the player user id before searching
 		if($playerUserId <= 0) {
 			throw(new \PDOException("player user id is not positive"));
 		}
@@ -1156,7 +1156,7 @@ public function delete(\PDO $pdo) {
 				$players[$players->key()] = $player;
 				$players->next();
 			} catch(\Exception $exception) {
-				// if the row couldnt be converted, rethrow it
+				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
@@ -1164,7 +1164,7 @@ public function delete(\PDO $pdo) {
 	}
 
 	/**
-	 * formats the state variables for jSON serialization
+	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
 	 **/

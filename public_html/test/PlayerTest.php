@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\Test;
 
-use Edu\Cnm\MlbScout\{AccessLevel, Team, User};
+use Edu\Cnm\MlbScout\{Player, AccessLevel, Team, User};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -119,10 +119,10 @@ class PlayerTest extends MlbScoutTest {
 	 **/
 	protected $VALID_PLAYERWEIGHT2 = "180";
 	/**
-	 * userAccessLevel access level for the users; this is a foreign key
+	 * userAccessLevel access level for the users;
 	 * @var accessLevel
 	 **/
-	protected $accessLevel;
+	protected $accessLevel = null;
 	/**
 	 * playerTeam who the players play for; this is for foreign key relations
 	 * @var Team PlayerTeam
@@ -143,11 +143,11 @@ class PlayerTest extends MlbScoutTest {
 
 		// create and insert a playerUser to own the test playerUser
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
-		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
 		$this->team = new Team(null, "teamName", "teamType");
+		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
 		$this->accessLevel->insert($this->getPDO());
-		$this->user->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
+		$this->user->insert($this->getPDO());
 	}
 
 	/**
@@ -235,7 +235,7 @@ class PlayerTest extends MlbScoutTest {
 	 * @expectedException
 	 */
 	public function testUpdatedInvalidPlayer() {
-		// create a player wiht a non null player id and watch it fail
+		// create a player with a non null player id and watch it fail
 		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(),$this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->update($this->getPDO());
 	}
@@ -264,7 +264,7 @@ class PlayerTest extends MlbScoutTest {
 	/**
 	 * test deleting a player that does not exist
 	 *
-	 * @expecedException PDOException
+	 * @expectedException PDOException
 	 */
 	public function testDeleteInvalidPlayer() {
 		// create a player and try to delete it without actually inserting it
@@ -321,7 +321,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerBatting());
+		$results = Player::getPlayerByPlayerBatting($this->getPDO(), $player->getPlayerBatting());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -363,7 +363,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerCommitment());
+		$results = Player::getPlayerByPlayerCommitment($this->getPDO(), $player->getPlayerCommitment());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -387,7 +387,7 @@ class PlayerTest extends MlbScoutTest {
 	/**
 	 * test grabbing a player by commitment that does not exist
 	 */
-	public function testGetInvalidPlayerByPlayercommitment() {
+	public function testGetInvalidPlayerByPlayerCommitment() {
 		// grab a player by searching for Commitment that does not exist
 		$player = Player::getPlayerByPlayerCommitment($this->getPDO(), "nothing will be found");
 		$this->assertCount(0, $player);
@@ -405,7 +405,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerFirstName());
+		$results = Player::getPlayerByPlayerFirstName($this->getPDO(), $player->getPlayerFirstName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -447,7 +447,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHealthStatus());
+		$results = Player::getPlayerByPlayerHealthStatus($this->getPDO(), $player->getPlayerHealthStatus());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -489,7 +489,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHeight());
+		$results = Player::getPlayerByPlayerHeight($this->getPDO(), $player->getPlayerHeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -531,7 +531,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerHomeTown());
+		$results = Player::getPlayerByPlayerHomeTown($this->getPDO(), $player->getPlayerHomeTown());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -573,7 +573,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerLastName());
+		$results = Player::getPlayerByPlayerLastName($this->getPDO(), $player->getPlayerLastName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -615,7 +615,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerPosition());
+		$results = Player::getPlayerByPlayerPosition($this->getPDO(), $player->getPlayerPosition());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -657,7 +657,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerThrowingHand());
+		$results = Player::getPlayerByPlayerThrowingHand($this->getPDO(), $player->getPlayerThrowingHand());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
@@ -679,7 +679,7 @@ class PlayerTest extends MlbScoutTest {
 	}
 
 	/**
-	 * test grabbing a player by batting that does not exist
+	 * test grabbing a player by throwing hand that does not exist
 	 */
 	public function testGetInvalidPlayerByPlayerThrowingHand() {
 		// grab a player by searching for ThrowingHand that does not exist
@@ -699,7 +699,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerWeight());
+		$results = Player::getPlayerByPlayerWeight($this->getPDO(), $player->getPlayerWeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
