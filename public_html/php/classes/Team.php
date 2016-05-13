@@ -303,7 +303,7 @@ class Team implements \JsonSerializable {
 					while(($row = $statement->fetch()) !== false) {
 								try {
 											$team = new Team($row["teamId"], $row["teamType"], $row["teamName"], 											$row["teamRoster"]);
-											$team[$teams->key()] = $team;
+											$teams[$teams->key()] = $team;
                            		$teams->next();
                   		} catch(\Exception $exception) {
 											// if the row couldn't be converted, rethrow it
