@@ -52,9 +52,8 @@ class AccessLevelTest extends MlbScoutTest {
 		
 		//create and insert a User to own the test Access Level
 		$this->salt = bin2hex(random_bytes(32));
-		$this->hash = hash_pbkdf2("sha512",$this->password, $this->salt,4096);
-		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail","userFirstName","userHash","userLastName",
-			"userPassword","userPhoneNumber","userSalt","userUpdate");
+		$this->hash = hash_pbkdf2("sha512", $this->salt,4096);
+		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail","userFirstName","userHash","userLastName", "userPhoneNumber","userSalt");
 		$this->user->insert($this->getPDO());
 	}
 
@@ -193,7 +192,7 @@ class AccessLevelTest extends MlbScoutTest {
 			$accessLevel = AccessLevel::getAccessLevelByAccessLevelName($this->getPDO(), "MLB Scout that Couches both MLB College and High School teams");
 			$this->assertCount(0, $accessLevel);
 		}
-	
+
 
 		/**
 		 * test grabbing all Access Levels
