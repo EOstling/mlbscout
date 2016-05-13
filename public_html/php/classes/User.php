@@ -385,11 +385,11 @@ class User implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userSalt, userPhoneNumber, userLastName, userHash, userFirstName) VALUES(:userAccessLevelId, :userActivationToken, :userEmail, :userSalt, :userPhoneNumber, :userLastName, :userHash, :userFirstName)";
+		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt) VALUES(:userAccessLevelId, :userActivationToken, :userEmail, :userFirstName, :userHash, :userLastName, :userPhoneNumber, :userSalt)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userSalt" => $this->userSalt, "userPhoneNumber" => $this->userPhoneNumber, "userLastName" => $this->userLastName, "userHash" => $this->userHash, "userFirstName" => $this->userFirstName];
+		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
 		$statement -> execute($parameters);
 
 		//update the null userId with what mySQL just game us
@@ -432,11 +432,11 @@ class User implements \JsonSerializable {
 		}
 
 		// create a query template
-		$query = "UPDATE user SET userId = :userId, userAccessLevelId = :userAccessLevelId, userActivationToken = :userActivationToken, userEmail = :userEmail, userSalt = :userSalt, userPhoneNumber = :userPhoneNumber, userLastName = :userLastName, userHash = :userHash, userFirstName = :userFirstName";
+		$query = "UPDATE user SET userId = :userId, userAccessLevelId = :userAccessLevelId, userActivationToken = :userActivationToken, userEmail = :userEmail, userFirstName = :userFirstName, userHash = :userHash, userLastName = :userLastName, userPhoneNumber = :userPhoneNumber, userSalt = :userSalt";
 		$statement = $pdo ->prepare($query);
 
 		// bind the member varibales to the place holders in this template
-		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userSalt" => $this->userSalt, "userPhoneNumber" => $this->userPhoneNumber, "userLastName" => $this->userLastName, "userHash" => $this->userHash, "userFirstName" => $this->userFirstName];
+		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 	}
 
@@ -456,7 +456,7 @@ class User implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userSalt, userPhoneNumber, userLastName, userHash, userFirstName FROM user WHERE userId = :userId";
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userId = :userId";
 		$statement = $pdo -> prepare($query);
 
 		// bind the user id to the place holder template
@@ -469,7 +469,7 @@ class User implements \JsonSerializable {
 			$statement -> setFetchMode (\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userSalt"], $row["userPhoneNumber"], $row["userLastName"], $row["userHash"], $row["userFirstName"] );
+				$user = new User($row["UserId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
 			}
 		} catch(\Exception $exception) {
 			//if the row couldn't be converted, rethrow it
@@ -495,7 +495,7 @@ class User implements \JsonSerializable {
 		}
 
 		// create querry template
-		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userSalt, userPhoneNumber, userLastName, userHash, userFirstName FROM user WHERE userEmail LIKE :userEmail";
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userEmail LIKE :userEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind the user Email to the place holder in the template
@@ -508,7 +508,7 @@ class User implements \JsonSerializable {
 		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
 		WHILE(($row = $statement->fetch()) !== false) {
 			try {
-				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userEmail"], $row["userSalt"], $row["userPhoneNumber"], $row["userLastName"], $row["userHash"], $row["userFirstName"]);
+				$user = new User($row["UserId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
 				$users[$users->key()] = $user;
 				$users->next();
 			} catch (\Exception $exception) {
@@ -529,7 +529,7 @@ class User implements \JsonSerializable {
 	 */
 	public static function getAllUsers(\PDO $pdo) {
 		//create query template
-		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userSalt, userPhoneNumber, userLastName, userHash, userFirstName FROM user";
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -538,7 +538,7 @@ class User implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !==false) {
 			try{
-				$user = new User($row["UserId"], $row["userAccessLevelId"], $row["userEmail"], $row["userSalt"], $row["userPhoneNumber"], $row["userLastName"], $row["userHash"], $row["userFirstName"] );
+				$user = new User($row["UserId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
 				$users[$users->key()] = $user;
 				$users->next();
 			} catch(\Exception $exception) {
