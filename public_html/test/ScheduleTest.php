@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\Test;
 
-use Edu\Cnm\MlbScout\{Schedule, Team};
+use Edu\Cnm\MlbScout\{Schedule, Team, User, AccessLevel};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -44,10 +44,20 @@ class ScheduleTest extends MlbScoutTest {
 	 **/
 	protected $VALID_SCHEDULETIME = null;
 	/**
+	 * userAccessLevel access level for the users;
+	 * @var accessLevel
+	 **/
+	protected $accessLevel = null;
+	/**
 	 * Team that has the schedule: this is the foreign key relations
 	 * @var Team
 	 **/
 	protected $team = null;
+	/**
+	 * playerUser created the player; this is for foreign key relations
+	 * @var User playerUser
+	 **/
+	protected $user = null;
 
 	/**
 	 * create dependent objects before running each test
@@ -57,8 +67,12 @@ class ScheduleTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a team to own the test schedule
+		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->team = new Team(null, "teamName", "teamType");
+		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
+		$this->accessLevel->insert($this->getPDO());
 		$this->team->insert($this->getPDO());
+		$this->user->insert($this->getPDO());
 
 		// calculate the date
 		$this->VALID_SCHEDULETIME = new \DateTime();
