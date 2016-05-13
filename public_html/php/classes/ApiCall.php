@@ -56,7 +56,21 @@ class ApiCall implements \JsonSerializable {
 
 	private $apiCallURL;
 
-
+	/**
+	 * ApiCall constructor.
+	 * @param int $newApiCallId
+	 * @param int $newApiCallUserId
+	 * @param string $newApiCallBrowser
+	 * @param \DateTime $newApiCallDateTime
+	 * @param string $newApiCallHttpVerb
+	 * @param string $newApiCallIp
+	 * @param string $newApiCallQueryString
+	 * @param string $newApiCallPayload
+	 * @param string $newApiCallURL
+	 * throws InvalidArgument exception
+	 * throws Typerror @var $typeError;
+	 * throws exception
+	 */
 	public function __construct(int $newApiCallId, int $newApiCallUserId, string $newApiCallBrowser,
 										 \DateTime $newApiCallDateTime, string $newApiCallHttpVerb, string $newApiCallIp,
 										 string $newApiCallQueryString, string $newApiCallPayload, string $newApiCallURL) {
@@ -72,38 +86,51 @@ class ApiCall implements \JsonSerializable {
 			$this->setApiCallURL($newApiCallURL);
 
 		} catch(\InvalidArgumentException $invalidArgument) {
-			// rethrow the exception to the caller
+			// rethrow the exception
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
-			// rethrow the exception to the caller
+			// rethrow the exception
 			throw(new \RangeException($range->getMessage(), 0, $range));
 		} catch(\TypeError $typeError) {
-			// rethrow the exception to the caller
+			// rethrow the exception
 			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
 		} catch(\Exception $exception) {
-			// rethrow the exception to the caller
+			// rethrow the exception
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 
 
 	}
 
-//ApiCallId
+	/**
+	 * @return INT
+	 */
 	public function getApiCallId() {
 		return ($this->apiCallId);
 	}
 
-	public function setApicallId(int $newApiCallId) {
+	/**
+	 * @param int $newApiCallId
+	 */
+	public function setApiCallId(int $newApiCallId) {
 		if($newApiCallId === null) {
 			$this->apiCallId = null;
 			return;
 		}
 		$this->apiCallId = $newApiCallId;
 	}
+
+	/**
+	 * @return INT
+	 */
 	public function getApiCallUserId() {
 		return ($this->apiCallUserId);
 	}
 
+	/**
+	 * @param int $newApiCallUserId
+	 * throws RangeException
+	 */
 	public function setApiCallUserId(int $newApiCallUserId) {
 		if($newApiCallUserId <= 0) {
 			throw(new \RangeException("profile id is not positive"));
@@ -112,10 +139,18 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getApiCallBrowser() {
 		return ($this->apiCallBrowser);
 	}
 
+	/**
+	 * Throws InvalidArgumentException
+	 * throws RangeException
+	 * @param string $newApiCallBrowser
+	 */
 	public function setApiCallBrowser(string $newApiCallBrowser) {
 		$newApiCallBrowser = trim($newApiCallBrowser);
 		$newApiCallBrowser = filter_var($newApiCallBrowser, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -130,11 +165,16 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
-//DateTime
+	/**
+	 * @return \DateTime
+	 */
 	public function getApiCallDateTime() {
 		return ($this->apiCallDateTime);
 	}
 
+	/**
+	 * @param null $newApiCallDateTime
+	 */
 	public function setApiCallDateTime($newApiCallDateTime = null) {
 
 		if($newApiCallDateTime !== null) {
@@ -147,22 +187,31 @@ class ApiCall implements \JsonSerializable {
 		}
 	}
 
+	/**
+	 * @return string
+	 */
+
 	public function getApiCallHttpVerb() {
 		return ($this->apiCallHttpVerb);
 	}
 
+	/**
+	 * throws InvalidArgumentException
+	 * @param string $newApiCallHttpVerb
+	 */
 	public function setApiCallHttpVerb(string $newApiCallHttpVerb) {
 
 		$verb = $newApiCallHttpVerb;
 		if($verb !== "GET" && $verb !== "POST" && $verb !== "PUT" && $verb !== "DELETE") {
 			throw(new\InvalidArgumentException("Api Verb must be Get, Put, Post or Delete"));
-
 		}
 		$this->apiCallHttpVerb = $newApiCallHttpVerb;
-
 	}
 
-
+	/**
+	 * @param bool $userIp
+	 * @return string
+	 */
 	public function getApiCallIp($userIp =false) {
 		if($userIp === TRUE){
 			return($this->apiCallIp);
@@ -170,6 +219,10 @@ class ApiCall implements \JsonSerializable {
 		return (inet_ntop($this->apiCallIp));
 	}
 
+	/**
+	 * throws InvalidArgumentException
+	 * @param string $newApiCallIp
+	 */
 	public function setApiCallIp(string $newApiCallIp) {
 		$newApiCallIp = trim($newApiCallIp);
 		$newApiCallIp = filter_var($newApiCallIp, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -187,11 +240,18 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
-
+	/**
+	 * @return string
+	 */
 	public function getApiCallQueryString() {
 		return ($this->apiCallQueryString);
 	}
 
+	/**
+	 * throws InvalidArgumentException
+	 * throws RangeException
+	 * @param string $newApiCallQueryString
+	 */
 	public function setApiCallQueryString(string $newApiCallQueryString) {
 		$newApiCallQueryString = trim($newApiCallQueryString);
 		$newApiCallQueryString = filter_var($newApiCallQueryString, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -209,10 +269,18 @@ class ApiCall implements \JsonSerializable {
 		$this->apiCallQueryString = $newApiCallQueryString;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getApiCallPayload() {
 		return ($this->apiCallPayload);
 	}
 
+	/**
+	 * throws InvalidArgumentException
+	 * throws RangeException
+	 * @param int $newApiCallPayload
+	 */
 	public function setApiCallPayload(int $newApiCallPayload) {
 		$newApiCallPayload = trim($newApiCallPayload);
 		$newApiCallPayload = filter_var($newApiCallPayload, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -224,15 +292,20 @@ class ApiCall implements \JsonSerializable {
 			throw(new\RangeException("Too long"));
 		}
 		$this->apiCallPayload = $newApiCallPayload;
-
-
 	}
 
-
+	/**
+	 * @return string
+	 */
 	public function getApiCallURL() {
 		return ($this->apiCallURL);
 	}
 
+	/**
+	 * throws InvalidArgumentException
+	 * throws RangeException
+	 * @param string $newApiCallURL
+	 */
 	public function setApiCallURL(string $newApiCallURL) {
 		$newApiCallURL = trim($newApiCallURL);
 		$newApiCallURL = filter_var($newApiCallURL, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -244,10 +317,11 @@ class ApiCall implements \JsonSerializable {
 			throw(new\RangeException("URL is too long"));
 		}
 		$this->apiCallURL = $newApiCallURL;
-
 	}
 
-
+	/**
+	 * @param \Pdo $pdo
+	 */
 	public function insert(\Pdo $pdo) {
 		if($this->apiCallId !== null) {
 			throw(new\PDOException("This is incorrect"));
@@ -256,7 +330,6 @@ class ApiCall implements \JsonSerializable {
 		$query = "INSERT INTO apiCall( apiCallUserId, apiCallBrowser,apiCallHttpVerb,apiCallIP,apiCallQueryString,apiCallPayload,apiCallURL )VALUES(:apiCallUserId, :apiCallBrowser,:apiCallHttpVerb, :apiCallIP, :apiCallQueryString, :apiCallPayload, :apiCallURL)";
 		$statement = $pdo->prepare($query);
 		//Bind the data
-
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
@@ -266,6 +339,10 @@ class ApiCall implements \JsonSerializable {
 		$this->apiCallId	 = intval($pdo->lastInsertId());
 	}
 
+	/**
+	 * throws PdoException
+	 * @param \Pdo $pdo
+	 */
 	public function delete(\Pdo $pdo) {
 
 		if($this->apiCallUserId === null) {
@@ -279,6 +356,10 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
+	/**
+	 * throws PdoException
+	 * @param \Pdo $pdo
+	 */
 	public function update(\Pdo $pdo) {
 		if($this->apiCallId === null) {
 			throw(new \PDOException("Well we can't update anything that doesn't exist now can we"));
@@ -299,9 +380,12 @@ class ApiCall implements \JsonSerializable {
 	}
 
 
-
-
-
+	/**
+	 * throws PdoException
+	 * @param \PDO $pdo
+	 * @param string $ApiCallId
+	 * @return \apiClass|null
+	 */
 	public function getApiCallByApiCallId(\PDO $pdo, string $ApiCallId) {
 		if($ApiCallId <= 0) {
 			throw(new \PDOException("User Id isn't positive"));
@@ -310,7 +394,7 @@ class ApiCall implements \JsonSerializable {
 		// create query template
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime,apiCallHttpVerb,apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
-// bind the UserId to the place holder in the template
+		// bind the UserId to the place holder in the template
 		$parameters = array("CallId" => $ApiCallId);
 		$statement->execute($parameters);
 
@@ -328,6 +412,11 @@ class ApiCall implements \JsonSerializable {
 		return ($apiCall);
 	}
 
+	/**
+	 * @param \Pdo $pdo
+	 * @param string $ApiUserId
+	 * @return \SplFixedArray ApiCalls
+	 */
 	public function getApiCallByUserId(\Pdo $pdo, string $ApiUserId) {
 		$ApiUserId = trim($ApiUserId);
 		$ApiUserId = filter_var($ApiUserId, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -336,7 +425,7 @@ class ApiCall implements \JsonSerializable {
 		}
 		$query = "SELECT apiCallId, apiCallUserId, apiCallDateTime, apiCallHttpVerb, apicallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallBrowser = :apiCallBrowser";
 		$statement = $pdo->prepare($query);
-// bind the  to the place holder in the template
+		// bind the  to the place holder in the template
 		$parameters = array("UserId" => $ApiUserId);
 		$statement->execute($parameters);
 
@@ -344,7 +433,7 @@ class ApiCall implements \JsonSerializable {
 		$parameters = array("UserId" => $ApiUserId);
 		$statement->execute($parameters);
 
-		// build an array of Browsers
+		// Build an array of Browsers
 		$apiCalls = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -361,6 +450,9 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
+	/**
+	 * @param \Pdo $pdo
+	 */
 	public function getAllApiCall(\Pdo $pdo){
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallQueryString, apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
@@ -380,7 +472,9 @@ class ApiCall implements \JsonSerializable {
 
 	}
 
-
+	/**
+	 * @return array
+	 */
 	public function jsonSerialize() {
 	$fields = get_object_vars($this);
 	return ($fields);
