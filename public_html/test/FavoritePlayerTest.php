@@ -21,6 +21,12 @@ require_once(dirname(__DIR__) . "/php/classes/autoload.php");
  */
 class FavoritePlayerTest extends MlbScoutTest {
 	/**
+	 * playerId
+	 * @var string $VALID_PLAYERID
+	 */
+	protected $VALID_PLAYERID = "PHPUnit test passing";
+	/**
 	 *
 	 */
+
 }
