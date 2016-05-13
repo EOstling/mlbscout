@@ -66,12 +66,12 @@ class ScheduleTest extends MlbScoutTest {
 		// run the default setUp() method first
 		parent::setUp();
 
-		// create and insert a team to own the test schedule
+		// create and insert a playerUser to own the test playerUser
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
-		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
 		$this->team->insert($this->getPDO());
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
 		$this->user->insert($this->getPDO());
 
 		// calculate the date
