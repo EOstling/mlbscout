@@ -45,7 +45,7 @@ class ScheduleTest extends MlbScoutTest {
 	protected $VALID_SCHEDULETIME = null;
 	/**
 	 * userAccessLevel access level for the users;
-	 * @var accessLevel
+	 * @var AccessLevel $accessLevel
 	 **/
 	protected $accessLevel = null;
 	/**
@@ -68,9 +68,9 @@ class ScheduleTest extends MlbScoutTest {
 
 		// create and insert a team to own the test schedule
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
-		$this->team = new Team(null, "teamName", "teamType");
-		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash","userLastName", "userPassword", "userPhoneNumber", "userSalt");
 		$this->accessLevel->insert($this->getPDO());
+		$this->team = new Team(null, "teamName", "teamType");
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
 		$this->team->insert($this->getPDO());
 		$this->user->insert($this->getPDO());
 
