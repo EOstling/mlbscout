@@ -59,7 +59,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$pdoAccessLevel = AccessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("accessLevel"));
 		$this->assertEquals($pdoAccessLevel->getAccessLevelId());
-		$this->assertEquals($pdoAccessLevel->getAccessLevelName()), $this->VALID_ACCESSLEVELNAME2);
+		$this->assertEquals($pdoAccessLevel->getAccessLevelName()); $this->VALID_ACCESSLEVELNAME2);
 	}
 
 	/**
