@@ -9,7 +9,7 @@ require_once ("autoload.php");
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  */
 class AccessLevel implements \JsonSerializable {
-	/*
+	/**
 	 * access level id for user; this is the primary key
 	 * @var int $accessLevelId
 	 */
@@ -53,7 +53,7 @@ class AccessLevel implements \JsonSerializable {
 	/**
 	 * accessor method for access level id
 	 *
-	 * @return int value of access level id
+	 * @return int|null value of access level id
 	 */
 	public function getAccessLevelId() {
 		return $this->accessLevelId;
@@ -62,11 +62,17 @@ class AccessLevel implements \JsonSerializable {
 	/**
 	 * mutator method for access level id
 	 *
-	 * @param int $newAccessLevelId new value of access level id
+	 * @param int|null $newAccessLevelId new value of access level id
 	 * @throws \RangeException if $newAccessLevelId
 	 * @throws \TypeError if $newAccessLevelId is not an integer
 	 */
 	public function setAccessLevelId($newAccessLevelId) {
+		// base case: if the new access level id is null, this a new access level without a mySQL
+		if($newAccessLevelId === null) {
+			$this->accessLevelId = null;
+			return;
+		}
+
 		// verify the access level id is positive
 		if($newAccessLevelId <=0) {
 			throw(new \RangeException("access level is is not positive"));
@@ -208,7 +214,7 @@ class AccessLevel implements \JsonSerializable {
 			$accessLevel = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if($row !==false) {
+			if($row !== false) {
 				$accessLevel = new AccessLevel($row["accessLevelId"],$row["accessLevelName"]);
 			}
 		} catch(\Exception $exception) {

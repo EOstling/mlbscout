@@ -25,7 +25,7 @@ class AccessLevelTest extends MlbScoutTest {
 	protected $VALID_ACCESSLEVELNAME = "Scout";
 	/**
 	 * Access Level Name
-	 * @var string $VALID_ACCESSLEVLENAME2
+	 * @var string $VALID_ACCESSLEVELENAME2
 	 */
 	protected $VALID_ACCESSLEVELNAME2 = "Coach";
 
