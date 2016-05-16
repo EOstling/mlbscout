@@ -44,14 +44,6 @@ class AccessLevelTest extends MlbScoutTest {
 	private $user;
 
 	/**
-	 * create dependent objects before running each test
-	 */
-	public final function setUp() {
-		// run the default setUP() method first
-		parent::setUp();
-	}
-
-	/**
 	 * test inserting a Access Level that already exist
 	 *
 	 * @expectedException \PDOException
