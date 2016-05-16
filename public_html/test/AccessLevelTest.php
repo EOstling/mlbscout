@@ -49,10 +49,6 @@ class AccessLevelTest extends MlbScoutTest {
 	public final function setUp() {
 		// run the default setUP() method first
 		parent::setUp();
-		
-		//create and insert a User to own the test Access Level
-		$this->accessLevel = new AccessLevel(null, "accessLevelName");
-		$this->accessLevel->insert($this->getPDO());
 	}
 
 	/**
