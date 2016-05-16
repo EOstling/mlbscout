@@ -78,6 +78,11 @@ Class UserTest extends MlbScoutTest {
 	 * @var User Salt
 	 */
 	private $salt;
+	/**
+	 * user accesss level
+	 * @var AccessLevel
+	 */
+	protected $accessLevel;
 
 	/**
 	 * create dependent objects before running each test
@@ -87,6 +92,8 @@ Class UserTest extends MlbScoutTest {
 		parent::setUp();
 
 		//create and insert a User to own the account
+		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel->insert($this->getPDO());
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash", "userLastName", "userPhoneNumber", "userSalt");
