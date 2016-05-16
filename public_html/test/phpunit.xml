@@ -2,6 +2,7 @@
 	<testsuites>
 		<testsuite name="Mlb Scout Test">
 			<file>AccessLevelTest.php</file>
+			<file>UserTest.php</file>
 			<file>PlayerTest.php</file>
 			<file>TeamTest.php</file>
 			<file>ScheduleTest.php</file>

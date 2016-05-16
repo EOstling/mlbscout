@@ -380,7 +380,7 @@ class User implements \JsonSerializable {
 	 */
 	public function insert(\PDO $pdo) {
 		// enforce the user is null
-		if($this->userId !==null) {
+		if($this->userId !== null) {
 			throw(new \PDOException("user already exist"));
 		}
 
@@ -390,7 +390,7 @@ class User implements \JsonSerializable {
 
 		// bind the member variables to the place holders in the template
 		$parameters = ["userId" => $this->userId, "userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
-		$statement -> execute($parameters);
+		$statement->execute($parameters);
 
 		//update the null userId with what mySQL just game us
 		$this->userId = intval($pdo->lastInsertId());
