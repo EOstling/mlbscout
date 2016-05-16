@@ -240,8 +240,8 @@ class accessLevel implements \JsonSerializable {
 
 		//bind the access level name to the place holder in the template
 		$accessLevelName = "%$accessLevelName%";
-		$paramaters = array("accessLevelName" => $accessLevelName);
-		$statement->execute($paramaters);
+		$parameters = array("accessLevelName" => $accessLevelName);
+		$statement->execute($parameters);
 
 		//build an array of access levels
 		$accessLevels = new \SplFixedArray($statement->rowCount());
@@ -268,7 +268,7 @@ class accessLevel implements \JsonSerializable {
 	 */
 	public static function getAllAccessLevels(\PDO $pdo) {
 		// create query template
-		$query = "SELECT accessLevelId, AccessLevelName FROM AccessLevel";
+		$query = "SELECT accessLevelId, accessLevelName FROM AccessLevel";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
