@@ -77,7 +77,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 * test creating a Access Level and then deleting it
 	 *
 	 */
-	public function testDeleteValidTweet() {
+	public function testDeleteValidAccessLevel() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 

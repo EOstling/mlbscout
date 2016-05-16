@@ -190,7 +190,7 @@ class AccessLevel implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public static function getAccessLevelByAccessLevelId (\PDO $pdo, int $accessLevelId) {
-	// sanitize the access level id before searaching
+	// sanitize the access level id before searching
 		if($accessLevelId <=0) {
 			throw(new \PDOException("access level id is not positive"));
 		}
