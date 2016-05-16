@@ -3,7 +3,6 @@ namespace Edu\Cnm\MlbScout\Test;
 
 // grab the project test paramaters
 use Edu\Cnm\MlbScout\AccessLevel;
-use Edu\Cnm\MlbScout\User;
 
 require_once("MlbScoutTest.php");
 
@@ -28,7 +27,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 * Access Level Name
 	 * @var string $VALID_ACCESSLEVLENAME2
 	 */
-	protected $VALID_ACCESSLEVELNAME2 = "Couch";
+	protected $VALID_ACCESSLEVELNAME2 = "Coach";
 
 	/**
 	 * test inserting a Access Level that already exist
@@ -40,6 +39,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$accessLevel = new AccessLevel(MlbScoutTest::INVALID_KEY, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 	}
+
 	/**
 	 * test inserting a Access Level, editing it, and then updating it
 	 */
@@ -49,6 +49,9 @@ class AccessLevelTest extends MlbScoutTest {
 
 		// create a new Access Level and insert it into mySQL
 		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+
+		var_dump($accessLevel);
+
 		$accessLevel->insert($this->getPDO());
 
 		// edit the Access Level and update it in mySQL
