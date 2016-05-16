@@ -90,7 +90,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	/**
-	 *
+	 *Testing a valid apicall id
 	 */
 
 	public function testInsertValidApiCall() {
@@ -203,7 +203,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	/**
-	 *
+	 *testing valid call id
 	 */
 	public function testGetValidApiCallbyCallId() {
 		$numRows = $this->getConnection()->getRowCount("ApiCallCallId");
@@ -227,7 +227,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	/**
-	 *
+	 * Testing invalid api call id
 	 */
 	public function testGetInvalidApiCallbyCallId() {
 		//Grab an invalid Call Id that exceeds
@@ -236,7 +236,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	/**
-	 *
+	 *Getting a valid user id
 	 */
 	public function testGetValidApiCallbyUserId() {
 		$numRows = $this->getConnection()->getRowCount("ApiCallUserId");
@@ -263,7 +263,7 @@ class apiClass extends MlbScoutTest {
 	}
 
 	/**
-	 *
+	 *Get invalid api user id
 	 */
 	public function testGetInvalidApiCallbyUserId() {
 //Grab an invalid Call Id that exceeds
