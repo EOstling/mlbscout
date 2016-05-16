@@ -85,7 +85,6 @@ class apiClass extends MlbScoutTest {
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com",
 			"Tyrion", $this->userHash, "Lannister" , "8675309", $this->userSalt);
 		$this->user->insert($this->getPDO());
-		//Timestamp of Test being ran
 		$this->ApiCallDateTime = new \DateTime();
 	}
 
@@ -125,7 +124,7 @@ class apiClass extends MlbScoutTest {
 	public function testInsertInvalidApiCall() {
 		// create a DateTime with a non null Date id and watch it fail
 		$apiCall = new apiCall(MlbScoutTest::INVALID_KEY, $this->VALID_ApiCallUserId, $this->VALID_ApiCallBrowser ,
-			$this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->ApiCallIp, $this->VALID_ApiCallQueryString,
+			$this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallUserId, $this->VALID_ApiCallQueryString,
 			$this->VALID_ApiCallPayload, $this->VALID_ApiCallURL);
 
 		$apiCall->insert($this->getPDO());
@@ -241,7 +240,7 @@ class apiClass extends MlbScoutTest {
 	public function testGetValidApiCallbyUserId() {
 		$numRows = $this->getConnection()->getRowCount("ApiCallUserId");
 		//Create a new ApiCall and insert into mySQL
-		$apiCall = new apiCall(null, $this->ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
+		$apiCall = new apiCall(null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
 			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
 			$this->VALID_ApiCallURL);
 		$apiCall->insert($this->getPDO());
