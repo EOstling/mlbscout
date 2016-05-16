@@ -10,7 +10,7 @@ use Edu\Cnm\MlbScout\{AccessLevel,User};
 require_once("MlbScoutTest.php");
 
 
-//require_once(apiClass(__DIR__) . "/mlbscout/php/classes/apiCall/autoload.php");
+require_once(dirname(__DIR__) . "/mlbscout/php/classes/apiCall/autoload.php");
 
 class apiClass extends MlbScoutTest {
 
