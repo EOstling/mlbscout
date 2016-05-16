@@ -1,11 +1,8 @@
 <?php
 namespace Edu\Cnm\MlbScout;
-
-
 require_once ("autoload.php");
 /**
  * access level class for MLB scout Capstone
- *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  */
 class AccessLevel implements \JsonSerializable {
@@ -61,7 +58,6 @@ class AccessLevel implements \JsonSerializable {
 	
 	/**
 	 * mutator method for access level id
-	 *
 	 * @param int|null $newAccessLevelId new value of access level id
 	 * @throws \RangeException if $newAccessLevelId
 	 * @throws \TypeError if $newAccessLevelId is not an integer
@@ -84,7 +80,6 @@ class AccessLevel implements \JsonSerializable {
 	
 	/**
 	 * accessor method for access level name
-	 *
 	 * @return string value of access level name
 	 */
 	public function getAccessLevelName() {
@@ -128,15 +123,12 @@ class AccessLevel implements \JsonSerializable {
 		if($this->accessLevelId !== null) {
 			throw(new \PDOException("not a new access level id"));
 		}
-
 		// create query template
 		$query = "INSERT INTO accessLevel(accessLevelName) VALUES(:accessLevelName)";
 		$statement = $pdo->prepare($query);
-
 		//bind the member variables to the place holders in the template
 		$parameters = ["accessLevelName" => $this->accessLevelName];
 		$statement->execute($parameters);
-
 		//update the null accessLevelId with what mySQL just game us
 		$this->accessLevelId = intval($pdo->lastInsertId());
 	}
