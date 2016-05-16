@@ -29,19 +29,6 @@ class AccessLevelTest extends MlbScoutTest {
 	 * @var string $VALID_ACCESSLEVLENAME2
 	 */
 	protected $VALID_ACCESSLEVELNAME2 = "Couch";
-	/**
-	 * @var User Hash
-	 */
-	private $hash;
-	/**
-	 * @var User Salt
-	 */
-	private $salt;
-	/**
-	 * User that holds the Access Level; this is for foreign key relations
-	 * @var Users user
-	 */
-	private $user;
 
 	/**
 	 * test inserting a Access Level that already exist
