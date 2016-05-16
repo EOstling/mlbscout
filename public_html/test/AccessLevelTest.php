@@ -45,7 +45,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testUpdateValidAccessLevel() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("AccessLevel");
+		$numRows = $this->getConnection()->getRowCount("accessLevel");
 
 		// create a new Access Level and insert it into mySQL
 		$accessLevel = new AccessLevel(null, $this->user-getUserId(), $this->VALID_ACCESSLEVELNAME);
