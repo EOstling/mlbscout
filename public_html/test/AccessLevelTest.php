@@ -7,7 +7,7 @@ use Edu\Cnm\MlbScout\{AccessLevel};
 require_once("MlbScoutTest.php");
 
 // grab the class under scrutiny
-require_once(dirname(__DIR__) . "../php/classes/autoload.php");
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the Access Level Class
@@ -85,7 +85,8 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidAccessLevel() {
 		// create a Access Level with a non null Access Level id and watch it fail
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new AccessLevel(MlbScoutTest::INVALID_KEY, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel->insert($this->getPDO());
 		$accessLevel->update($this->getPDO());
 	}
 	
@@ -157,6 +158,7 @@ class AccessLevelTest extends MlbScoutTest {
 
 		// create a new Access Level and insert it into mySQL
 		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		var_dump($accessLevel);
 		$accessLevel->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -166,7 +168,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\AccessLevel", $results);
 
 		// grab the result from the array and validate it
-		$pdoAccessLevel = $results [0];
+		$pdoAccessLevel = $results[0];
 		$this->assertEquals($pdoAccessLevel->getAccessLevelName(), $this->VALID_ACCESSLEVELNAME);
 	}
 

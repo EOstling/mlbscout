@@ -31,7 +31,7 @@ class AccessLevel implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function _construct(int $newAccessLevelId, string $newAccessLevelName) {
+	public function __construct(int $newAccessLevelId = null, string $newAccessLevelName) {
 		try {
 			$this->setAccessLevelId($newAccessLevelId);
 			$this->setAccessLevelName($newAccessLevelName);
@@ -99,13 +99,12 @@ class AccessLevel implements \JsonSerializable {
 	 * @throws \RangeException if $newAccessLevelName is > 24 characters
 	 * @throws \TypeError if $newAccessLevelName is not a string
 	 */
-	public function setAccessLevelName($newAccessLevelName) {
+	public function setAccessLevelName(string $newAccessLevelName) {
 		// verify the access level name is secure
 		$newAccessLevelName = trim ($newAccessLevelName);
 		$newAccessLevelName = filter_var($newAccessLevelName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newAccessLevelName) === true) {
 			throw(new \InvalidArgumentException("access level name is empty or insecure"));
-
 		}
 
 		// verify the access level name will fit in the database
@@ -236,12 +235,12 @@ class AccessLevel implements \JsonSerializable {
 		// sanitize the description before searching
 		$accessLevelName = trim($accessLevelName);
 		$accessLevelName = filter_var($accessLevelName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($accessLevelName) === true) {
+		if(empty($accessLevelName)) {
 			throw(new \PDOException("access level name is invalid"));
 		}
 
 		// create query template
-		$query = "SELECT accessLevelId, accessLevelName FROM AccessLevel WHERE accessLevelName LIKE :accessLevelName";
+		$query = "SELECT accessLevelId, accessLevelName FROM accessLevel WHERE accessLevelName LIKE :accessLevelName";
 		$statement = $pdo->prepare($query);
 
 		//bind the access level name to the place holder in the template
@@ -263,6 +262,7 @@ class AccessLevel implements \JsonSerializable {
 			}
 		}
 		return($accessLevels);
+
 	}
 
 	/**
@@ -274,7 +274,7 @@ class AccessLevel implements \JsonSerializable {
 	 */
 	public static function getAllAccessLevels(\PDO $pdo) {
 		// create query template
-		$query = "SELECT accessLevelId, accessLevelName FROM AccessLevel";
+		$query = "SELECT accessLevelId, accessLevelName FROM accessLevel";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
