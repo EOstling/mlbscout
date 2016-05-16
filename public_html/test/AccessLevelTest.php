@@ -2,7 +2,7 @@
 namespace Edu\Cnm\MlbScout\Test;
 
 // grab the project test paramaters
-use Edu\Cnm\MlbScout\AccessLevel;
+use Edu\Cnm\MlbScout\accessLevel;
 use Edu\Cnm\MlbScout\User;
 
 require_once("MlbScoutTest.php");
@@ -37,7 +37,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidAccessLevel() {
 		// create a Access Level with a non null access level id and watch it fail
-		$accessLevel = new AccessLevel(MlbScoutTest::INVALID_KEY, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(MlbScoutTest::INVALID_KEY, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 	}
 	/**
@@ -48,7 +48,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 
 		// create a new Access Level and insert it into mySQL
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 
 		// edit the Access Level and update it in mySQL
@@ -56,7 +56,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$accessLevel->update($this->getPDO());
 
 		// grab th data from mySQL and enforce the fields match our expectations
-		$pdoAccessLevel = AccessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
+		$pdoAccessLevel = accessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("accessLevel"));
 		$this->assertEquals($pdoAccessLevel->getAccessLevelId());
 		$this->assertEquals($pdoAccessLevel->getAccessLevelName(), $this->VALID_ACCESSLEVELNAME2);
@@ -69,7 +69,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidAccessLevel() {
 		// create a Access Level with a non null Accesss Level id and watch it fail
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->update($this->getPDO());
 	}
 	
@@ -82,7 +82,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 
 		// create a new Access Level and insert into mySQL
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 
 		// delete the Access Level from mySQL
@@ -90,7 +90,7 @@ class AccessLevelTest extends MlbScoutTest {
 		$accessLevel->delete($this->getPDO());
 		
 		// grab the data from mySQL and enforce the Access Level does not exist
-		$pdoAccessLevel = AccessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
+		$pdoAccessLevel = accessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
 		$this->assertNull($pdoAccessLevel);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("accessLevel"));
 	}
@@ -102,7 +102,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testDeleteInvalidAccessLevel() {
 		// create a Access Level and try to delete it without actually inserting it
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->delete($this->getPDO());
 	}
 	
@@ -114,11 +114,11 @@ class AccessLevelTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 		
 		// create a new Access Level and insert it into mySQL
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 		
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoAccessLevel = AccessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
+		$pdoAccessLevel = accessLevel::getAccessLevelByAccessLevelId($this->getPDO(), $accessLevel->getAccessLevelId());
 		$this->asserEquals($numRows + 1, $this->getConnection()->getRowCount("accessLevel"));
 		$this->assertEquals($pdoAccessLevel->getAccessLevelName(), $this->VALID_ACCESSLEVELNAME);
 	}
@@ -128,7 +128,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testGetInvalidAccessLevelByAccessLevelId() {
 		// grab a access level id that exceeds the maximum allowable access level id
-		$accessLevel = AccessLevel::getAccessLevelByAccessLevelId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$accessLevel = accessLevel::getAccessLevelByAccessLevelId($this->getPDO(), MlbScoutTest::INVALID_KEY);
 		$this->assertNull($accessLevel);
 	}
 
@@ -140,11 +140,11 @@ class AccessLevelTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 
 		// create a new Access Level and insert it into mySQL
-		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+		$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = AccessLevel::getAccessLevelByAccessLevelName($this->getPDO(), $accessLevel->getAccessLevelName());
+		$results = accessLevel::getAccessLevelByAccessLevelName($this->getPDO(), $accessLevel->getAccessLevelName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("accessLevel"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\AccessLevel", $results);
@@ -160,7 +160,7 @@ class AccessLevelTest extends MlbScoutTest {
 		public
 		function testGetInvalidAccessLevelByAccessLevelName() {
 			// grab a access level by searching for a Name that does not exist
-			$accessLevel = AccessLevel::getAccessLevelByAccessLevelName($this->getPDO(), "MLB Scout that Couches both MLB College and High School teams");
+			$accessLevel = accessLevel::getAccessLevelByAccessLevelName($this->getPDO(), "MLB Scout that Couches both MLB College and High School teams");
 			$this->assertCount(0, $accessLevel);
 		}
 
@@ -173,11 +173,11 @@ class AccessLevelTest extends MlbScoutTest {
 			$numRows = $this->getConnection()->getRowCount("accessLevel");
 
 			// create a new Access Level and insert it into mySQL
-			$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
+			$accessLevel = new accessLevel(null, $this->VALID_ACCESSLEVELNAME);
 			$accessLevel->insert($this->getPDO());
 
 			// grab the data from mySQL and enforce the fields match our expectations
-			$results = AccessLevel::getAllAccessLevels($this->getPDO());
+			$results = accessLevel::getAllAccessLevels($this->getPDO());
 			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("accessLevel"));
 			$this->assertCount(1, $results);
 			$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\AccessLevel", $results);

@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\Test;
 
-use Edu\Cnm\MlbScout\{Schedule, Team, User, AccessLevel};
+use Edu\Cnm\MlbScout\{Schedule, Team, User, accessLevel};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -45,7 +45,7 @@ class ScheduleTest extends MlbScoutTest {
 	protected $VALID_SCHEDULETIME = null;
 	/**
 	 * userAccessLevel access level for the users;
-	 * @var AccessLevel $accessLevel
+	 * @var accessLevel $accessLevel
 	 **/
 	protected $accessLevel = null;
 	/**
@@ -67,7 +67,7 @@ class ScheduleTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a playerUser to own the test playerUser
-		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel = new accessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());

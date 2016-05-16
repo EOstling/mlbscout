@@ -8,7 +8,7 @@ require_once ("autoload.php");
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  */
-class AccessLevel implements \JsonSerializable {
+class accessLevel implements \JsonSerializable {
 	/*
 	 * access level id for user; this is the primary key
 	 * @var int $accessLevelId
@@ -185,7 +185,7 @@ class AccessLevel implements \JsonSerializable {
 	 * 
 	 * @param \PDO $pdo $pdo PDO connection object
 	 * @param int $accessLevelId access level id to search for
-	 * @return AccessLevel|null AccessLevel found or null if not found
+	 * @return accessLevel|null AccessLevel found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
@@ -209,7 +209,7 @@ class AccessLevel implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !==false) {
-				$accessLevel = new AccessLevel($row["accessLevelId"],$row["accessLevelName"]);
+				$accessLevel = new accessLevel($row["accessLevelId"],$row["accessLevelName"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -248,7 +248,7 @@ class AccessLevel implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$accessLevel = new AccessLevel($row["accessLevelId"], $row["accessLevelName"]);
+				$accessLevel = new accessLevel($row["accessLevelId"], $row["accessLevelName"]);
 				$accessLevels[$accessLevels->key()] = $accessLevel;
 				$accessLevels->next();
 			} catch(\Exception $exception) {
@@ -277,7 +277,7 @@ class AccessLevel implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$accessLevel = new AccessLevel($row["accessLevelId"], $row["accessLevelName"]);
+				$accessLevel = new accessLevel($row["accessLevelId"], $row["accessLevelName"]);
 				$accessLevels[$accessLevels->key()] = $accessLevel;
 				$accessLevels->next();
 			} catch(\Exception $exception) {

@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout\Test;
 
-use Edu\Cnm\MlbScout\{Player, AccessLevel, Team, User};
+use Edu\Cnm\MlbScout\{Player, accessLevel, Team, User};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -120,7 +120,7 @@ class PlayerTest extends MlbScoutTest {
 	protected $VALID_PLAYERWEIGHT2 = "180";
 	/**
 	 * userAccessLevel access level for the users;
-	 * @var AccessLevel $accessLevel
+	 * @var accessLevel $accessLevel
 	 **/
 	protected $accessLevel;
 	/**
@@ -142,7 +142,7 @@ class PlayerTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a playerUser to own the test playerUser
-		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel = new accessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
