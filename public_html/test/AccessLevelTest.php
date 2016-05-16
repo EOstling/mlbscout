@@ -51,9 +51,8 @@ class AccessLevelTest extends MlbScoutTest {
 		parent::setUp();
 		
 		//create and insert a User to own the test Access Level
-		$this->salt = bin2hex(random_bytes(32));
-		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt,4096);
-		$this->user->insert($this->getPDO());
+		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel->insert($this->getPDO());
 	}
 
 	/**
