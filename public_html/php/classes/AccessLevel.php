@@ -172,11 +172,11 @@ class AccessLevel implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "UPDATE accessLevel SET accessLevelName = :accessLevelName WHERE accessLevelId = accessLevelId";
+		$query = "UPDATE accessLevel SET accessLevelName = :accessLevelName WHERE accessLevelId = :accessLevelId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holds in the template
-		$parameters = ["accessLevelName =>$this->accessLevelName, accessLevelId => $this->accessLevelId"];
+		$parameters = ["accessLevelName" =>$this->accessLevelName, "accessLevelId" => $this->accessLevelId];
 		$statement->execute($parameters);
 	}
 
