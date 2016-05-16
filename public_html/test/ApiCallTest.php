@@ -15,56 +15,56 @@ require_once(dirname(__DIR__) . "/mlbscout/php/classes/apiCall/autoload.php");
 class apiClass extends MlbScoutTest {
 
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallBrowser
 	 *
 	 */
 	protected $VALID_ApiCallBrowser = "Safari";
 	/**
-	 * @var null
+	 * @var null $VALID_ApiCallDateTime
 	 */
 	protected $VALID_ApiCallDateTime = null;
 	/**
-	 * @var string
+	 * @var string$VALID_ApiCallHttpVerb
 	 */
 	protected $VALID_ApiCallHttpVerb = "GET";
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallHttpVerb2
 	 */
 	protected $VALID_ApiCallHttpVerb2= "POST";
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallIP
 	 */
 	protected $VALID_ApiCallIP = "127.0.0.1";
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallQueryString
 	 */
 	protected $VALID_ApiCallQueryString = "TestString";
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallPayload
 	 */
 	protected $VALID_ApiCallPayload = "TestPayload";
 	/**
-	 * @var string
+	 * @var string $VALID_ApiCallURL
 	 */
 	protected $VALID_ApiCallURL = "google.com";
 	/**
-	 * @var null
+	 * @var null $VALID_ApiCallUserId
 	 */
 	protected $VALID_ApiCallUserId = null;
 	/**
-	 * @var int
+	 * @var int $hash
 	 */
 	private $hash;
 	/**
-	 * @var int
+	 * @var int $salt
 	 */
 	private $salt;
 	/**
-	 * @var string
+	 * @var string $user
 	 */
 	private $user;
 	/**
-	 * @var int
+	 * @var int $accessLevel
 	 * AccessLevel
 	 */
 	protected $accessLevel= null;
