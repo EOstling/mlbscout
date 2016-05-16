@@ -96,7 +96,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPlayer = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$this->assertEquals($pdoPlayer->getPlayerid(), $this->player->getPlayerId());
+		$this->assertEquals($pdoPlayer->getPlayerId(), $this->player->getPlayerId());
 	}
 
 	/**
