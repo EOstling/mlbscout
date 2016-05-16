@@ -72,7 +72,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function _construct(int $newUserId = null, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, int $newUserPhoneNumber, string $newUserSalt = null) {
+	public function __construct(int $newUserId = null, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, int $newUserPhoneNumber, string $newUserSalt = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
