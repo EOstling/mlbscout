@@ -94,9 +94,14 @@ Class UserTest extends MlbScoutTest {
 		//create and insert a User to own the account
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
+
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
-		$this->user = new User(null, "userAccessLevelId", "userActivationToken", "userEmail", "userFirstName", "userHash", "userLastName", "userPhoneNumber", "userSalt");
+
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), "userActivationToken", "userEmail", "userFirstName", "userHash", "userLastName", "userPhoneNumber", "userSalt");
+
+		//var_dump($this->accessLevel->getAccessLevelId());
+
 		$this->user->insert($this->getPDO());
 	}
 
