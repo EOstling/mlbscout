@@ -229,7 +229,7 @@ class AccessLevel implements \JsonSerializable {
 	public static function getAccessLevelByAccessLevelName(\PDO $pdo, string $accessLevelName) {
 		// sanitize the description before searching
 		$accessLevelName = trim($accessLevelName);
-		$accessLevelName = filter_var($accessLevelName, FILTER_SANITIZE_STRING);
+		$accessLevelName = filter_var($accessLevelName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($accessLevelName) === true) {
 			throw(new \PDOException("access level name is invalid"));
 		}
