@@ -74,7 +74,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 
 	/**
 	 * Test inserting a User that already exists
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
