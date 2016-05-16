@@ -7,7 +7,7 @@ use Edu\Cnm\MlbScout\{AccessLevel};
 require_once("MlbScoutTest.php");
 
 // grab the class under scrutiny
-require_once(dirname(__DIR__) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__) . "../php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the Access Level Class
@@ -49,7 +49,7 @@ class AccessLevelTest extends MlbScoutTest {
 	/**
 	 * test inserting a Access Level that already exist
 	 *
-	 * @expectedException \PDOException
+	 * @expectedException /PDOException
 	 */
 	public function testInsertInvalidAccessLevel() {
 		// create a Access Level with a non null access level id and watch it fail
@@ -81,7 +81,7 @@ class AccessLevelTest extends MlbScoutTest {
 	/**
 	 * test updating a Access Level that already exists
 	 * 
-	 * @expectedException \PDOException
+	 * @expectedException /PDOException
 	 */
 	public function testUpdateInvalidAccessLevel() {
 		// create a Access Level with a non null Access Level id and watch it fail
