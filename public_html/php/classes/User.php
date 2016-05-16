@@ -113,7 +113,13 @@ class User implements \JsonSerializable {
 	 * @throws \RangeException if $newUserId is not positive
 	 * @throws \TypeError if $newUserId is not an integer
 	 */
-	public function setUserId($newUserId) {
+	public function setUserId($newUserId = null) {
+		// base case: if the user id is null, this a new user without a mySQL assigned id (yet)
+		if($newUserId === null) {
+			$this->userId = null;
+			return;
+		}
+		
 		//verify the profile id is positive
 		if($newUserId <=0) {
 			throw(new \RangeException("profile id is not positive"));
