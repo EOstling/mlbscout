@@ -663,7 +663,7 @@ class PlayerTest extends MlbScoutTest {
 		$this->assertCount(1, $results);
 		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
-		// grab the result from the array and validate it
+		// grab the result from the array and validate itMySQL - mlbscout@localhost
 		$pdoPlayer = $results[0];
 		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());

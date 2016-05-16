@@ -2,7 +2,7 @@
 namespace Edu\Cnm\MlbScout\Test;
 
 // grab the project test paramaters
-use Edu\Cnm\MlbScout\AccessLevel;
+use Edu\Cnm\MlbScout\{AccessLevel};
 
 require_once("MlbScoutTest.php");
 
@@ -84,7 +84,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 * @expectedException \PDOException
 	 */
 	public function testUpdateInvalidAccessLevel() {
-		// create a Access Level with a non null Accesss Level id and watch it fail
+		// create a Access Level with a non null Access Level id and watch it fail
 		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->update($this->getPDO());
 	}
@@ -140,7 +140,7 @@ class AccessLevelTest extends MlbScoutTest {
 	}
 
 	/**
-	 * test grabbinga a Access Level that does not exist
+	 * test grabbing a Access Level that does not exist
 	 */
 	public function testGetInvalidAccessLevelByAccessLevelId() {
 		// grab a access level id that exceeds the maximum allowable access level id
