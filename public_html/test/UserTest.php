@@ -107,7 +107,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -140,7 +140,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// edit the User and update it in mySQL
@@ -181,7 +181,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 
 		// delete the User from mySQL
@@ -218,7 +218,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -249,7 +249,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -286,7 +286,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->user->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
