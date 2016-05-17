@@ -128,7 +128,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 	}
 
@@ -169,7 +169,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 	}
 
@@ -206,7 +206,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testDeleteInvalidUser() {
 		// create a User and try to delete it without actually inserting it
-		$user = new User(null, $this->accessLevel->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 	}
 
@@ -274,7 +274,7 @@ Class UserTest extends MlbScoutTest {
 	public function testGetInvalidUserByUserEmail() {
 		// grab a User by searching for email that does not exist
 		$user = User::getUserByUserEmail($this->getPDO(), "if nothing is what you seek, you have found what you are looking for");
-		$user->assertCount(0, $user);
+		$this->assertCount(0, $user);
 	}
 
 
@@ -286,7 +286,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
