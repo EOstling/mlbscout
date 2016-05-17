@@ -72,8 +72,7 @@ class AccessLevelTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidAccessLevel() {
 		// create a Access Level with a non null Access Level id and watch it fail
-		$accessLevel = new AccessLevel(MlbScoutTest::INVALID_KEY, $this->VALID_ACCESSLEVELNAME);
-		$accessLevel->insert($this->getPDO());
+		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
 		$accessLevel->update($this->getPDO());
 	}
 
