@@ -24,12 +24,12 @@ Class UserTest extends MlbScoutTest {
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN
 	 */
-	protected $VALID_USERACTIVATIONTOKEN = "0f25eeb7c6a7518";
+	protected $VALID_USERACTIVATIONTOKEN = null;
 	/**
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN2
 	 */
-	protected $VALID_USERACTIVATIONTOKEN2 = "ca36d07f9e443f";
+	protected $VALID_USERACTIVATIONTOKEN2 = null;
 	/**
 	 * email of the user
 	 * @var string $VALID_USEREMAIL
@@ -94,7 +94,7 @@ Class UserTest extends MlbScoutTest {
 		//create and insert a User to own the account
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
-
+		$this->activationToken = random_bytes(16);
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 
