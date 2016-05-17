@@ -65,7 +65,7 @@ class User implements \JsonSerializable {
 	 * @param string $newUserFirstName new value of first name
 	 * @param string $newUserHash new value of user hash
 	 * @param string $newUserLastName new value of user last name
-	 * @param int $newUserPhoneNumber new value of user phone number
+	 * @param string $newUserPhoneNumber new value of user phone number
 	 * @param string $newUserSalt new value of user salt
 	 * @throws \RangeException if data values are out of bounds
 	 * @throws \TypeError if data types violate type hints
@@ -156,7 +156,7 @@ class User implements \JsonSerializable {
 		$this->userAccessLevelId = $newUserAccessLevelId;
 	}
 
-	/**
+	/**apiCall
 	 * accessor method for user activation token
 	 *
 	 * @return string value of activation token
@@ -172,11 +172,12 @@ class User implements \JsonSerializable {
 	 * @throws \RangeException if $newUserActivationToken is not positive
 	 * @throws \TypeError if $newUserActivation in not an integer
 	 */
-	public function setUserActivationToken($newUserActivationToken) {
-
-		// verify the user activation token is positive
-		if($newUserActivationToken <=0) {
-			throw(new \RangeException("user activation token is not positive"));
+	public function setUserActivationToken(string $newUserActivationToken) {
+		if(!ctype_xdigit($newUserActivationToken)) {
+			throw (new \InvalidArgumentException ("user activation is empty or insecure"));
+		}
+		if(($newUserActivationToken) === 32) {
+			throw(new \RangeException("user activation token is not of valid length"));
 		}
 
 		//convert and store the user activation token
@@ -327,7 +328,7 @@ class User implements \JsonSerializable {
 	 * mutator method for user phone number
 	 *
 	 * @param string $newUserPhoneNumber new value of user phone number
-	 * @throws UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \UnexpectedValueException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
 	public function setUserPhoneNumber($newUserPhoneNumber) {
