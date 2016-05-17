@@ -107,7 +107,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -128,7 +128,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 	}
 
@@ -140,7 +140,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// edit the User and update it in mySQL
@@ -169,7 +169,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 	}
 
@@ -181,7 +181,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 
 		// delete the User from mySQL
@@ -206,7 +206,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testDeleteInvalidUser() {
 		// create a User and try to delete it without actually inserting it
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 	}
 
@@ -218,7 +218,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -249,7 +249,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -286,7 +286,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
