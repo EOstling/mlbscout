@@ -104,7 +104,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testInsertValidUser() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConncection()->getRowCount("user");
+		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
 		$user = new User(null, $this->user->getUserId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
