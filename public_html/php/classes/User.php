@@ -338,7 +338,7 @@ class User implements \JsonSerializable {
 		}
 
 		//verify the user phone number will fit in the database
-		if(strlen($newUserLastName) > 20) {
+		if(strlen($newUserPhoneNumber) > 20) {
 			throw(new \RangeException("phone number is too large"));
 		}
 
