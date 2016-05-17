@@ -72,7 +72,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(int $newUserId = null, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, int $newUserPhoneNumber, string $newUserSalt = null) {
+	public function __construct(int $newUserId = null, int $newUserAccessLevelId, $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
@@ -317,7 +317,7 @@ class User implements \JsonSerializable {
 	/**
 	 * accessor method for user phone number
 	 *
-	 * @return int value of user phone number
+	 * @return string value of user phone number
 	 */
 	public function getUserPhoneNumber() {
 		return ($this->userPhoneNumber);
@@ -326,16 +326,20 @@ class User implements \JsonSerializable {
 	/**
 	 * mutator method for user phone number
 	 *
-	 * @param int $newUserPhoneNumber new value of user phone number
-	 * @throws \InvalidArgumentException if $newUserPhoneNumer is not a integer
-	 * @throws \TypeError if $newUserPhoneNumber is not a string
+	 * @param string $newUserPhoneNumber new value of user phone number
+	 * @throws UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
 	public function setUserPhoneNumber($newUserPhoneNumber) {
-		// verify the user phone number is secure
-		$newUserPhoneNumber = trim($newUserPhoneNumber);
-		$newUserPhoneNumber = filter_var($newUserPhoneNumber, FILTER_VALIDATE_INT);
-		if(empty($newUserPhoneNumber) === true) {
-			throw(new \InvalidArgumentException("user phone number is empty or insecure"));
+		// verify the phone number is valid
+		$newUserPhoneNumber = filter_var($newUserPhoneNumber, FILTER_SANITIZE_STRING);
+		if($newUserPhoneNumber === false) {
+			throw(new \UnexpectedValueException("phone number is not a valid string"));
+		}
+
+		//verify the user phone number will fit in the database
+		if(strlen($newUserLastName) > 20) {
+			throw(new \RangeException("phone number is too large"));
 		}
 
 		// store the user phone number
