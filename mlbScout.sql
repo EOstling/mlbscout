@@ -21,7 +21,7 @@ CREATE TABLE user(
 	userHash CHAR(128) NOT NULL,
 	userLastName VARCHAR(32) NOT NULL,
 	userPassword VARCHAR(64) NOT NULL,
-	userPhoneNumber INT NOT NULL,
+	userPhoneNumber VARCHAR(20) NOT NULL,
 	userSalt CHAR(64) NOT NULL,
 	userUpdate VARCHAR(64),
 	INDEX(userId),

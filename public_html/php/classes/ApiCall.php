@@ -67,9 +67,9 @@ class ApiCall implements \JsonSerializable {
 	 * @param string $newApiCallQueryString
 	 * @param string $newApiCallPayload
 	 * @param string $newApiCallURL
-	 * throws InvalidArgument exception
-	 * throws Typerror @var $typeError;
-	 * throws exception
+	 * @throws \Exception
+	 * @throws \TypeError
+	 * @internal param $typeError ;
 	 */
 	public function __construct(int $newApiCallId, int $newApiCallUserId, string $newApiCallBrowser,
 										 \DateTime $newApiCallDateTime, string $newApiCallHttpVerb, string $newApiCallIp,
@@ -384,7 +384,7 @@ class ApiCall implements \JsonSerializable {
 	 * throws PdoException
 	 * @param \PDO $pdo
 	 * @param string $ApiCallId
-	 * @return \apiClass|null
+	 * @return ApiCall|null
 	 */
 	public function getApiCallByApiCallId(\PDO $pdo, string $ApiCallId) {
 		if($ApiCallId <= 0) {
@@ -403,7 +403,7 @@ class ApiCall implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$apiCall = new \apiClass($row["UserId"], $row["CallId"], $row["Browser"], $row["ApiDateTime"]);
+				$apiCall = new apiClass($row["UserId"], $row["CallId"], $row["Browser"], $row["ApiDateTime"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
