@@ -2,7 +2,7 @@
 namespace Edu\Cnm\MlbScout;
 
 use Edu\Cnm\MlbScout\Test\MlbScoutTest;
-use Edu\Cnm\MlbScout\User;
+use Edu\Cnm\MlbScout\{AccessLevel};
 
 // grab the project test parameters
 require_once("MlbScoutTest.php");
@@ -107,7 +107,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->AccessLevel->getUserAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
