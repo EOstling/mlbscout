@@ -11,13 +11,11 @@ class AccessLevel implements \JsonSerializable {
 	 * @var int $accessLevelId
 	 */
 	private $accessLevelId;
-
 	/**
 	 * access level set for user
 	 * @var string $accessLevelName
 	 */
 	private $accessLevelName;
-
 	/**
 	 * constructor for this AccessLevel
 	 *
@@ -45,8 +43,7 @@ class AccessLevel implements \JsonSerializable {
 			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
-
-}
+	}
 	/**
 	 * accessor method for access level id
 	 *
@@ -55,7 +52,7 @@ class AccessLevel implements \JsonSerializable {
 	public function getAccessLevelId() {
 		return $this->accessLevelId;
 	}
-	
+
 	/**
 	 * mutator method for access level id
 	 * @param int|null $newAccessLevelId new value of access level id
@@ -68,16 +65,14 @@ class AccessLevel implements \JsonSerializable {
 			$this->accessLevelId = null;
 			return;
 		}
-
 		// verify the access level id is positive
 		if($newAccessLevelId <=0) {
 			throw(new \RangeException("access level is is not positive"));
 		}
-
 		//convert and store the access level id
 		$this->accessLevelId = $newAccessLevelId;
 	}
-	
+
 	/**
 	 * accessor method for access level name
 	 * @return string value of access level name
@@ -85,7 +80,7 @@ class AccessLevel implements \JsonSerializable {
 	public function getAccessLevelName() {
 		return $this->accessLevelName;
 	}
-	
+
 	/**
 	 * mutator method for access level name
 	 *
@@ -101,19 +96,17 @@ class AccessLevel implements \JsonSerializable {
 		if(empty($newAccessLevelName) === true) {
 			throw(new \InvalidArgumentException("access level name is empty or insecure"));
 		}
-
 		// verify the access level name will fit in the database
 		if(strlen($newAccessLevelName) > 24) {
 			throw(new \RangeException("access level name is too large"));
 		}
-
 		// store the access level name
 		$this->accessLevelName = $newAccessLevelName;
 	}
-	
+
 	/**
 	 * inserts this access level into mySQL
-	 * 
+	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
@@ -132,29 +125,25 @@ class AccessLevel implements \JsonSerializable {
 		//update the null accessLevelId with what mySQL just game us
 		$this->accessLevelId = intval($pdo->lastInsertId());
 	}
-
-		/**
-		 * deletes this Access Level from mySQL
-		 *
-		 * @param \PDO $pdo PDO connection object
-		 * @throws \PDOException when mySQL related errors occur
-		 * @throws \TypeError if $pdo is not a PDO connection object
-		 */
+	/**
+	 * deletes this Access Level from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
 	public function delete(\PDO $pdo) {
 		// enforce the accessLevelId is not null
 		if($this->accessLevelId === null) {
 			throw(new \PDOException("unable to delete a access level that does not exist"));
 		}
-
 		// create query template
 		$query = "DELETE FROM accessLevel WHERE accessLevelId = :accessLevelId";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the place holders in the template
 		$parameters = ["accessLevelId" => $this->accessLevelId];
 		$statement->execute($parameters);
 	}
-
 	/**
 	 * updates this AccessLevel from mySQL
 	 *
@@ -167,19 +156,16 @@ class AccessLevel implements \JsonSerializable {
 		if($this->accessLevelId === null) {
 			throw(new \PDOException("unable to delete a access level that does not exist"));
 		}
-
 		// create query template
 		$query = "UPDATE accessLevel SET accessLevelName = :accessLevelName WHERE accessLevelId = :accessLevelId";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the place holds in the template
 		$parameters = ["accessLevelName" =>$this->accessLevelName, "accessLevelId" => $this->accessLevelId];
 		$statement->execute($parameters);
 	}
-
 	/**
 	 * gets the Access Level by accessLevelId
-	 * 
+	 *
 	 * @param \PDO $pdo $pdo PDO connection object
 	 * @param int $accessLevelId access level id to search for
 	 * @return AccessLevel|null AccessLevel found or null if not found
@@ -187,19 +173,16 @@ class AccessLevel implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 */
 	public static function getAccessLevelByAccessLevelId (\PDO $pdo, int $accessLevelId) {
-	// sanitize the access level id before searching
+		// sanitize the access level id before searching
 		if($accessLevelId <=0) {
 			throw(new \PDOException("access level id is not positive"));
 		}
-
 		// create query template
 		$query = "SELECT accessLevelId, accessLevelName from accessLevel WHERE accessLevelId = :accessLevelId";
 		$statement = $pdo->prepare($query);
-
 		// bind the access level id to the place holder in the template
 		$parameters = array("accessLevelId" => $accessLevelId);
 		$statement ->execute($parameters);
-
 		// grab the AccessLevel from mySQL
 		try {
 			$accessLevel = null;
@@ -213,7 +196,7 @@ class AccessLevel implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($accessLevel);
-}
+	}
 	/**
 	 * gets the AccessLevel by accessLevelName
 	 *
@@ -230,16 +213,13 @@ class AccessLevel implements \JsonSerializable {
 		if(empty($accessLevelName)) {
 			throw(new \PDOException("access level name is invalid"));
 		}
-
 		// create query template
 		$query = "SELECT accessLevelId, accessLevelName FROM accessLevel WHERE accessLevelName LIKE :accessLevelName";
 		$statement = $pdo->prepare($query);
-
 		//bind the access level name to the place holder in the template
 		$accessLevelName = "%$accessLevelName%";
 		$parameters = array("accessLevelName" => $accessLevelName);
 		$statement->execute($parameters);
-
 		//build an array of access levels
 		$accessLevels = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -254,9 +234,7 @@ class AccessLevel implements \JsonSerializable {
 			}
 		}
 		return($accessLevels);
-
 	}
-
 	/**
 	 * gets all Access Levels
 	 * @param \PDO $pdo PDO connection object
@@ -269,7 +247,6 @@ class AccessLevel implements \JsonSerializable {
 		$query = "SELECT accessLevelId, accessLevelName FROM accessLevel";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
-
 		// build an array of Access Levels
 		$accessLevels = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -285,7 +262,6 @@ class AccessLevel implements \JsonSerializable {
 		}
 		return($accessLevels);
 	}
-
 	/**
 	 * formats the state variables for JSON serialization
 	 *
@@ -295,5 +271,4 @@ class AccessLevel implements \JsonSerializable {
 		$fields = get_object_vars($this);
 		return ($fields);
 	}
-
 }
