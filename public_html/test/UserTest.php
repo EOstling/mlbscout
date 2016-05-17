@@ -281,7 +281,7 @@ Class UserTest extends MlbScoutTest {
 	/**
 	 * test grabbing all Users
 	 */
-	public function testGatAllValidUsers() {
+	public function testGetAllValidUsers() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
 

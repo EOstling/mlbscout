@@ -4,7 +4,7 @@ namespace Edu\Cnm\MlbScout;
 
 require_once ("autoload.php");
 /**
- * User Class for MLBscout Capstone
+ * User Class for mlbscout Capstone
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
  */
@@ -72,7 +72,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(int $newUserId = null, int $newUserAccessLevelId, string $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
+	public function __construct(int $newUserId = null, int $newUserAccessLevelId , string $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
@@ -169,8 +169,9 @@ class User implements \JsonSerializable {
 	 * mutator method for user activation token
 	 *
 	 * @param string $newUserActivationToken new value
+	 * @throws \InvalidArgumentException if $newUserActivationToken is not a valid email or insecure
 	 * @throws \RangeException if $newUserActivationToken is not positive
-	 * @throws \TypeError if $newUserActivation in not an integer
+	 * @throws \TypeError if $newUserActivationToken in not an integer
 	 */
 	public function setUserActivationToken(string $newUserActivationToken) {
 		if(!ctype_xdigit($newUserActivationToken)) {
