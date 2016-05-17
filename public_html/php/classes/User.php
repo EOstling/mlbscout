@@ -156,7 +156,7 @@ class User implements \JsonSerializable {
 		$this->userAccessLevelId = $newUserAccessLevelId;
 	}
 
-	/**apiCall
+	/**
 	 * accessor method for user activation token
 	 *
 	 * @return string value of activation token
@@ -175,7 +175,7 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserActivationToken(string $newUserActivationToken) {
 		if(!ctype_xdigit($newUserActivationToken)) {
-			throw (new \InvalidArgumentException ("user activation is empty or insecure"));
+			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
 		if(($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
