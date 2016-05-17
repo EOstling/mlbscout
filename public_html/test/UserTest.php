@@ -97,12 +97,6 @@ Class UserTest extends MlbScoutTest {
 		$this->VALID_USERACTIVATIONTOKEN = bin2hex(random_bytes(16));
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
-
-		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), "userActivationToken", "userEmail", "userFirstName", "userHash", "userLastName", "userPhoneNumber", "userSalt");
-
-		//var_dump($this->accessLevel->getAccessLevelId());
-
-		$this->user->insert($this->getPDO());
 	}
 
 	/**
