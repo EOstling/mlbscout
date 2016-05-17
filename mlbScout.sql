@@ -25,7 +25,9 @@ CREATE TABLE user(
 	userSalt CHAR(64) NOT NULL,
 	userUpdate VARCHAR(64),
 	INDEX(userId),
+	INDEX (userAccessLevelId),
 	UNIQUE(userEmail),
+	FOREIGN KEY (userAccessLevelId) REFERENCES accessLevel(accessLevelId),
 	PRIMARY KEY (userId)
 );
 
