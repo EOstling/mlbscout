@@ -59,7 +59,7 @@ class AccessLevel implements \JsonSerializable {
 	 * @throws \RangeException if $newAccessLevelId
 	 * @throws \TypeError if $newAccessLevelId is not an integer
 	 */
-	public function setAccessLevelId($newAccessLevelId) {
+	public function setAccessLevelId(int $newAccessLevelId = null) {
 		// base case: if the new access level id is null, this a new access level without a mySQL
 		if($newAccessLevelId === null) {
 			$this->accessLevelId = null;
