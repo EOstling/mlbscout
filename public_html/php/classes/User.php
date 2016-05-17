@@ -510,13 +510,13 @@ class User implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the user Email to the place holder in the template
-		$userEmail = "%userEmail%";
+		$userEmail = "%$userEmail%";
 		$parameters = array("userEmail" => $userEmail);
 		$statement->execute($parameters);
 
 		// build an array of users
 		$users = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDOException::FETCH_ASSOC);
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		WHILE(($row = $statement->fetch()) !== false) {
 			try {
 				$user = new User($row["UserId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
