@@ -117,8 +117,11 @@ Class UserTest extends MlbScoutTest {
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
+
 	}
 
 	/**
@@ -128,7 +131,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 	}
 
@@ -140,26 +143,30 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 
 		// edit the User and update it in mySQL
 		$user->setUserActivationToken($this->VALID_USERACTIVATIONTOKEN);
 		$user->setUserEmail($this->VALID_USEREMAIL);
 		$user->setUserFirstName($this->VALID_USERFIRSTNAME);
+		$user->getUserHash($this->hash);
 		$user->setUserLastName($this->VALID_USERLASTNAME);
 		$user->setUserPhoneNumber($this->VALID_USERPHONENUMBER);
+		$user->getUserSalt($this->salt);
 		$user->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserID());
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
 	/**
@@ -169,7 +176,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testUpdateInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 	}
 
@@ -181,7 +188,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->delete($this->getPDO());
 
 		// delete the User from mySQL
@@ -189,14 +196,16 @@ Class UserTest extends MlbScoutTest {
 		$user->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserID());
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
 	/**
@@ -206,7 +215,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testDeleteInvalidUser() {
 		// create a User and try to delete it without actually inserting it
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->delete($this->getPDO());
 	}
 
@@ -218,18 +227,20 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserID());
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
 	/**
@@ -249,7 +260,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -264,8 +275,10 @@ Class UserTest extends MlbScoutTest {
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
 	/**
@@ -286,7 +299,7 @@ Class UserTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER);
+		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -301,8 +314,10 @@ Class UserTest extends MlbScoutTest {
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
 		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
 		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
 
