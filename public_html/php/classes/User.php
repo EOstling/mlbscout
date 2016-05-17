@@ -230,7 +230,7 @@ class User implements \JsonSerializable {
 	 * mutator method for user first name
 	 *
 	 * @param string $newUserFirstName new value of first name
-	 * @throws UnexpectedValueException if $newUserFirstName is not valid
+	 * @throws \UnexpectedValueException if $newUserFirstName is not valid
 	 * @throws \RangeException if $newUserFirstName is > 32 characters
 	 */
 	public function setUserFirstName($newUserFirstName) {
@@ -296,7 +296,7 @@ class User implements \JsonSerializable {
 	 * mutator method for user last name
 	 *
 	 * @param string $newUserLastName new value of user last name
-	 * @throws UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \UnexpectedValueException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
 	public function setUserLastName($newUserLastName) {
