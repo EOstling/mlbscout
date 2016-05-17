@@ -125,6 +125,7 @@ class AccessLevel implements \JsonSerializable {
 		//update the null accessLevelId with what mySQL just game us
 		$this->accessLevelId = intval($pdo->lastInsertId());
 	}
+	
 	/**
 	 * deletes this Access Level from mySQL
 	 *

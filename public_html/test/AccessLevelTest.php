@@ -139,7 +139,6 @@ class AccessLevelTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("accessLevel");
 		// create a new Access Level and insert it into mySQL
 		$accessLevel = new AccessLevel(null, $this->VALID_ACCESSLEVELNAME);
-		var_dump($accessLevel);
 		$accessLevel->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = AccessLevel::getAccessLevelByAccessLevelName($this->getPDO(), $accessLevel->getAccessLevelName());
