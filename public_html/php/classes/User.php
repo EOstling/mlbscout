@@ -269,14 +269,16 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserHash($newUserHash) {
 		// verify the user hash is secure
-		$newUserHash = trim($newUserHash);
-		$newUserHash = filter_var($newUserHash, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newUserHash === true)) {
+		if(empty($newUserHash)) {
 			throw(new \InvalidArgumentException("user hash is empty or insecure"));
 		}
 
+		if(!ctype_xdigit($newUserHash)) {
+			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
+		}
+
 		// verify hash will fit in the database
-		if(strlen($newUserHash) > 128) {
+		if(strlen($newUserHash) !== 128) {
 			throw(new \RangeException("user hash is too large"));
 		}
 
