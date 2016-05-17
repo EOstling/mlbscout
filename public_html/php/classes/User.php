@@ -177,7 +177,7 @@ class User implements \JsonSerializable {
 		if(!ctype_xdigit($newUserActivationToken)) {
 			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
-		if(($newUserActivationToken) !== 32) {
+		if(strlen($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
 		}
 

@@ -111,7 +111,7 @@ Class UserTest extends MlbScoutTest {
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserID());
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
