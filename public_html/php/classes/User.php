@@ -204,7 +204,7 @@ class User implements \JsonSerializable {
 	public function setUserEmail($newUserEmail) {
 		//verify the user email is secure
 		$newUserEmail = trim($newUserEmail);
-		$newUserEmail = filter_var($newUserEmail, FILTER_VALIDATE_EMAIL);
+		$newUserEmail = filter_var($newUserEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newUserEmail) === true) {
 			throw(new \InvalidArgumentException("email is empty or insecure"));
 		}
@@ -492,6 +492,43 @@ class User implements \JsonSerializable {
 		return($user);
 	}
 
+	/**
+	 * gets the User by userAccessLevelId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $userAccessLevelId User id to search for
+	 * @return User|null User found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getUserByUserAccessLevelId(\PDO $pdo, int $userAccessLevelId) {
+		// sanitize the userId before searching
+		if($userAccessLevelId <= 0) {
+			throw(new \PDOException("access level id is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT :userId, :userAccessLevelId, :userActivationToken, :userEmail, :userFirstName, :userHash, :userLastName, :userPhoneNumber, :userSalt FROM User WHERE :userAccessLevelId LIKE :userAccessLevelId";
+		$statement = $pdo -> prepare($query);
+
+		// bind the user access level id to the place holder template
+		$parameters = array("userAccessLevelId" =>$userAccessLevelId);
+		$statement->execute($parameters);
+
+		// grab the user from mySQL
+		try{
+			$user = null;
+			$statement -> setFetchMode (\PDO::FETCH_ASSOC);
+			$row = $statement ->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($user);
+	}
 	/**
 	 * gets the User by userEmail
 	 *
