@@ -147,6 +147,7 @@ Class UserTest extends MlbScoutTest {
 		$user->insert($this->getPDO());
 
 		// edit the User and update it in mySQL
+		$user->setUserAccessLevelId($this->accessLevel);
 		$user->setUserActivationToken($this->VALID_USERACTIVATIONTOKEN);
 		$user->setUserEmail($this->VALID_USEREMAIL);
 		$user->setUserFirstName($this->VALID_USERFIRSTNAME);
