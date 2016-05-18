@@ -297,7 +297,7 @@ Class UserTest extends MlbScoutTest {
 
 		//grab the result from the array and validate it
 		$pdoUser = $results[0];
-		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoUser->getUserAccessLevelId(), $this->accessLevel->getAccessLevelId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
@@ -336,7 +336,7 @@ Class UserTest extends MlbScoutTest {
 
 		//grab the result from the array and validate it
 		$pdoUser = $results[0];
-		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoUser->getUserAccessLevelId(), $this->accessLevel->getAccessLevelId());
 		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
 		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
