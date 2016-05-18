@@ -1,5 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout;
+use Edu\Cnm\MlbScout\Test\apiClass;
+
 require_once("autoload.php");
 
 class ApiCall implements \JsonSerializable {
