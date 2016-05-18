@@ -221,7 +221,7 @@ class User implements \JsonSerializable {
 	/**
 	 * accessor method for user first name
 	 *
-	 * @return string value of user first name
+	 * @return string value of first name
 	 */
 	public function getUserFirstName() {
 		return ($this->userFirstName);
@@ -229,24 +229,25 @@ class User implements \JsonSerializable {
 
 	/**
 	 * mutator method for user first name
-	 *
 	 * @param string $newUserFirstName new value of first name
-	 * @throws \UnexpectedValueException if $newUserFirstName is not valid
+	 * @throws \InvalidArgumentException if $newUserFirstName is not a first name or insecure
 	 * @throws \RangeException if $newUserFirstName is > 32 characters
+	 * @throws \TypeError if $newUserEmail is not a string
 	 */
 	public function setUserFirstName($newUserFirstName) {
-		// verify the first name is valid
-		$newUserFirstName = filter_var($newUserFirstName, FILTER_SANITIZE_STRING);
-		if($newUserFirstName === false) {
-			throw(new \UnexpectedValueException("first name is not a valid string"));
+		//verify the user email is secure
+		$newUserFirstName = trim($newUserFirstName);
+		$newUserFirstName = filter_var($newUserFirstName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newUserFirstName) === true) {
+			throw(new \InvalidArgumentException("first name is empty or insecure"));
 		}
 
-		//verify the user first name will fit in the database
+		//verify the user email will fit in the database
 		if(strlen($newUserFirstName) > 32) {
-			throw(new \RangeException("first name is too long please change it"));
+			throw(new \RangeException("email is too large"));
 		}
 
-		// store the user first name
+		// store the user email
 		$this->userFirstName = $newUserFirstName;
 	}
 
@@ -491,7 +492,7 @@ class User implements \JsonSerializable {
 		}
 		return($user);
 	}
-	
+
 	/**
 	 * gets the User by userEmail
 	 *
