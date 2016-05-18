@@ -83,7 +83,7 @@ class apiClass extends MlbScoutTest {
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com",
-			"Tyrion", $this->userHash, "Lannister" , "8675309", $this->userSalt);
+			"Tyrion", $this->hash, "Lannister" , "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 		$this->ApiCallDateTime = new \DateTime();
 	}
@@ -118,7 +118,7 @@ class apiClass extends MlbScoutTest {
 	/**
 	 * test inserting a DateTime that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 **/
 
 	public function testInsertInvalidApiCall() {
@@ -161,7 +161,7 @@ class apiClass extends MlbScoutTest {
 
 	/**
 	 * Give an invalid ApiCall
-	 *  @expectedException PDOException
+	 *  @expectedException \PDOException
 	 */
 	public function testUpdateInvalidApiCall() {
 		$apiCall = new apiCall(null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
@@ -191,7 +191,7 @@ class apiClass extends MlbScoutTest {
 
 	/**
 	 * Test invalid delete Invalid ApiCall
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 */
 	public function testDeleteInvalidApiCall() {
 		// create a ApiCall and try to delete it without actually inserting it
