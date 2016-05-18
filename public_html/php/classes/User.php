@@ -174,9 +174,12 @@ class User implements \JsonSerializable {
 	 * @throws \TypeError if $newUserActivationToken in not an integer
 	 */
 	public function setUserActivationToken(string $newUserActivationToken) {
+		// verify the activation token is a hexadecimal
 		if(!ctype_xdigit($newUserActivationToken)) {
 			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
+
+		// verify the activation token is of valid length
 		if(strlen($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
 		}
@@ -274,13 +277,13 @@ class User implements \JsonSerializable {
 			throw(new \InvalidArgumentException("user hash is empty or insecure"));
 		}
 
+		// verify the hash is a hexadecimal
 		if(!ctype_xdigit($newUserHash)) {
-			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
+			throw(new \InvalidArgumentException ("user hash is empty or insecure"));
 		}
-
-		// verify hash will fit in the database
+		//verify the hash will fit in the database
 		if(strlen($newUserHash) !== 128) {
-			throw(new \RangeException("user hash is too large"));
+			throw(new \RangeException("user hash is not of valid length"));
 		}
 
 		// store the user hash
@@ -369,18 +372,19 @@ class User implements \JsonSerializable {
 	 * @throws \TypeError if $newUserSalt is not a string
 	 */
 	public function setUserSalt($newUserSalt) {
-		//verify the user salt is secure
-		$newUserSalt = trim($newUserSalt);
-		$newUserSalt = filter_var($newUserSalt, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newUserSalt) === true) {
-			throw(new \InvalidArgumentException("users salt is empty or insecure"));
+		// verify the user salt is secure
+		if(empty($newUserSalt)) {
+			throw(new \InvalidArgumentException("user salt is empty or insecure"));
 		}
 
-		// verify the user salt will fit in the database
-		if(strlen($newUserSalt) > 64) {
-			throw(new \RangeException ("user salt it too large"));
+		// verify the Salt is a hexadecimal
+		if(!ctype_xdigit($newUserSalt)) {
+			throw(new \InvalidArgumentException ("user salt is empty or insecure"));
 		}
-
+		//verify the salt will fit in the database
+		if(strlen($newUserSalt) !== 64) {
+			throw(new \RangeException("user salt is not of valid length"));
+		}
 
 		//store the user salt
 		$this->userSalt = $newUserSalt;
