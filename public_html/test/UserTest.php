@@ -160,12 +160,12 @@ Class UserTest extends MlbScoutTest {
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserAccessLevelId(), $this->accessLevel->getAccessLevelId());
-		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
-		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
-		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
+		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN2);
+		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL2);
+		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME2);
 		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
-		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
-		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
+		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME2);
+		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER2);
 		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
