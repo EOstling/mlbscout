@@ -105,7 +105,7 @@ class apiClass extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUser"));
-		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallId->getUser());
+		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUser());
 		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
 		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_ApiCallDateTime);
 		$this->assertEquals($pdoApiCall->getUrl(), $this->VALID_ApiCallURL);
@@ -230,7 +230,7 @@ class apiClass extends MlbScoutTest {
 	 */
 	public function testGetInvalidApiCallbyCallId() {
 		//Grab an invalid Call Id that exceeds
-		$ApiCall = ApiCall::getApiCallByCallId($this->getPDO(), MlbScout::INVALID_KEY);
+		$ApiCall = ApiCall::getApiCallByCallId($this->getPDO(), MlbScoutTest::INVALID_KEY);
 		$this->assertNull($ApiCall);
 	}
 
@@ -266,7 +266,7 @@ class apiClass extends MlbScoutTest {
 	 */
 	public function testGetInvalidApiCallbyUserId() {
 //Grab an invalid Call Id that exceeds
-		$ApiCall = ApiCall::getApiCallByCallId($this->getPDO(), MlbScout::INVALID_KEY);
+		$ApiCall = ApiCall::getApiCallByCallId($this->getPDO(), MlbScoutTest::INVALID_KEY);
 		$this->assertNull($ApiCall);
 	}
 
