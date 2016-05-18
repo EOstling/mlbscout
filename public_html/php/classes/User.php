@@ -204,7 +204,7 @@ class User implements \JsonSerializable {
 	public function setUserEmail($newUserEmail) {
 		//verify the user email is secure
 		$newUserEmail = trim($newUserEmail);
-		$newUserEmail = filter_var($newUserEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newUserEmail = filter_var($newUserEmail, FILTER_SANITIZE_EMAIL);
 		if(empty($newUserEmail) === true) {
 			throw(new \InvalidArgumentException("email is empty or insecure"));
 		}
@@ -447,11 +447,11 @@ class User implements \JsonSerializable {
 		}
 
 		// create a query template
-		$query = "UPDATE user SET userId = :userId, userAccessLevelId = :userAccessLevelId, userActivationToken = :userActivationToken, userEmail = :userEmail, userFirstName = :userFirstName, userHash = :userHash, userLastName = :userLastName, userPhoneNumber = :userPhoneNumber, userSalt = :userSalt";
+		$query = "UPDATE user SET userAccessLevelId = :userAccessLevelId, userActivationToken = :userActivationToken, userEmail = :userEmail, userFirstName = :userFirstName, userHash = :userHash, userLastName = :userLastName, userPhoneNumber = :userPhoneNumber, userSalt = :userSalt WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in this template
-		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
+		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt, "userId" => $this->userId];
 		$statement->execute($parameters);
 	}
 
