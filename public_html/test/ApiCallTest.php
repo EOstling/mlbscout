@@ -104,6 +104,7 @@ class apiClass extends MlbScoutTest {
 		$apiCall = new apiCall (null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
 			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
 			$this->VALID_ApiCallURL);
+			$apiCall->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoApiCall = apicall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("ApiUser"));
