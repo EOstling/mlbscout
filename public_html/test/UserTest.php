@@ -131,7 +131,7 @@ Class UserTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->insert($this->getPDO());
 	}
 
