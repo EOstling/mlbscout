@@ -43,12 +43,12 @@ abstract class MlbScoutTest extends \PHPUnit_Extensions_Database_TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
+		$dataset->addTable("accessLevel");
 		$dataset->addTable("user");
 		$dataset->addTable("team");
 		$dataset->addTable("player");
 		$dataset->addTable("schedule");
 		$dataset->addTable("favoritePlayer");
-		$dataset->addTable("accessLevel");
 		$dataset->addTable("apiCall");
 		return($dataset);
 	}
