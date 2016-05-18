@@ -145,6 +145,7 @@ class apiClass extends MlbScoutTest {
 		$apiCall = new apiCall(null, $this->VALID_ApiCallUserId, $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
 			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
 			$this->VALID_ApiCallURL);
+		$apiCall->insert($this->getPDO());
 		// edit the ApiCall and update it in mySQL
 		$apiCall->setQueryString($this->VALID_ApiCallHttpVerb2);
 		$apiCall->update($this->getPDO());
@@ -167,7 +168,7 @@ class apiClass extends MlbScoutTest {
 	 *  @expectedException \PDOException
 	 */
 	public function testUpdateInvalidApiCall() {
-		$apiCall = new apiCall(null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
+		$apiCall = new apiCall (null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
 			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
 			  $this->VALID_ApiCallURL);
 		$apiCall->update($this->getPDO());
