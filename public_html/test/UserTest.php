@@ -192,7 +192,7 @@ Class UserTest extends MlbScoutTest {
 		$user->insert($this->getPDO());
 
 		// delete the User from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("User"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$user->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
