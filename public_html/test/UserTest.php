@@ -211,35 +211,7 @@ Class UserTest extends MlbScoutTest {
 		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->delete($this->getPDO());
 	}
-
-	/**
-	 * test inserting a User and regrabbing it from mySQL
-	 */
-	public function testGetValidUserByUserAccessLevelId() {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("user");
-
-		//create a new User and insert to into mySQL
-		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
-		$user->delete($this->getPDO());
-
-		// grab the data from mySQL and enforce the fields match our expectations
-		$results = User::getUserByUserAccessLevelId($this->getPDO(), $user->getUserId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
-		$this->assertCount(1, $results);
-		$this->asserContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\User", $results);
-
-		// grab the result from the array and validate it
-		$pdoUser = $results[0];
-		$this->assertEquals($pdoUser->getUserAccessLevelId(), $this->accessLevel->getAccessLevelId());
-		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
-		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
-		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
-		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
-		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
-		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
-		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
-	}
+	
 	/**
 	 * test inserting a User and regrabbing it from mySQL
 	 */
