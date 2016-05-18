@@ -24,12 +24,12 @@ Class UserTest extends MlbScoutTest {
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN
 	 */
-	protected $VALID_USERACTIVATIONTOKEN = "string";
+	protected $VALID_USERACTIVATIONTOKEN = null;
 	/**
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN2
 	 */
-	protected $VALID_USERACTIVATIONTOKEN2 = "string";
+	protected $VALID_USERACTIVATIONTOKEN2 = null;
 	/**
 	 * email of the user
 	 * @var string $VALID_USEREMAIL
@@ -95,6 +95,7 @@ Class UserTest extends MlbScoutTest {
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->VALID_USERACTIVATIONTOKEN = bin2hex(random_bytes(16));
+		$this->VALID_USERACTIVATIONTOKEN2 = bin2hex(random_bytes(16));
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 	}
@@ -211,7 +212,7 @@ Class UserTest extends MlbScoutTest {
 		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
 		$user->delete($this->getPDO());
 	}
-	
+
 	/**
 	 * test inserting a User and regrabbing it from mySQL
 	 */
