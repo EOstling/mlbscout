@@ -147,12 +147,12 @@ Class UserTest extends MlbScoutTest {
 		$user->insert($this->getPDO());
 
 		// edit the User and update it in mySQL
-		$user->setUserActivationToken($this->VALID_USERACTIVATIONTOKEN);
-		$user->setUserEmail($this->VALID_USEREMAIL);
-		$user->setUserFirstName($this->VALID_USERFIRSTNAME);
+		$user->setUserActivationToken($this->VALID_USERACTIVATIONTOKEN2);
+		$user->setUserEmail($this->VALID_USEREMAIL2);
+		$user->setUserFirstName($this->VALID_USERFIRSTNAME2);
 		$user->setUserHash($this->hash);
-		$user->setUserLastName($this->VALID_USERLASTNAME);
-		$user->setUserPhoneNumber($this->VALID_USERPHONENUMBER);
+		$user->setUserLastName($this->VALID_USERLASTNAME2);
+		$user->setUserPhoneNumber($this->VALID_USERPHONENUMBER2);
 		$user->setUserSalt($this->salt);
 		$user->update($this->getPDO());
 
@@ -160,12 +160,12 @@ Class UserTest extends MlbScoutTest {
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertEquals($pdoUser->getUserAccessLevelId(), $this->accessLevel->getAccessLevelId());
-		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN2);
-		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL2);
-		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME2);
+		$this->assertEquals($pdoUser->getUserActivationToken(), $this->VALID_USERACTIVATIONTOKEN);
+		$this->assertEquals($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertEquals($pdoUser->getUserFirstName(), $this->VALID_USERFIRSTNAME);
 		$this->assertEquals($pdoUser->getUserHash(), $this->hash);
-		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME2);
-		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER2);
+		$this->assertEquals($pdoUser->getUserLastName(), $this->VALID_USERLASTNAME);
+		$this->assertEquals($pdoUser->getUserPhoneNumber(), $this->VALID_USERPHONENUMBER);
 		$this->assertEquals($pdoUser->getUserSalt(), $this->salt);
 	}
 
