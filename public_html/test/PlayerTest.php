@@ -146,7 +146,7 @@ class PlayerTest extends MlbScoutTest {
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
-		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->userHash,"userLastName", "8675309", $this->userSalt);
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash,"userLastName", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 	}
 

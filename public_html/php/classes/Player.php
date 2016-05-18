@@ -31,7 +31,7 @@ class Player implements \JsonSerializable {
 	 **/
 	private $playerBatting;
 	/**
-	 * this is if the player has commited to a school or another team
+	 * this is if the player has committed to a school or another team
 	 * @var string $playerCommitment
 	 **/
 	private $playerCommitment;
@@ -575,7 +575,7 @@ public function delete(\PDO $pdo) {
 	$query = "DELETE FROM player WHERE playerId =:playerId";
 	$statement = $pdo->prepare($query);
 
-	// bind the member variables to the place homder in the template
+	// bind the member variables to the place holder in the template
 	$parameters = ["playerId" => $this->playerId];
 	$statement->execute($parameters);
 }
