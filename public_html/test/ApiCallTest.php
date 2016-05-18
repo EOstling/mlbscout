@@ -1,6 +1,8 @@
 <?php
 namespace  Edu\Cnm\MlbScout\Test;
 use Edu\Cnm\MlbScout\{AccessLevel,User};
+use Edu\Cnm\MlbScout\ApiCall;
+
 /**
  * Full Unit test for Api Call Class.
  *	@see apiCall class
@@ -83,7 +85,7 @@ class apiClass extends MlbScoutTest {
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com",
-			"Tyrion", $this->hash, "Lannister" , "8675309", $this->salt);
+			"Tyrion", $this->hash, "Lannister", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 		$this->ApiCallDateTime = new \DateTime();
 	}
