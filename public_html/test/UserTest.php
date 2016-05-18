@@ -24,12 +24,12 @@ Class UserTest extends MlbScoutTest {
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN
 	 */
-	protected $VALID_USERACTIVATIONTOKEN;
+	protected $VALID_USERACTIVATIONTOKEN = null;
 	/**
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN2
 	 */
-	protected $VALID_USERACTIVATIONTOKEN2;
+	protected $VALID_USERACTIVATIONTOKEN2 = null;
 	/**
 	 * email of the user
 	 * @var string $VALID_USEREMAIL
