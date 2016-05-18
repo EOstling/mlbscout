@@ -150,10 +150,10 @@ Class UserTest extends MlbScoutTest {
 		$user->setUserActivationToken($this->VALID_USERACTIVATIONTOKEN);
 		$user->setUserEmail($this->VALID_USEREMAIL);
 		$user->setUserFirstName($this->VALID_USERFIRSTNAME);
-		$user->getUserHash($this->hash);
+		$user->setUserHash($this->hash);
 		$user->setUserLastName($this->VALID_USERLASTNAME);
 		$user->setUserPhoneNumber($this->VALID_USERPHONENUMBER);
-		$user->getUserSalt($this->salt);
+		$user->setUserSalt($this->salt);
 		$user->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
