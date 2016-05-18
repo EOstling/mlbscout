@@ -406,7 +406,7 @@ class User implements \JsonSerializable {
 		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 
-		//update the null userId with what mySQL just game us
+		//update the null userId with what mySQL just gave us
 		$this->userId = intval($pdo->lastInsertId());
 	}
 
