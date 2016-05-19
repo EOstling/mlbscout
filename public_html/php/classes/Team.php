@@ -195,7 +195,7 @@ class Team implements \JsonSerializable {
 	public function delete(\PDO $pdo) {
 		// enforce the teamId is not null
 		if($this->teamId === null) {
-			throw(new \PDOException("unable to delete a tweet that does not exist"));
+			throw(new \PDOException("unable to delete a team that does not exist"));
 		}
 
 		// create query template
