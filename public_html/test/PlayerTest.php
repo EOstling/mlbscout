@@ -229,16 +229,16 @@ class PlayerTest extends MlbScoutTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
-		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
-		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
-		$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
-		$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
-		$this->assertEquals($pdoPlayer->getPlayerHeight(), $this->VALID_PLAYERHEIGHT);
-		$this->assertEquals($pdoPlayer->getPlayerHomeTown(), $this->VALID_PLAYERHOMETOWN);
-		$this->assertEquals($pdoPlayer->getPlayerLastName(), $this->VALID_PLAYERLASTNAME);
-		$this->assertEquals($pdoPlayer->getPlayerPosition(), $this->VALID_PLAYERPOSITION);
-		$this->assertEquals($pdoPlayer->getPlayerThrowingHand(), $this->VALID_PLAYERTHROWINGHAND);
-		$this->assertEquals($pdoPlayer->getPlayerWeight(), $this->VALID_PLAYERWEIGHT);
+		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING2);
+		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT2);
+		$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME2);
+		$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS2);
+		$this->assertEquals($pdoPlayer->getPlayerHeight(), $this->VALID_PLAYERHEIGHT2);
+		$this->assertEquals($pdoPlayer->getPlayerHomeTown(), $this->VALID_PLAYERHOMETOWN2);
+		$this->assertEquals($pdoPlayer->getPlayerLastName(), $this->VALID_PLAYERLASTNAME2);
+		$this->assertEquals($pdoPlayer->getPlayerPosition(), $this->VALID_PLAYERPOSITION2);
+		$this->assertEquals($pdoPlayer->getPlayerThrowingHand(), $this->VALID_PLAYERTHROWINGHAND2);
+		$this->assertEquals($pdoPlayer->getPlayerWeight(), $this->VALID_PLAYERWEIGHT2);
    }
 
 	/**
@@ -249,6 +249,7 @@ class PlayerTest extends MlbScoutTest {
 	public function testUpdatedInvalidPlayer() {
 		// create a player with a non null player id and watch it fail
 		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player->insert($this->getPDO());
 		$player->update($this->getPDO());
 	}
 
@@ -527,7 +528,7 @@ class PlayerTest extends MlbScoutTest {
 	 */
 	public function testGetInvalidPlayerByPlayerHeight() {
 		// grab a player by searching for Height that does not exist
-		$player = Player::getPlayerByPlayerHeight($this->getPDO(), "nothing will be found");
+		$player = Player::getPlayerByPlayerHeight($this->getPDO(), 1);
 		$this->assertCount(0, $player);
 	}
 
@@ -737,7 +738,7 @@ class PlayerTest extends MlbScoutTest {
 	 */
 	public function testGetInvalidPlayerByPlayerWeight() {
 		// grab a player by searching for Weight that does not exist
-		$player = Player::getPlayerByPlayerWeight($this->getPDO(), "nothing will be found");
+		$player = Player::getPlayerByPlayerWeight($this->getPDO(), 1);
 		$this->assertCount(0, $player);
 	}
 }

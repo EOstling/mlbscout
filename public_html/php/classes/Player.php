@@ -779,7 +779,7 @@ public function delete(\PDO $pdo) {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getPlayerByHomeTown(\PDO $pdo, string $playerHomeTown) {
+	public static function getPlayerByPlayerHomeTown(\PDO $pdo, string $playerHomeTown) {
 		// sanitize the description before searching
 		$playerHomeTown = trim($playerHomeTown);
 		$playerHomeTown = filter_var($playerHomeTown, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
