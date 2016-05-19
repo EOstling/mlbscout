@@ -388,7 +388,7 @@ class Team implements \JsonSerializable {
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		return ($fields);
+		return($fields);
 	}
 }
 
