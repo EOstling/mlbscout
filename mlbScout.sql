@@ -83,7 +83,7 @@ CREATE TABLE favoritePlayer(
 	PRIMARY KEY (favoriteUserId,favoritePlayerId)
 );
 
-CREATE TABLE ApiCall(
+CREATE TABLE apiCall(
 	apiCallId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	apiCallUserId INT UNSIGNED NOT NULL,
 	apiCallBrowser VARCHAR(128) NOT NULL,
