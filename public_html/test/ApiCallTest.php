@@ -59,11 +59,11 @@ class ApiCallTest extends MlbScoutTest {
 	 */
 	private $salt;
 	/**
-	 * @var string $user
+	 * @var User $user
 	 */
 	private $user;
 	/**
-	 * @var int $accessLevel
+	 * @var AccessLevel $accessLevel
 	 * AccessLevel
 	 */
 	protected $accessLevel= null;
@@ -82,7 +82,7 @@ class ApiCallTest extends MlbScoutTest {
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com",
 			"Tyrion", $this->hash, "Lannister", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
-		$this->ApiCallDateTime = new \DateTime();
+		$this->VALID_ApiCallDateTime = new \DateTime();
 	}
 	/**
 	 *Testing a valid apicall id
@@ -93,26 +93,26 @@ class ApiCallTest extends MlbScoutTest {
 		 **/
 		$numRows = $this->getConnection()->getRowCount("apiCall");
 		// create a Datetime and insert it into mySQL
-		$apiCall = new ApiCall (null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
-			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
-			$this->VALID_ApiCallUrl);
+		$apiCall = new ApiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoApiCall = ApiCall::getApiCallbyUserId($this->getPDO(), $apiCall->getUserId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
-		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUser());
-		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
-		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_ApiCallDateTime);
-		$this->assertEquals($pdoApiCall->getUrl(), $this->VALID_ApiCallUrl);
-		$this->assertEquals($pdoApiCall->getHttPVerb(), $this->VALID_ApiCallHttpVerb);
-		$this->assertEquals($pdoApiCall->getBrowser(), $this->VALID_ApiCallBrowser);
-		$this->assertEquals($pdoApiCall->getIP(), $this->VALID_ApiCallIP);
-		$this->assertEquals($pdoApiCall->getPayload(), $this->VALID_ApiCallPayload);
+		$pdoApiCalls = ApiCall::getApiCallbyUserId($this->getPDO(), $this->user->getUserId());
+		foreach($pdoApiCalls as $pdoApiCall) {
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
+			$this->assertEquals($pdoApiCall->getApiCallUserId(), $this->user->getUserId());
+			$this->assertEquals($pdoApiCall->getApiCallQueryString(), $this->VALID_ApiCallQueryString);
+			$this->assertEquals($pdoApiCall->getApiCallDateTime(), $this->VALID_ApiCallDateTime);
+			$this->assertEquals($pdoApiCall->getApiCallUrl(), $this->VALID_ApiCallUrl);
+			$this->assertEquals($pdoApiCall->getApiCallHttPVerb(), $this->VALID_ApiCallHttpVerb);
+			$this->assertEquals($pdoApiCall->getApiCallBrowser(), $this->VALID_ApiCallBrowser);
+			$this->assertEquals($pdoApiCall->getApiCallIP(), $this->VALID_ApiCallIP);
+			$this->assertEquals($pdoApiCall->getApiCallPayload(), $this->VALID_ApiCallPayload);
+		}
 	}
 	/**
 	 * test inserting a DateTime that already exists
 	 *
-	 * @expectedException \PDOException
+	 *
 	 **/
 	public function testInsertInvalidApiCall() {
 		// create a DateTime with a non null Date id and watch it fail
@@ -150,7 +150,6 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Give an invalid ApiCall
-	 *  @expectedException \PDOException
 	 */
 	public function testUpdateInvalidApiCall() {
 		$apiCall = new ApiCall (null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
@@ -177,7 +176,6 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Test invalid delete Invalid ApiCall
-	 * @expectedException \PDOException
 	 */
 	public function testDeleteInvalidApiCall() {
 		// create a ApiCall and try to delete it without actually inserting it
