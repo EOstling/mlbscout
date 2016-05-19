@@ -90,7 +90,7 @@ class TeamTest extends MlbScoutTest {
 		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
 		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME2);
-		$this->assertEquals($pdoTeam->getTeamType(), $this);
+		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE2);
 	}
 
 	/**
