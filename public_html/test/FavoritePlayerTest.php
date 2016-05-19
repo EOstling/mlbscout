@@ -2,6 +2,7 @@
 namespace Edu\Cnm\MlbScout\FavoritePlayerTest\Test;
 
 use Edu\Cnm\MlbScout\{Player, User};
+use Edu\Cnm\MlbScout\AccessLevel;
 use Edu\Cnm\MlbScout\Test\MlbScoutTest;
 
 // grab the project test parameters
@@ -31,6 +32,11 @@ class FavoritePlayerTest extends MlbScoutTest {
 	 */
 	protected $VALID_USERID = "PHPUnit test passing";
 	/**
+	 * userAccessLevel acess level for the users;
+	 * @var AccessLevel
+	 */
+	protected $accessLevel = null;
+	/**
 	 * User that favorited the player; this is for foreign key relations
 	 */
 	protected $user = null;
@@ -47,11 +53,13 @@ class FavoritePlayerTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a User to favorite a player
-		$this->user = new User(null, "@phpunit", "test@phpunit.de", "+12125551212");
+		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel->insert($this->getPDO());
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash,"userLastName", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 
 		// create and insert a Player that a user can favorite
-		$this->player = new Player(null, @"phpunit", "test@phpunit.de", "+12125551212");
+		$this->player = new Player(null, "phpunit", "test@phpunit.de", "+12125551212");
 		$this->player->insert($this->getPDO());
 	}
 
