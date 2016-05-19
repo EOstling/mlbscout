@@ -40,7 +40,7 @@ class Team implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 **/
-	public function __construct(int $newTeamId = null, string $newTeamName, $newTeamType) {
+	public function __construct(int $newTeamId = null, string $newTeamName, string $newTeamType) {
 		try {
 			$this->setTeamId($newTeamId);
 			$this->setTeamName($newTeamName);

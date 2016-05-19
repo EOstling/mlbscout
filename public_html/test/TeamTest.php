@@ -65,7 +65,7 @@ class TeamTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidTeam() {
 		// create a Team with a non null team id and watch it fail
-		$team = new Team(MlbScoutTest::INVALID_KEY, $this->VALID_TEAMNAME);
+		$team = new Team(MlbScoutTest::INVALID_KEY, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
 		$team->insert($this->getPDO());
 	}
 
@@ -77,7 +77,7 @@ class TeamTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("team");
 
 		// create a new Team and insert to into mySQL
-		$team = new Team(null, $this->VALID_TEAMNAME);
+		$team = new Team(null, $this->VALID_TEAMNAME, $this->VALID_TEAMTYPE);
 		$team->insert($this->getPDO());
 
 		// edit the Team and update it in mySQL
@@ -118,7 +118,7 @@ class TeamTest extends MlbScoutTest {
 		$team->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $$team->getTeamId);
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
 		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
 		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
