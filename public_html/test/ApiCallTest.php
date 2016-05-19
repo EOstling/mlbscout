@@ -49,7 +49,7 @@ class ApiCallTest extends MlbScoutTest {
 	/**
 	 * @var null $VALID_ApiCallUserId
 	 */
-	protected $VALID_ApiCallUserId = null;
+	protected $VALID_ApiCallUserId= null;
 	/**
 	 * @var int $hash
 	 */
@@ -109,16 +109,13 @@ class ApiCallTest extends MlbScoutTest {
 			$this->assertEquals($pdoApiCall->getApiCallPayload(), $this->VALID_ApiCallPayload);
 		}
 	}
+
 	/**
-	 * test inserting a DateTime that already exists
 	 *
-	 *
-	 **/
+	 */
 	public function testInsertInvalidApiCall() {
 		// create a DateTime with a non null Date id and watch it fail
-		$apiCall = new ApiCall(MlbScoutTest::INVALID_KEY, $this->VALID_ApiCallUserId, $this->VALID_ApiCallBrowser ,
-			$this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallUserId, $this->VALID_ApiCallQueryString,
-			$this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
+		$apiCall = new ApiCall(MlbScoutTest::INVALID_KEY, $this->user->getUserId() , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
 		// try to insert a second time and watch it fail
 		$apiCall->insert($this->getPDO());

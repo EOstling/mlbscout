@@ -134,7 +134,7 @@ class ApiCall implements \JsonSerializable {
 	public function setApiCallBrowser(string $newApiCallBrowser) {
 		$newApiCallBrowser = trim($newApiCallBrowser);
 		$newApiCallBrowser = filter_var($newApiCallBrowser, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newApiCallBrowser) === TRUE) {
+		if(empty($newApiCallBrowser) === true) {
 			throw(new\InvalidArgumentException("Api Browser can't be empty"));
 		}
 		if(strlen($newApiCallBrowser) > 128) {
@@ -197,12 +197,15 @@ class ApiCall implements \JsonSerializable {
 		if(empty($newApiCallIp) === true) {
 			throw(new \InvalidArgumentException("Api IP can't be empty"));
 		}
-		if(inet_pton($newApiCallIp)!== false){
-			$this->apiCallIP = inet_pton($newApiCallIp);
-		}else if(inet_ntop($newApiCallIp)!== false){
-			$this->apiCallIP = $newApiCallIp;
+
+		if(@inet_pton($newApiCallIp) === false) {
+			if(@inet_ntop($newApiCallIp) === false) {
+				throw(new \InvalidArgumentException("Invalid IP"));
+			} else {
+				$this->apiCallIP = $newApiCallIp;
+			}
 		} else {
-			throw(new \InvalidArgumentException("Invalid IP"));
+			$this->apiCallIP = inet_pton($newApiCallIp);
 		}
 	}
 	/**
@@ -236,12 +239,12 @@ class ApiCall implements \JsonSerializable {
 	/**
 	 * throws InvalidArgumentException
 	 * throws RangeException
-	 * @param int $newApiCallPayload
+	 * @param  $newApiCallPayload
 	 */
 	public function setApiCallPayload(string $newApiCallPayload) {
 		$newApiCallPayload = trim($newApiCallPayload);
 		$newApiCallPayload = filter_var($newApiCallPayload, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newApiCallPayload) === TRUE) {
+		if(empty($newApiCallPayload) === true) {
 			throw(new\InvalidArgumentException("Payload cant be empty"));
 		}
 		if(strlen($newApiCallPayload) > 128) {
