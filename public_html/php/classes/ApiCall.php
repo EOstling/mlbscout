@@ -217,7 +217,7 @@ class ApiCall implements \JsonSerializable {
 	/**
 	 * throws InvalidArgumentException
 	 * throws RangeException
-	 * @param string $newApiCallQueryString
+	 * @param  $newApiCallQueryString
 	 */
 	public function setApiCallQueryString(string $newApiCallQueryString) {
 		$newApiCallQueryString = trim($newApiCallQueryString);
@@ -261,7 +261,7 @@ class ApiCall implements \JsonSerializable {
 	/**
 	 * throws InvalidArgumentException
 	 * throws RangeException
-	 * @param string $newApiCallURL
+	 * @param  $newApiCallURL
 	 */
 	public function setApiCallURL(string $newApiCallURL) {
 		$newApiCallURL = trim($newApiCallURL);
@@ -274,12 +274,13 @@ class ApiCall implements \JsonSerializable {
 		}
 		$this->apiCallURL = $newApiCallURL;
 	}
+
 	/**
 	 * @param \Pdo $pdo
 	 */
 	public function insert(\Pdo $pdo) {
 		if($this->apiCallId !== null) {
-			throw(new\PDOException("This is incorrect"));
+			throw(new \InvalidArgumentException("wat"));
 		}
 		//Lets create $query;
 		$query = "INSERT INTO apiCall(apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL)VALUES(:apiCallUserId, :apiCallBrowser, :apiCallDateTime, :apiCallHttpVerb, :apiCallIp, :apiCallQueryString, :apiCallPayload, :apiCallURL)";
@@ -292,7 +293,7 @@ class ApiCall implements \JsonSerializable {
 		$this->apiCallId	 = intval($pdo->lastInsertId());
 	}
 	/**
-	 * throws PdoException
+	 * throws \PDOException
 	 * @param \Pdo $pdo
 	 */
 	public function delete(\Pdo $pdo) {

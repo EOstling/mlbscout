@@ -49,7 +49,7 @@ class ApiCallTest extends MlbScoutTest {
 	/**
 	 * @var null $VALID_ApiCallUserId
 	 */
-	protected $VALID_ApiCallUserId= null;
+	protected $VALID_ApiCallUserId;
 	/**
 	 * @var int $hash
 	 */
@@ -125,15 +125,13 @@ class ApiCallTest extends MlbScoutTest {
 	 */
 	public function testUpdateValidApiCall() {
 		$numRows = $this->getConnection()->getRowCount("apiCall");
-		$apiCall = new ApiCall(null, $this->VALID_ApiCallUserId, $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
-			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
-			$this->VALID_ApiCallUrl);
+		$apiCall = new ApiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
 		// edit the ApiCall and update it in mySQL
 		$apiCall->setQueryString($this->VALID_ApiCallHttpVerb2);
 		$apiCall->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoApiCall = ApiCall::getaAicallbyUserId($this->getPDO(), $apiCall->getUserId());
+		$pdoApiCall = ApiCall::getaApiCallbyUserId($this->getPDO(), $apiCall->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUserId());
 		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
