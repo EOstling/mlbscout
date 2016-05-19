@@ -120,10 +120,9 @@ class TeamTest extends MlbScoutTest {
 		$team->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
-		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
-		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
+		$pdoTeam = Team::getTeamByTeamId($this->getPDO(), $team->getTeamId());
+		$this->assertNull($pdoTeam);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("team"));
 	}
 	/**
 	 * test deleting a Team that does not exist
