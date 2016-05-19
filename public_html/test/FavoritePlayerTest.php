@@ -54,7 +54,6 @@ class FavoritePlayerTest extends MlbScoutTest {
 
 		// create and insert a User to favorite a player
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
-		$this->accessLevel->insert($this->getPDO());
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash,"userLastName", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 
