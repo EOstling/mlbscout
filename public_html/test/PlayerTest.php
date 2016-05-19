@@ -323,6 +323,83 @@ class PlayerTest extends MlbScoutTest {
 	}
 
 	/**
+	 * test inserting a player and regrabbing it from mySQL
+	 */
+	public function testGetValidPlayerByPlayerTeamId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("player");
+
+		// create a new player and insert into mySQL
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoPlayers = Player::getPlayerbyPlayerTeamId($this->getPDO(), $player->getPlayerTeamId());
+		foreach($pdoPlayers as $pdoPlayer) {
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
+			$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
+			$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
+			$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
+			$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
+			$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
+			$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
+			$this->assertEquals($pdoPlayer->getPlayerHeight(), $this->VALID_PLAYERHEIGHT);
+			$this->assertEquals($pdoPlayer->getPlayerHomeTown(), $this->VALID_PLAYERHOMETOWN);
+			$this->assertEquals($pdoPlayer->getPlayerLastName(), $this->VALID_PLAYERLASTNAME);
+			$this->assertEquals($pdoPlayer->getPlayerPosition(), $this->VALID_PLAYERPOSITION);
+			$this->assertEquals($pdoPlayer->getPlayerThrowingHand(), $this->VALID_PLAYERTHROWINGHAND);
+			$this->assertEquals($pdoPlayer->getPlayerWeight(), $this->VALID_PLAYERWEIGHT);
+		}
+	}
+
+	/**
+	 * test grabbing a player that does not exist
+	 */
+	public function testGetInvalidPlayerByPlayerTeamId() {
+		// grab a playerUser id that exceeds the maximum allowable playerUser id
+		$player = Player::GetPlayerByPlayerTeamId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$this->assertNull($player);
+	}
+
+	/**
+	 * test inserting a player and regrabbing it from mySQL
+	 */
+	public function testGetValidPlayerByPlayerUserId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("player");
+
+		// create a new player and insert into mySQL
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoPlayers = Player::getPlayerbyPlayerUserId($this->getPDO(), $player->getPlayerUserId());
+		foreach($pdoPlayers as $pdoPlayer) {
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
+			$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
+			$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
+			$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
+			$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
+			$this->assertEquals($pdoPlayer->getPlayerFirstName(), $this->VALID_PLAYERFIRSTNAME);
+			$this->assertEquals($pdoPlayer->getPlayerHealthStatus(), $this->VALID_PLAYERHEALTHSTATUS);
+			$this->assertEquals($pdoPlayer->getPlayerHeight(), $this->VALID_PLAYERHEIGHT);
+			$this->assertEquals($pdoPlayer->getPlayerHomeTown(), $this->VALID_PLAYERHOMETOWN);
+			$this->assertEquals($pdoPlayer->getPlayerLastName(), $this->VALID_PLAYERLASTNAME);
+			$this->assertEquals($pdoPlayer->getPlayerPosition(), $this->VALID_PLAYERPOSITION);
+			$this->assertEquals($pdoPlayer->getPlayerThrowingHand(), $this->VALID_PLAYERTHROWINGHAND);
+			$this->assertEquals($pdoPlayer->getPlayerWeight(), $this->VALID_PLAYERWEIGHT);
+		}
+	}
+
+	/**
+	 * test grabbing a player that does not exist
+	 */
+	public function testGetInvalidPlayerByPlayerUserId() {
+		// grab a playerUser id that exceeds the maximum allowable playerUser id
+		$player = Player::GetPlayerByPlayerUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$this->assertNull($player);
+	}
+	/**
 	 * test grabbing a player by playerBatting
 	 */
 	public function testGetValidPlayerByPlayerBatting() {
