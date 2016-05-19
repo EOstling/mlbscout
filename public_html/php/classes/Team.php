@@ -190,7 +190,7 @@ class Team implements \JsonSerializable {
 	 * deletes this Team from mySQL
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection objeect
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function delete(\PDO $pdo) {
 		// enforce the teamId is not null
