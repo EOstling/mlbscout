@@ -39,6 +39,7 @@ class TeamTest extends MlbScoutTest {
 	 * Name of updated Team
 	 * @var string $VALID_TEAMTYPE2
 	 */
+	protected $VALID_TEAMTYPE2 = "PHPUnit test still passing";
 
 	/**
 	 * test inserting a valid Team and verify that the actual mySQL data matches
@@ -81,7 +82,8 @@ class TeamTest extends MlbScoutTest {
 		$team->insert($this->getPDO());
 
 		// edit the Team and update it in mySQL
-		$team->setTeamContent($this->VALID_TEAMNAME2);
+		$team->setTeamName($this->VALID_TEAMNAME2);
+		$team->setTeamType($this->VALID_TEAMTYPE2);
 		$team->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -114,7 +116,7 @@ class TeamTest extends MlbScoutTest {
 		$team->insert($this->getPDO());
 
 		// delete the Team from mySQL
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("team"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
 		$team->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
