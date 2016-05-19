@@ -52,12 +52,13 @@ class User implements \JsonSerializable {
 	 * @var string $userSalt
 	 */
 	private $userSalt;
+
 	/**
 	 * Constructor for this User
 	 *
 	 * @param int $newUserId new value of user id
 	 * @param int $newUserAccessLevelId new value of user access level id
-	 * @param string $newUserActivationToken new value
+	 * @param string $newUserActivationToken new value of token
 	 * @param string $newUserEmail new value of email
 	 * @param string $newUserFirstName new value of first name
 	 * @param string $newUserHash new value of user hash
@@ -69,7 +70,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(int $newUserId = null, int $newUserAccessLevelId , string $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
+	public function __construct(int $newUserId = null, int $newUserAccessLevelId, string $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
 		try {
 			$this->setUserId($newUserId);
 			$this->setUserAccessLevelId($newUserAccessLevelId);
@@ -80,20 +81,21 @@ class User implements \JsonSerializable {
 			$this->setUserLastName($newUserLastName);
 			$this->setUserPhoneNumber($newUserPhoneNumber);
 			$this->setUserSalt($newUserSalt);
-		}catch(\InvalidArgumentException $invalidArgument) {
+		} catch(\InvalidArgumentException $invalidArgument) {
 			//rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		}catch(\RangeException $range) {
+		} catch(\RangeException $range) {
 			// rethrow the exception to the caller
 			throw(new \RangeException($range->getMessage(), 0, $range));
-		}catch(\TypeError $typeError) {
+		} catch(\TypeError $typeError) {
 			//rethrow the exception to the caller
 			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
-		}catch(\Exception $exception) {
+		} catch(\Exception $exception) {
 			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
+
 	/**
 	 * accessor method for user id
 	 *
@@ -102,6 +104,7 @@ class User implements \JsonSerializable {
 	public function getUserId() {
 		return ($this->userId);
 	}
+
 	/**
 	 * mutator method for user id
 	 *
@@ -117,12 +120,13 @@ class User implements \JsonSerializable {
 		}
 
 		//verify the profile id is positive
-		if($newUserId <=0) {
+		if($newUserId <= 0) {
 			throw(new \RangeException("profile id is not positive"));
 		}
 		//convert and store the user id
 		$this->userId = $newUserId;
 	}
+
 	/**
 	 * accessor method for user access level id
 	 *
@@ -131,6 +135,7 @@ class User implements \JsonSerializable {
 	public function getUserAccessLevelId() {
 		return ($this->userAccessLevelId);
 	}
+
 	/**
 	 * mutator method for user access level id
 	 *
@@ -140,12 +145,13 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserAccessLevelId($newUserAccessLevelId) {
 		// verify the  user access level id is positive
-		if($newUserAccessLevelId <=0) {
+		if($newUserAccessLevelId <= 0) {
 			throw(new \RangeException("access level id is not positive"));
 		}
 		// convert and store the access level id
 		$this->userAccessLevelId = $newUserAccessLevelId;
 	}
+
 	/**
 	 * accessor method for user activation token
 	 *
@@ -154,6 +160,7 @@ class User implements \JsonSerializable {
 	public function getUserActivationToken() {
 		return ($this->userActivationToken);
 	}
+
 	/**
 	 * mutator method for user activation token
 	 *
@@ -162,16 +169,22 @@ class User implements \JsonSerializable {
 	 * @throws \RangeException if $newUserActivationToken is not positive
 	 * @throws \TypeError if $newUserActivationToken in not an integer
 	 */
-	public function setUserActivationToken(string $newUserActivationToken) {
+	public function setUserActivationToken(string $newUserActivationToken = null) {
+		// base case: if the user id is null, this a new user without a mySQL assigned id (yet)
+		if($newUserActivationToken === null) {
+			$this->userActivationToken = null;
+			return;
+		}
+		
 		// verify the activation token is a hexadecimal
 		if(!ctype_xdigit($newUserActivationToken)) {
 			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
+
 		// verify the activation token is of valid length
 		if(strlen($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
 		}
-		
 		//convert and store the user activation token
 		$this->userActivationToken = $newUserActivationToken;
 	}
@@ -277,14 +290,14 @@ class User implements \JsonSerializable {
 	 * mutator method for user last name
 	 *
 	 * @param string $newUserLastName new value of user last name
-	 * @throws \UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \InvalidArgumentException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
 	public function setUserLastName($newUserLastName) {
 		// verify the Last name is valid
 		$newUserLastName = filter_var($newUserLastName, FILTER_SANITIZE_STRING);
 		if($newUserLastName === false) {
-			throw(new \UnexpectedValueException("last name is not a valid string"));
+			throw(new \InvalidArgumentException("last name is not a valid string"));
 		}
 		//verify the user last name will fit in the database
 		if(strlen($newUserLastName) > 32) {
@@ -305,14 +318,14 @@ class User implements \JsonSerializable {
 	 * mutator method for user phone number
 	 *
 	 * @param string $newUserPhoneNumber new value of user phone number
-	 * @throws \UnexpectedValueException if $newUserLastName is not valid
+	 * @throws \InvalidArgumentException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
 	 */
 	public function setUserPhoneNumber($newUserPhoneNumber) {
 		// verify the phone number is valid
 		$newUserPhoneNumber = filter_var($newUserPhoneNumber, FILTER_SANITIZE_STRING);
 		if($newUserPhoneNumber === false) {
-			throw(new \UnexpectedValueException("phone number is not a valid string"));
+			throw(new \InvalidArgumentException("phone number is not a valid string"));
 		}
 		//verify the user phone number will fit in the database
 		if(strlen($newUserPhoneNumber) > 20) {
