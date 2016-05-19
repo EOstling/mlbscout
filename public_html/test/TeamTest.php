@@ -177,7 +177,7 @@ class TeamTest extends MlbScoutTest {
 		$results = Team::getTeamByTeamName($this->getPDO(), $team->getTeamName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstanceOf("Edu\\Cnm\\MlbScout\\Team", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Team", $results);
 
 		// grab the results from the array and validate it
 		$pdoTeam = $results[0];
