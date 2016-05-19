@@ -58,6 +58,14 @@ class ScheduleTest extends MlbScoutTest {
 	 * @var User playerUser
 	 **/
 	protected $user = null;
+	/**
+	 * @var User Hash
+	 */
+	private $hash;
+	/**
+	 * @var User Salt
+	 */
+	private $salt;
 
 	/**
 	 * create dependent objects before running each test
@@ -65,6 +73,9 @@ class ScheduleTest extends MlbScoutTest {
 	public final function setUp() {
 		// run the default setUp() method first
 		parent::setUp();
+
+		$this->salt = bin2hex(random_bytes(32));
+		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 
 		// create and insert a playerUser to own the test playerUser
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
