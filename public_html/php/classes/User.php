@@ -23,7 +23,7 @@ class User implements \JsonSerializable {
 	 * activation token for user account
 	 * @var string $userActivationToken
 	 */
-	private $userActivationToken = null;
+	private $userActivationToken;
 	/**
 	 * email of this user
 	 * @var string $userEmail
