@@ -21,7 +21,7 @@ class User implements \JsonSerializable {
 	 * activation token for user account
 	 * @var string $userActivationToken
 	 */
-	private $userActivationToken;
+	private $userActivationToken = null;
 	/**
 	 * email of this user
 	 * @var string $userEmail
@@ -171,6 +171,7 @@ class User implements \JsonSerializable {
 		if(strlen($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
 		}
+		
 		//convert and store the user activation token
 		$this->userActivationToken = $newUserActivationToken;
 	}
