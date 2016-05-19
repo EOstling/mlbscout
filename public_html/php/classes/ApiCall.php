@@ -74,7 +74,7 @@ class ApiCall implements \JsonSerializable {
 	 * @internal param $typeError ;
 	 */
 	public function __construct(int $newApiCallId, int $newApiCallUserId, string $newApiCallBrowser,
-										 \DateTime $newApiCallDateTime, string $newApiCallHttpVerb, string $newApiCallIp,
+										  $newApiCallDateTime = null, string $newApiCallHttpVerb, string $newApiCallIp,
 										 string $newApiCallQueryString, string $newApiCallPayload, string $newApiCallURL) {
 		try {
 			$this->setapiCallId($newApiCallId);
