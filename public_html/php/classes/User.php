@@ -1,7 +1,5 @@
 <?php
 namespace Edu\Cnm\MlbScout;
-
-
 require_once ("autoload.php");
 /**
  * User Class for mlbscout Capstone
@@ -54,7 +52,6 @@ class User implements \JsonSerializable {
 	 * @var string $userSalt
 	 */
 	private $userSalt;
-
 	/**
 	 * Constructor for this User
 	 *
@@ -105,7 +102,6 @@ class User implements \JsonSerializable {
 	public function getUserId() {
 		return ($this->userId);
 	}
-
 	/**
 	 * mutator method for user id
 	 *
@@ -119,17 +115,14 @@ class User implements \JsonSerializable {
 			$this->userId = null;
 			return;
 		}
-		
+
 		//verify the profile id is positive
 		if($newUserId <=0) {
 			throw(new \RangeException("profile id is not positive"));
-
 		}
-
 		//convert and store the user id
 		$this->userId = $newUserId;
 	}
-
 	/**
 	 * accessor method for user access level id
 	 *
@@ -138,7 +131,6 @@ class User implements \JsonSerializable {
 	public function getUserAccessLevelId() {
 		return ($this->userAccessLevelId);
 	}
-
 	/**
 	 * mutator method for user access level id
 	 *
@@ -151,11 +143,9 @@ class User implements \JsonSerializable {
 		if($newUserAccessLevelId <=0) {
 			throw(new \RangeException("access level id is not positive"));
 		}
-
 		// convert and store the access level id
 		$this->userAccessLevelId = $newUserAccessLevelId;
 	}
-
 	/**
 	 * accessor method for user activation token
 	 *
@@ -164,7 +154,6 @@ class User implements \JsonSerializable {
 	public function getUserActivationToken() {
 		return ($this->userActivationToken);
 	}
-
 	/**
 	 * mutator method for user activation token
 	 *
@@ -175,19 +164,16 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserActivationToken(string $newUserActivationToken) {
 		// verify the activation token is a hexadecimal
-		if(!ctype_xdigit($newUserActivationToken) !== 32) {
+		if(!ctype_xdigit($newUserActivationToken)) {
 			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
-
 		// verify the activation token is of valid length
 		if(strlen($newUserActivationToken) !== 32) {
 			throw(new \RangeException("user activation token is not of valid length"));
 		}
-
 		//convert and store the user activation token
 		$this->userActivationToken = $newUserActivationToken;
 	}
-
 	/**
 	 * accessor method for user email
 	 *
@@ -196,7 +182,6 @@ class User implements \JsonSerializable {
 	public function getUserEmail() {
 		return ($this->userEmail);
 	}
-
 	/**
 	 * mutator method for user email
 	 * @param string $newUserEmail new value of email
@@ -211,16 +196,13 @@ class User implements \JsonSerializable {
 		if(empty($newUserEmail) === true) {
 			throw(new \InvalidArgumentException("email is empty or insecure"));
 		}
-
 		//verify the user email will fit in the database
 		if(strlen($newUserEmail) > 64) {
 			throw(new \RangeException("email is too large"));
 		}
-
 		// store the user email
 		$this->userEmail = $newUserEmail;
 	}
-
 	/**
 	 * accessor method for user first name
 	 *
@@ -229,7 +211,6 @@ class User implements \JsonSerializable {
 	public function getUserFirstName() {
 		return ($this->userFirstName);
 	}
-
 	/**
 	 * mutator method for user first name
 	 * @param string $newUserFirstName new value of first name
@@ -244,16 +225,13 @@ class User implements \JsonSerializable {
 		if(empty($newUserFirstName) === true) {
 			throw(new \InvalidArgumentException("first name is empty or insecure"));
 		}
-
 		//verify the user email will fit in the database
 		if(strlen($newUserFirstName) > 32) {
 			throw(new \RangeException("email is too large"));
 		}
-
 		// store the user email
 		$this->userFirstName = $newUserFirstName;
 	}
-
 	/**
 	 * accessor method for user hash
 	 *
@@ -262,7 +240,6 @@ class User implements \JsonSerializable {
 	public function getUserHash() {
 		return ($this->userHash);
 	}
-
 	/**
 	 * mutator method for user hash
 	 *
@@ -276,20 +253,17 @@ class User implements \JsonSerializable {
 		if(empty($newUserHash)) {
 			throw(new \InvalidArgumentException("user hash is empty or insecure"));
 		}
-
 		// verify the hash is a hexadecimal
-		if(!ctype_xdigit($newUserHash) !==128) {
+		if(!ctype_xdigit($newUserHash)) {
 			throw(new \InvalidArgumentException ("user hash is empty or insecure"));
 		}
 		//verify the hash will fit in the database
 		if(strlen($newUserHash) !== 128) {
 			throw(new \RangeException("user hash is not of valid length"));
 		}
-
 		// store the user hash
 		$this->userHash = $newUserHash;
 	}
-
 	/**
 	 * accessor method for user last name
 	 *
@@ -298,7 +272,6 @@ class User implements \JsonSerializable {
 	public function getUserLastName() {
 		return ($this->userLastName);
 	}
-
 	/**
 	 * mutator method for user last name
 	 *
@@ -312,16 +285,13 @@ class User implements \JsonSerializable {
 		if($newUserLastName === false) {
 			throw(new \UnexpectedValueException("last name is not a valid string"));
 		}
-
 		//verify the user last name will fit in the database
 		if(strlen($newUserLastName) > 32) {
 			throw(new \RangeException("last name is too long please change it"));
 		}
-
 		// store the user last name
 		$this->userLastName = $newUserLastName;
 	}
-
 	/**
 	 * accessor method for user phone number
 	 *
@@ -330,7 +300,6 @@ class User implements \JsonSerializable {
 	public function getUserPhoneNumber() {
 		return ($this->userPhoneNumber);
 	}
-
 	/**
 	 * mutator method for user phone number
 	 *
@@ -344,16 +313,13 @@ class User implements \JsonSerializable {
 		if($newUserPhoneNumber === false) {
 			throw(new \UnexpectedValueException("phone number is not a valid string"));
 		}
-
 		//verify the user phone number will fit in the database
 		if(strlen($newUserPhoneNumber) > 20) {
 			throw(new \RangeException("phone number is too large"));
 		}
-
 		// store the user phone number
 		$this->userPhoneNumber = $newUserPhoneNumber;
 	}
-
 	/**
 	 * accessor method for user salt
 	 *
@@ -362,7 +328,6 @@ class User implements \JsonSerializable {
 	public function getUserSalt() {
 		return ($this->userSalt);
 	}
-
 	/**
 	 * mutator method for user salt
 	 *
@@ -376,20 +341,17 @@ class User implements \JsonSerializable {
 		if(empty($newUserSalt)) {
 			throw(new \InvalidArgumentException("user salt is empty or insecure"));
 		}
-
 		// verify the Salt is a hexadecimal
-		if(!ctype_xdigit($newUserSalt) !== 64) {
+		if(!ctype_xdigit($newUserSalt)) {
 			throw(new \InvalidArgumentException ("user salt is empty or insecure"));
 		}
 		//verify the salt will fit in the database
 		if(strlen($newUserSalt) !== 64) {
 			throw(new \RangeException("user salt is not of valid length"));
 		}
-
 		//store the user salt
 		$this->userSalt = $newUserSalt;
 	}
-
 	/**
 	 * inserts this User into mySQL
 	 *
@@ -402,19 +364,15 @@ class User implements \JsonSerializable {
 		if($this->userId !== null) {
 			throw(new \PDOException("user already exist"));
 		}
-
 		// create query template
 		$query = "INSERT INTO user(userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt) VALUES(:userAccessLevelId, :userActivationToken, :userEmail, :userFirstName, :userHash, :userLastName, :userPhoneNumber, :userSalt)";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the place holders in the template
 		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
-
 		//update the null userId with what mySQL just gave us
 		$this->userId = intval($pdo->lastInsertId());
 	}
-
 	/**
 	 *deletes this User from mySQL
 	 *
@@ -427,16 +385,13 @@ class User implements \JsonSerializable {
 		if($this->userId === null) {
 			throw(new \PDOException("unable to delete a user that does not exist"));
 		}
-
 		// create a query template
 		$query = "DELETE FROM user WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
-
 		//bind the member variables to the place holder in the template
 		$parameters = ["userId" => $this->userId];
 		$statement->execute($parameters);
 	}
-
 	/**
 	 * updates this User in mySQL
 	 *
@@ -449,16 +404,13 @@ class User implements \JsonSerializable {
 		if($this->userId === null) {
 			throw(new \PDOException("unable to udate a user that does not exist"));
 		}
-
 		// create a query template
 		$query = "UPDATE user SET userAccessLevelId = :userAccessLevelId, userActivationToken = :userActivationToken, userEmail = :userEmail, userFirstName = :userFirstName, userHash = :userHash, userLastName = :userLastName, userPhoneNumber = :userPhoneNumber, userSalt = :userSalt WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the place holders in this template
 		$parameters = ["userAccessLevelId" => $this->userAccessLevelId, "userActivationToken" => $this->userActivationToken, "userEmail" => $this->userEmail, "userFirstName" => $this->userFirstName, "userHash" => $this->userHash, "userLastName" => $this->userLastName, "userPhoneNumber" => $this->userPhoneNumber, "userSalt" => $this->userSalt, "userId" => $this->userId];
 		$statement->execute($parameters);
 	}
-
 	/**
 	 * gets the User by userId
 	 *
@@ -473,15 +425,12 @@ class User implements \JsonSerializable {
 		if($userId <= 0) {
 			throw(new \PDOException("user id is not positive"));
 		}
-
 		//create query template
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
-
 		// bind the user id to the place holder template
 		$parameters = array("userId" =>$userId);
 		$statement->execute($parameters);
-
 		// grab the user from mySQL
 		try{
 			$user = null;
@@ -496,7 +445,6 @@ class User implements \JsonSerializable {
 		}
 		return($user);
 	}
-
 	/**
 	 * gets the User by userEmail
 	 *
@@ -512,16 +460,13 @@ class User implements \JsonSerializable {
 		if(empty($userEmail) === true) {
 			throw(new \PDOException ("user email is invalid"));
 		}
-
 		// create querry template
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userEmail LIKE :userEmail";
 		$statement = $pdo->prepare($query);
-
 		// bind the user Email to the place holder in the template
 		$userEmail = "%$userEmail%";
 		$parameters = array("userEmail" => $userEmail);
 		$statement->execute($parameters);
-
 		// build an array of users
 		$users = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -537,7 +482,6 @@ class User implements \JsonSerializable {
 		}
 		return ($users);
 	}
-
 	/**
 	 * gets all Users
 	 *
@@ -551,7 +495,6 @@ class User implements \JsonSerializable {
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
-
 		//build an array of users
 		$users = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -567,7 +510,6 @@ class User implements \JsonSerializable {
 		}
 		return ($users);
 	}
-
 	/**
 	 * formats the state variables for JSON serialization
 	 *
