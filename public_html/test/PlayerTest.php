@@ -92,12 +92,12 @@ class PlayerTest extends MlbScoutTest {
 	 * players position
 	 * @var string $VALID_PLAYERPOSITION
 	 **/
-	protected $VALID_PLAYERPOSITION = "left field";
+	protected $VALID_PLAYERPOSITION = "left fl";
 	/**
 	 * updated players position
 	 * @var string $VALID_PLAYERPOSITION2
 	 **/
-	protected $VALID_PLAYERPOSITION2 = "right field";
+	protected $VALID_PLAYERPOSITION2 = "right fl";
 	/**
 	 * players throwing hand
 	 * @var string $VALID_PLAYERTHROWINGHAND
@@ -149,12 +149,15 @@ class PlayerTest extends MlbScoutTest {
 		// run the default setUp() method first
 		parent::setUp();
 
+		$this->salt = bin2hex(random_bytes(32));
+		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
+
 		// create and insert a playerUser to own the test playerUser
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
 		$this->accessLevel->insert($this->getPDO());
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
-		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash,"userLastName", "8675309", $this->salt);
+		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash, "userLastName", "8675309", $this->salt);
 		$this->user->insert($this->getPDO());
 	}
 
@@ -172,7 +175,7 @@ class PlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPlayer = Player::getPlayerbyPlayerId($this->getPDO(), $player->getPlayerId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -214,7 +217,7 @@ class PlayerTest extends MlbScoutTest {
 		$player->setPlayerFirstName($this->VALID_PLAYERFIRSTNAME2);
 		$player->setPlayerHealthStatus($this->VALID_PLAYERHEALTHSTATUS2);
 		$player->setPlayerHeight($this->VALID_PLAYERHEIGHT2);
-		$player->setPlayerhomeTown($this->VALID_PLAYERHOMETOWN2);
+		$player->setPlayerHomeTown($this->VALID_PLAYERHOMETOWN2);
 		$player->setPlayerLastName($this->VALID_PLAYERLASTNAME2);
 		$player->setPlayerPosition($this->VALID_PLAYERPOSITION2);
 		$player->setPlayerThrowingHand($this->VALID_PLAYERTHROWINGHAND2);
@@ -224,7 +227,7 @@ class PlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPlayer = Player::getPlayerbyPlayerId($this->getPDO(), $player->getPlayerId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -295,7 +298,7 @@ class PlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPlayer = Player::getPlayerbyPlayerId($this->getPDO(), $player->getPlayerId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -333,11 +336,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerBatting($this->getPDO(), $player->getPlayerBatting());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -375,11 +378,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerCommitment($this->getPDO(), $player->getPlayerCommitment());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -417,11 +420,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerFirstName($this->getPDO(), $player->getPlayerFirstName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -459,11 +462,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerHealthStatus($this->getPDO(), $player->getPlayerHealthStatus());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -501,11 +504,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerHeight($this->getPDO(), $player->getPlayerHeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -543,11 +546,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerHomeTown($this->getPDO(), $player->getPlayerHomeTown());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -585,11 +588,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerLastName($this->getPDO(), $player->getPlayerLastName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -627,11 +630,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerPosition($this->getPDO(), $player->getPlayerPosition());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -669,11 +672,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerThrowingHand($this->getPDO(), $player->getPlayerThrowingHand());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate itMySQL - mlbscout@localhost
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);
@@ -711,11 +714,11 @@ class PlayerTest extends MlbScoutTest {
 		$results = Player::getPlayerByPlayerWeight($this->getPDO(), $player->getPlayerWeight());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\Player", $results);
 
 		// grab the result from the array and validate it
 		$pdoPlayer = $results[0];
-		$this->assertEquals($pdoPlayer->getPlayerTeam(), $this->team->getTeamId());
+		$this->assertEquals($pdoPlayer->getPlayerTeamId(), $this->team->getTeamId());
 		$this->assertEquals($pdoPlayer->getPlayerUserId(), $this->user->getUserId());
 		$this->assertEquals($pdoPlayer->getPlayerBatting(), $this->VALID_PLAYERBATTING);
 		$this->assertEquals($pdoPlayer->getPlayerCommitment(), $this->VALID_PLAYERCOMMITMENT);

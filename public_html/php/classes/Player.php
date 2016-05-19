@@ -97,21 +97,21 @@ class Player implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type
 	 * @throws \Exception if some other exceptions occur
 	 **/
-	public function __construct(int $newPlayerId = null, int $newPlayerTeamId, int $newPlayerUserId, int $newPlayerHeight, int $newPlayerWeight, string $newPlayerBatting, string $newPlayerCommitment, string $newPlayerFirstName, string $newPlayerHealthStatus, string $newPlayerHomeTown, string $newPlayerLastName, string $newPlayerPosition, string $newPlayerThrowingHand) {
+	public function __construct(int $newPlayerId = null, int $newPlayerTeamId, int $newPlayerUserId, string $newPlayerBatting, string $newPlayerCommitment, string $newPlayerFirstName, string $newPlayerHealthStatus, int $newPlayerHeight, string $newPlayerHomeTown, string $newPlayerLastName, string $newPlayerPosition, string $newPlayerThrowingHand, int $newPlayerWeight) {
 		try {
 			$this->setPlayerId($newPlayerId);
 			$this->setPlayerTeamId($newPlayerTeamId);
 			$this->setPlayerUserId($newPlayerUserId);
 			$this->setPlayerBatting($newPlayerBatting);
-			$this->setPlayerHeight($newPlayerHeight);
-			$this->setPlayerWeight($newPlayerWeight);
 			$this->setPlayerCommitment($newPlayerCommitment);
 			$this->setPlayerFirstName($newPlayerFirstName);
 			$this->setPlayerHealthStatus($newPlayerHealthStatus);
+			$this->setPlayerHeight($newPlayerHeight);
 			$this->setPlayerHomeTown($newPlayerHomeTown);
 			$this->setPlayerLastName($newPlayerLastName);
 			$this->setPlayerPosition($newPlayerPosition);
 			$this->setPlayerThrowingHand($newPlayerThrowingHand);
+			$this->setPlayerWeight($newPlayerWeight);
 		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow th exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
