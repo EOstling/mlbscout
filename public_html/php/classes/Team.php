@@ -110,7 +110,7 @@ class Team implements \JsonSerializable {
 	 * @throws \TypeError if $newTeamName is no a string
 	 **/
 	public function setTeamName(string $newTeamName) {
-		// verify the team name is sem_acquire
+		// verify the team name is secure
 		$newTeamName = trim($newTeamName);
 		$newTeamName = filter_var($newTeamName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newTeamName) === true) {
@@ -348,7 +348,7 @@ class Team implements \JsonSerializable {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($team);
+		return($team);
 	}
 
 	/**
