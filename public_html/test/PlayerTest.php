@@ -358,7 +358,7 @@ class PlayerTest extends MlbScoutTest {
 	public function testGetInvalidPlayerByPlayerTeamId() {
 		// grab a playerUser id that exceeds the maximum allowable playerUser id
 		$player = Player::GetPlayerByPlayerTeamId($this->getPDO(), MlbScoutTest::INVALID_KEY);
-		$this->assertNull($player);
+		$this->assertNull($players);
 	}
 
 	/**
@@ -397,7 +397,7 @@ class PlayerTest extends MlbScoutTest {
 	public function testGetInvalidPlayerByPlayerUserId() {
 		// grab a playerUser id that exceeds the maximum allowable playerUser id
 		$player = Player::GetPlayerByPlayerUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
-		$this->assertNull($player);
+		$this->assertNull($players);
 	}
 	/**
 	 * test grabbing a player by playerBatting
