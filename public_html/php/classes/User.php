@@ -23,7 +23,7 @@ class User implements \JsonSerializable {
 	 * activation token for user account
 	 * @var string $userActivationToken
 	 */
-	private $userActivationToken;
+	private $userActivationToken = null;
 	/**
 	 * email of this user
 	 * @var string $userEmail
@@ -175,7 +175,7 @@ class User implements \JsonSerializable {
 	 */
 	public function setUserActivationToken(string $newUserActivationToken) {
 		// verify the activation token is a hexadecimal
-		if(!ctype_xdigit($newUserActivationToken)) {
+		if(!ctype_xdigit($newUserActivationToken) !== 32) {
 			throw(new \InvalidArgumentException ("user activation is empty or insecure"));
 		}
 
@@ -278,7 +278,7 @@ class User implements \JsonSerializable {
 		}
 
 		// verify the hash is a hexadecimal
-		if(!ctype_xdigit($newUserHash)) {
+		if(!ctype_xdigit($newUserHash) !==128) {
 			throw(new \InvalidArgumentException ("user hash is empty or insecure"));
 		}
 		//verify the hash will fit in the database
