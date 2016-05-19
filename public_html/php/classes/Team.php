@@ -225,7 +225,7 @@ class Team implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["teamName" => $this->teamName, "teamType" => $this->teamType];
+		$parameters = ["teamId" => $this-> teamId, "teamName" => $this->teamName, "teamType" => $this->teamType];
 		$statement->execute($parameters);
 	}
 
