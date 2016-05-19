@@ -133,6 +133,14 @@ class PlayerTest extends MlbScoutTest {
 	 * @var User playerUser
 	 **/
 	protected $user = null;
+	/**
+	 * @var User Hash
+	 */
+	private $hash;
+	/**
+	 * @var User Salt
+	 */
+	private $salt;
 
 	/**
 	 * create dependent objects before running each test
@@ -265,7 +273,7 @@ class PlayerTest extends MlbScoutTest {
 	/**
 	 * test deleting a player that does not exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException \PDOException
 	 */
 	public function testDeleteInvalidPlayer() {
 		// create a player and try to delete it without actually inserting it
@@ -281,7 +289,7 @@ class PlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new player and insert into mySQL
-		$player= new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
+		$player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), $this->VALID_PLAYERBATTING, $this->VALID_PLAYERCOMMITMENT, $this->VALID_PLAYERFIRSTNAME, $this->VALID_PLAYERHEALTHSTATUS, $this->VALID_PLAYERHEIGHT, $this->VALID_PLAYERHOMETOWN, $this->VALID_PLAYERLASTNAME, $this->VALID_PLAYERPOSITION, $this->VALID_PLAYERTHROWINGHAND, $this->VALID_PLAYERWEIGHT);
 		$player->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
