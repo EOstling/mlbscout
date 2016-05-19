@@ -47,7 +47,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		parent::setUp();
 
 		// create and insert a User to favorite a player
-		$this->user = new User(null, "@phpunit". "test@phpunit.de", "+12125551212");
+		$this->user = new User(null, "@phpunit", "test@phpunit.de", "+12125551212");
 		$this->user->insert($this->getPDO());
 
 		// create and insert a Player that a user can favorite
