@@ -1,9 +1,13 @@
 <?php
-namespace  Edu\Cnm\MlbScout\Test;
-use Edu\Cnm\MlbScout\{AccessLevel, User};
+namespace Edu\Cnm\MlbScout\Test;
+// grab the project test paramaters
+use Edu\Cnm\MlbScout\{ApiCall,AccessLevel,User};
+require_once("MlbScoutTest.php");
+// grab the class under scrutiny
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 /**
  * Full Unit test for Api Call Class.
- *	@see apiCall class
+ *	@see ApiCall
  * @author Eliot Robert Ostling <it.treugott@gmail.com>
  **/
 require_once("MlbScoutTest.php");
@@ -132,7 +136,7 @@ class ApiCallTest extends MlbScoutTest {
 		$apiCall->setQueryString($this->VALID_ApiCallHttpVerb2);
 		$apiCall->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoApiCall = ApiCall::getApicallbyUserId($this->getPDO(), $apiCall->getUserId());
+		$pdoApiCall = ApiCall::getaAicallbyUserId($this->getPDO(), $apiCall->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUserId());
 		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
