@@ -127,7 +127,7 @@ class TeamTest extends MlbScoutTest {
 	/**
 	 * test deleting a Team that does not exist
 	 *
-	 * @expectedException
+	 * @expectedException \PDOException
 	 */
 	public function testDeleteInvalidTeam() {
 		// create a Team and try to delete it without actually inserting it
