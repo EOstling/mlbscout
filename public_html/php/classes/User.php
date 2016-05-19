@@ -378,7 +378,7 @@ class User implements \JsonSerializable {
 		}
 
 		// verify the Salt is a hexadecimal
-		if(!ctype_xdigit($newUserSalt)) {
+		if(!ctype_xdigit($newUserSalt) !== 64) {
 			throw(new \InvalidArgumentException ("user salt is empty or insecure"));
 		}
 		//verify the salt will fit in the database
