@@ -74,13 +74,13 @@ CREATE TABLE schedule (
 );
 
 CREATE TABLE favoritePlayer(
-	favoritePlayerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	favoriteUserId INT UNSIGNED NOT NULL,
-	INDEX(favoritePlayerId),
-	INDEX(favoriteUserId),
-	FOREIGN KEY (favoriteUserId)REFERENCES user(userId),
-	FOREIGN KEY (favoritePlayerId) REFERENCES player(playerId),
-	PRIMARY KEY (favoriteUserId,favoritePlayerId)
+	favoritePlayerPlayerId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	favoritePlayerUserId INT UNSIGNED NOT NULL,
+	INDEX(favoritePlayerPlayerId),
+	INDEX(favoritePlayerUserId),
+	FOREIGN KEY (favoritePlayerUserId)REFERENCES user(userId),
+	FOREIGN KEY (favoritePlayerPlayerId) REFERENCES player(playerId),
+	PRIMARY KEY (favoritePlayerUserId,favoritePlayerPlayerId)
 );
 
 CREATE TABLE apiCall(
