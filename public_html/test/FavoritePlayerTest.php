@@ -24,7 +24,7 @@ require_once(dirname(__DIR__) . "/php/classes/autoload.php");
  */
 class FavoritePlayerTest extends MlbScoutTest {
 	/**
-	 * favoritePlayerPlayerId
+	 * playerId
 	 * @var string $VALID_PLAYERID
 	 */
 	protected $VALID_PLAYERID = "PHPUnit test passing";
@@ -71,6 +71,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 
 		// create and insert a User to favorite a player
 		$this->accessLevel = new AccessLevel(null, "accessLevelName");
+		$this->accessLevel->insert($this->getPDO());
 		$this->salt = bin2hex(random_bytes(32));
 		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
 		$this->user = new User(null, $this->accessLevel->getAccessLevelId(), null, "userEmail@foo.com", "userFirstName", $this->hash, "userLastName", "8675309", $this->salt);
@@ -79,7 +80,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->team->insert($this->getPDO());
 
 		// create and insert a Player that a user can favorite
-		$this->player = new Player(null, $this->favoritePlayerPlayerId);
+		$this->player = new Player(null, $this->playerId);
 		$this->player->insert($this->getPDO());
 	}
 
@@ -91,7 +92,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new User and insert to into mySQL
-		$user = new User(null, $this->user->getUserId(), $this->VALID_USERID, $this->VALID_PLAYERID);
+		$user = new User(null, $this->user->getUserId(), $this->team->getTeamId);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -106,29 +107,29 @@ class FavoritePlayerTest extends MlbScoutTest {
 	 */
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->user->getUserId(), $this->player->getFavoritePlayerPlayerId());
+		$user = new User(MlbScoutTest::INVALID_KEY, $this->user->getUserId(), $this->player->getPlayerId());
 		$user->insert($this->getPDO());
 	}
 
 	/**
-	 * test inserting a valid Favorite Player and verify that the mySQL data matches
+	 * test inserting a valid Player and verify that the mySQL data matches
 	 */
 	public function testInsertValidPlayer() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("player");
 
 		// create a new Player and insert to into mySQL
-		$player = new Player(null, $this->player->getFavoritePlayerPlayerId(), $this->VALID_PLAYERID, $this->VALID_USERID);
+		$player = new Player(null, $this->player->getPlayerId(), $this->VALID_PLAYERID, $this->VALID_USERID);
 		$this->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoPlayer = Player::getFavoritePlayerByFavoritePlayerPlayerId($this->getPDO(), $player->getPlayerId());
+		$pdoPlayer = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
 		$this->assertEquals($pdoPlayer->getPlayerId(), $this->player->getPlayerId());
 	}
 
 	/**
-	 * test inserting a Favorite Player that already exists
+	 * test inserting a Player that already exists
 	 * @expectedException \PDOException
 	 */
 	public function testInsertInvalidPlayer() {
