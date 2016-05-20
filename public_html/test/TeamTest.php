@@ -186,6 +186,29 @@ class TeamTest extends MlbScoutTest {
 	}
 
 	/**
+	 * test grabbing a team by team type
+	 */
+	public function testGetValidTeamByTeamType() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("team");
+
+		// create a new Team and insert to into mySQL
+		$team = new Team(null, $this->VALID_TEAMTYPE, $this->VALID_TEAMNAME);
+		$team->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Team::getTeamByTeamType($this->getPDO(), $team->getTeamType());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("team"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstanceOf("Edu\\Cnm\\MlbScout\\Team", $results);
+
+		// grab the results from the array and validate it
+		$pdoTeam = $results[0];
+		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
+		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
+	}
+
+	/**
 	 * test grabbing a Team by content that does not exist
 	 */
 	public function testGetInvalidTeamByTeamName() {
@@ -216,7 +239,5 @@ class TeamTest extends MlbScoutTest {
 		$this->assertEquals($pdoTeam->getTeamName(), $this->VALID_TEAMNAME);
 		$this->assertEquals($pdoTeam->getTeamType(), $this->VALID_TEAMTYPE);
 	}
-
-
 
 }
