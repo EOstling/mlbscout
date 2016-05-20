@@ -198,7 +198,7 @@ class ApiCallTest extends MlbScoutTest {
 			$this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
-		$pdoApiCall = Apicall::getApiCallbyUserId($this->getPDO(), $apiCall->getCallId());
+		$pdoApiCall = Apicall::getApiCallbyApiCallUserId($this->getPDO(), $apiCall->getCallId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUserId());
 		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
@@ -220,35 +220,5 @@ class ApiCallTest extends MlbScoutTest {
 	/**
 	 *Getting a valid user id
 	 */
-	public function testGetValidApiCallbyApiUserId() {
-		$numRows = $this->getConnection()->getRowCount("apiCall");
-		//Create a new ApiCall and insert into mySQL
-		$apiCall = new ApiCall(null, $this->VALID_ApiCallUserId , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
-			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
-			$this->VALID_ApiCallUrl);
-		$apiCall->insert($this->getPDO());
-		//Grab data from mySQl
-		$pdoApiCalls = apicall::getApiCallbyApiUserId($this->getPDO(), $apiCall->getUserId());
-		foreach($pdoApiCalls as $pdoApiCall) {
-			if($pdoApiCall->getApiCallApiUserId() === $apiCall->getApiCallUserId()) {
-				$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
-				$this->assertEquals($pdoApiCall->getUserId(), $this->VALID_ApiCallUserId->getUserId());
-				$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
-				$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_ApiCallDateTime);
-				$this->assertEquals($pdoApiCall->getUrl(), $this->VALID_ApiCallUrl);
-				$this->assertEquals($pdoApiCall->getHTTPVerb(), $this->VALID_ApiCallHttpVerb);
-				$this->assertEquals($pdoApiCall->getBrowser(), $this->VALID_ApiCallBrowser);
-				$this->assertEquals($pdoApiCall->getIP(), $this->VALID_ApiCallIP);
-				$this->assertEquals($pdoApiCall->getPayload(), $this->VALID_ApiCallPayload);
-			}
-		}
-	}
-	/**
-	 *Get invalid api user id
-	 */
-	public function testGetInvalidApiCallbyApiUserId() {
-//Grab an invalid Call Id that exceeds
-		$apiCall = ApiCall::getApiCallByApiCallUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
-		$this->assertNull($apiCall);
-	}
+
 }
