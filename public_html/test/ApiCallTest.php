@@ -143,6 +143,8 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Give an invalid ApiCall
+	 * @expectedException \PDOException
+	 *
 	 */
 	public function testUpdateInvalidApiCall() {
 		$apiCall = new apiCall (null, $this->user->getUserId() , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime,
