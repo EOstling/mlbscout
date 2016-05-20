@@ -15,57 +15,57 @@ class ApiCallTest extends MlbScoutTest {
 	/**
 	 * @var string $VALID_ApiCallBrowser
 	 *
-	 */
+	 **/
 	protected $VALID_ApiCallBrowser = "Safari";
 	/**
 	 * @var null $VALID_ApiCallDateTime
-	 */
+	 **/
 	protected $VALID_ApiCallDateTime = null;
 	/**
 	 * @var string$VALID_ApiCallHttpVerb
-	 */
+	 **/
 	protected $VALID_ApiCallHttpVerb = "GET";
 	/**
 	 * @var string $VALID_ApiCallHttpVerb2
-	 */
+	 **/
 	protected $VALID_ApiCallHttpVerb2= "POST";
 	/**
 	 * @var string $VALID_ApiCallIP
-	 */
+	 **/
 	protected $VALID_ApiCallIP = "127.0.0.1";
 	/**
 	 * @var string $VALID_ApiCallQueryString
-	 */
+	 **/
 	protected $VALID_ApiCallQueryString = "TestString";
 	/**
 	 * @var string $VALID_ApiCallPayload
-	 */
+	 **/
 	protected $VALID_ApiCallPayload = "TestPayload";
 	/**
 	 * @var string $VALID_ApiCallUrl
-	 */
+	 **/
 	protected $VALID_ApiCallUrl = "google.com";
 	/**
 	 * @var int $hash
-	 */
+	 **/
 	private $hash;
 	/**
 	 * @var int $salt
-	 */
+	 **/
 	private $salt;
 	/**
 	 * @var User $user
-	 */
+	 **/
 	private $user;
 	/**
 	 * @var AccessLevel $accessLevel
 	 * AccessLevel
-	 */
+	 **/
 	protected $accessLevel= null;
 	//Creating the setup objects before testing
 	/**
 	 * Setup() function
-	 */
+	 **/
 	public final function setUp() {
 		//setup method first
 		parent::setUp();
@@ -81,7 +81,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 *Testing a valid $ApiCall id
-	 */
+	 **/
 	public function testInsertValidApiCall() {
 		$numRows = $this->getConnection()->getRowCount("apiCall");
 		// create a Datetime and insert it into mySQL
@@ -105,7 +105,7 @@ class ApiCallTest extends MlbScoutTest {
 	 * Test insert invalid API call
 	 *
 	 * @expectedException \InvalidArgumentException
-	 */
+	 **/
 	public function testInsertInvalidApiCall() {
 		$apiCall = new apiCall(MlbScoutTest::INVALID_KEY, $this->user->getUserId() , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
@@ -114,7 +114,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 *Testing a valid ApiCall
-	 */
+	 **/
 	public function testUpdateValidApiCall() {
 		$numRows = $this->getConnection()->getRowCount("apiCall");
 		$apiCall = new apiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload, $this->VALID_ApiCallUrl);
@@ -145,7 +145,7 @@ class ApiCallTest extends MlbScoutTest {
 	 * Give an invalid ApiCall
 	 * @expectedException \PDOException
 	 *
-	 */
+	 **/
 	public function testUpdateInvalidApiCall() {
 		$apiCall = new apiCall (null, $this->user->getUserId() , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime,
 			$this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
@@ -154,7 +154,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Delete by primary key by testing a valid ApiCall
-	 */
+	 **/
 	public function testDeleteValidApiCall() {
 		$numRows = $this->getConnection()->getRowCount("apiCall");
 		$apiCall = new apiCall(null, $this->user->getUserId() , $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
@@ -171,7 +171,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Test invalid delete Invalid ApiCall
-	 */
+	 **/
 	public function testDeleteInvalidApiCall() {
 		// create a ApiCall and try to delete it without actually inserting it
 		$ApiCall = new apiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
@@ -181,7 +181,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 *testing valid call id
-	 */
+	 **/
 	public function testGetValidApiCallByCallId() {
 		$numRows = $this->getConnection()->getRowCount("apiCall");
 		//Create a new ApiCall and insert into mySQL
@@ -203,7 +203,7 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 * Testing invalid api call id
-	 */
+	 **/
 	public function testGetInvalidApiCallByApiCallId() {
 		//Grab an invalid Call Id that exceeds
 		$ApiCall = apiCall::getApiCallByApiCallId($this->getPDO(), MlbScoutTest::INVALID_KEY);
@@ -211,6 +211,6 @@ class ApiCallTest extends MlbScoutTest {
 	}
 	/**
 	 *Getting a valid user id
-	 */
+	 **/
 
 }

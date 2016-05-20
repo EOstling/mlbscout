@@ -5,52 +5,52 @@ require_once ("autoload.php");
  * User Class for mlbscout Capstone
  *
  * @author Jared Padilla <jaredpadilla16@gmail.com>
- */
+ **/
 class User implements \JsonSerializable {
 	/**
 	 * id for the user who owns this profile; this is the primary key
 	 * @var int $userId
-	 */
+	 **/
 	private $userId;
 	/**
 	 * access level id set for user; this is the foreign key
 	 * @var int $userAccessLevelId
-	 */
+	 **/
 	private $userAccessLevelId;
 	/**
 	 * activation token for user account
 	 * @var string $userActivationToken
-	 */
+	 **/
 	private $userActivationToken = null;
 	/**
 	 * email of this user
 	 * @var string $userEmail
-	 */
+	 **/
 	private $userEmail;
 	/**
 	 * first name of this user
 	 * @var string $userFirstName
-	 */
+	 **/
 	private $userFirstName;
 	/**
 	 * hash set for the user
 	 * @var string $userHash
-	 */
+	 **/
 	private $userHash;
 	/**
 	 * last name of this user
 	 * @var string $userLastName
-	 */
+	 **/
 	private $userLastName;
 	/**
 	 * phone number of this user
 	 * @var int $userPhoneNumber
-	 */
+	 **/
 	private $userPhoneNumber;
 	/**
 	 * salt set for this user
 	 * @var string $userSalt
-	 */
+	 **/
 	private $userSalt;
 
 	/**
@@ -69,7 +69,7 @@ class User implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \Exception if some other exception occurs
-	 */
+	 **/
 	public function __construct(int $newUserId = null, int $newUserAccessLevelId, string $newUserActivationToken = null, string $newUserEmail, string $newUserFirstName, string $newUserHash, string $newUserLastName, string $newUserPhoneNumber, string $newUserSalt = null) {
 		try {
 			$this->setUserId($newUserId);
@@ -100,7 +100,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user id
 	 *
 	 * @return int value of user id
-	 */
+	 **/
 	public function getUserId() {
 		return ($this->userId);
 	}
@@ -111,7 +111,7 @@ class User implements \JsonSerializable {
 	 * @param int $newUserId new value of user id
 	 * @throws \RangeException if $newUserId is not positive
 	 * @throws \TypeError if $newUserId is not an integer
-	 */
+	 **/
 	public function setUserId($newUserId = null) {
 		// base case: if the user id is null, this a new user without a mySQL assigned id (yet)
 		if($newUserId === null) {
@@ -131,7 +131,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user access level id
 	 *
 	 * return int values of user access level id
-	 */
+	 **/
 	public function getUserAccessLevelId() {
 		return ($this->userAccessLevelId);
 	}
@@ -142,7 +142,7 @@ class User implements \JsonSerializable {
 	 * @param int $newUserAccessLevelId new value of user access level id
 	 * @throws \RangeException if $newUserAccessLevelId is not positive
 	 * @throws \TypeError if $newUserAccessLevelId is not an integer
-	 */
+	 **/
 	public function setUserAccessLevelId($newUserAccessLevelId) {
 		// verify the  user access level id is positive
 		if($newUserAccessLevelId <= 0) {
@@ -156,7 +156,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user activation token
 	 *
 	 * @return string value of activation token
-	 */
+	 **/
 	public function getUserActivationToken() {
 		return ($this->userActivationToken);
 	}
@@ -168,7 +168,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newUserActivationToken is not a valid email or insecure
 	 * @throws \RangeException if $newUserActivationToken is not positive
 	 * @throws \TypeError if $newUserActivationToken in not an integer
-	 */
+	 **/
 	public function setUserActivationToken(string $newUserActivationToken = null) {
 		// base case: if the user id is null, this a new user without a mySQL assigned id (yet)
 		if($newUserActivationToken === null) {
@@ -192,7 +192,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user email
 	 *
 	 * @return string value of email
-	 */
+	 **/
 	public function getUserEmail() {
 		return ($this->userEmail);
 	}
@@ -202,7 +202,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newUserEmail is not a valid email or insecure
 	 * @throws \RangeException if $newUserEmail is > 64 characters
 	 * @throws \TypeError if $newUserEmail is not a string
-	 */
+	 **/
 	public function setUserEmail($newUserEmail) {
 		//verify the user email is secure
 		$newUserEmail = trim($newUserEmail);
@@ -221,7 +221,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user first name
 	 *
 	 * @return string value of first name
-	 */
+	 **/
 	public function getUserFirstName() {
 		return ($this->userFirstName);
 	}
@@ -231,7 +231,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newUserFirstName is not a first name or insecure
 	 * @throws \RangeException if $newUserFirstName is > 32 characters
 	 * @throws \TypeError if $newUserEmail is not a string
-	 */
+	 **/
 	public function setUserFirstName($newUserFirstName) {
 		//verify the user email is secure
 		$newUserFirstName = trim($newUserFirstName);
@@ -250,7 +250,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user hash
 	 *
 	 * @return string value of user hash
-	 */
+	 **/
 	public function getUserHash() {
 		return ($this->userHash);
 	}
@@ -261,7 +261,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newUser hash is not a string or insecure
 	 * @throws \RangeException if $newUserHash is > 128 characters
 	 * @throws \TypeError if $newUserHash is not a string
-	 */
+	 **/
 	public function setUserHash($newUserHash) {
 		// verify the user hash is secure
 		if(empty($newUserHash)) {
@@ -282,7 +282,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user last name
 	 *
 	 * @return string value of user last name
-	 */
+	 **/
 	public function getUserLastName() {
 		return ($this->userLastName);
 	}
@@ -292,7 +292,7 @@ class User implements \JsonSerializable {
 	 * @param string $newUserLastName new value of user last name
 	 * @throws \InvalidArgumentException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
-	 */
+	 **/
 	public function setUserLastName($newUserLastName) {
 		// verify the Last name is valid
 		$newUserLastName = filter_var($newUserLastName, FILTER_SANITIZE_STRING);
@@ -310,7 +310,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user phone number
 	 *
 	 * @return string value of user phone number
-	 */
+	 **/
 	public function getUserPhoneNumber() {
 		return ($this->userPhoneNumber);
 	}
@@ -320,7 +320,7 @@ class User implements \JsonSerializable {
 	 * @param string $newUserPhoneNumber new value of user phone number
 	 * @throws \InvalidArgumentException if $newUserLastName is not valid
 	 * @throws \RangeException if $newUserLastName is > 32 characters
-	 */
+	 **/
 	public function setUserPhoneNumber($newUserPhoneNumber) {
 		// verify the phone number is valid
 		$newUserPhoneNumber = filter_var($newUserPhoneNumber, FILTER_SANITIZE_STRING);
@@ -338,7 +338,7 @@ class User implements \JsonSerializable {
 	 * accessor method for user salt
 	 *
 	 * @return string value for user salt
-	 */
+	 **/
 	public function getUserSalt() {
 		return ($this->userSalt);
 	}
@@ -349,7 +349,7 @@ class User implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newUserSalt is not a string or insecure
 	 * @throws \RangeException if $newUserSalt is > 64 characters
 	 * @throws \TypeError if $newUserSalt is not a string
-	 */
+	 **/
 	public function setUserSalt($newUserSalt) {
 		// verify the user salt is secure
 		if(empty($newUserSalt)) {
@@ -372,7 +372,7 @@ class User implements \JsonSerializable {
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
+	 **/
 	public function insert(\PDO $pdo) {
 		// enforce the user is null
 		if($this->userId !== null) {
@@ -393,7 +393,7 @@ class User implements \JsonSerializable {
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 * */
+	 * **/
 	public function delete(\PDO $pdo) {
 		//enforce the userId is not null
 		if($this->userId === null) {
@@ -412,7 +412,7 @@ class User implements \JsonSerializable {
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 */
+	 **/
 	public function update(\PDO $pdo) {
 		// enforce the userId is not null
 		if($this->userId === null) {
@@ -433,7 +433,7 @@ class User implements \JsonSerializable {
 	 * @return User|null User found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
-	 */
+	 **/
 	public static function getUserByUserId(\PDO $pdo, int $userId) {
 		// sanitize the userId before searching
 		if($userId <= 0) {
@@ -466,7 +466,7 @@ class User implements \JsonSerializable {
 	 * @param string $userEmail user email to reach for
 	 * @return \SplFixedArray SPLFixedArray of Users found
 	 * @throws \TypeError when variable are not the correct data type
-	 */
+	 **/
 	public static function getUserByUserEmail(\PDO $pdo, string $userEmail) {
 		// sanitize the description before searching
 		$userEmail = trim($userEmail);
@@ -503,7 +503,7 @@ class User implements \JsonSerializable {
 	 * @return \SplFixedArray SplFixedArray of Users found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
-	 */
+	 **/
 	public static function getAllUsers(\PDO $pdo) {
 		//create query template
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user";
@@ -528,7 +528,7 @@ class User implements \JsonSerializable {
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variable to serialize
-	 */
+	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		unset($fields["userHash"]);

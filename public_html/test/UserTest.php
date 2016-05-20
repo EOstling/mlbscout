@@ -12,81 +12,81 @@ require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the User class
- * 
+ *
  * This is a complete PHPUnit test of the User class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
- * 
+ *
  * @see User
  * @author Jared Padilla <JaredPadilla16@gmail.com>
- */
+ **/
 Class UserTest extends MlbScoutTest {
 	/**
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN
-	 */
+	 **/
 	protected $VALID_USERACTIVATIONTOKEN = null;
 	/**
 	 * activation token of the user
 	 * @var string $VALID_USERACTIVATIONTOKEN2
-	 */
+	 **/
 	protected $VALID_USERACTIVATIONTOKEN2 = null;
 	/**
 	 * email of the user
 	 * @var string $VALID_USEREMAIL
-	 */
+	 **/
 	protected $VALID_USEREMAIL = "foo@bar.com";
 	/**
 	 * email of the user
 	 * @var string $VALID_USEREMAIL2
-	 */
+	 **/
 	protected $VALID_USEREMAIL2 = "bar@foo.com";
 	/**
 	 * first name of the user
 	 * @var string $VALID_USERFIRSTNAME
-	 */
+	 **/
 	protected $VALID_USERFIRSTNAME = "Diego";
 	/**
 	 * first name of the user
 	 * @var string $VALID_USERFIRSTNAME2
-	 */
+	 **/
 	protected $VALID_USERFIRSTNAME2 = "Juan";
 	/**
 	 * last name of user
 	 * @var string $VALID_USERLASTNAME
-	 */
+	 **/
 	public $VALID_USERLASTNAME = "Padilla";
 	/**
 	 * last name of user
 	 * #var sting $VALID_USERLASTNAME2
-	 */
+	 **/
 	public $VALID_USERLASTNAME2 = "Martinez";
 	/**
 	 * phone number of user
 	 * @var int $VALID_USERPHONENUMBER
-	 */
+	 **/
 	public $VALID_USERPHONENUMBER = "5051234567";
 	/**
 	 * phone number of user
 	 * @var int $VALID_USERPHONENUMBER2
-	 */
+	 **/
 	public $VALID_USERPHONENUMBER2 = "5057654321";
 	/**
 	 * @var User Hash
-	 */
+	 **/
 	private $hash;
 	/**
 	 * @var User Salt
-	 */
+	 **/
 	private $salt;
 	/**
 	 * user accesss level
 	 * @var AccessLevel $accessLevel
-	 */
+	 **/
 	protected $accessLevel;
 
 	/**
 	 * create dependent objects before running each test
-	 */
+	 **/
 	public final function setUp() {
 		// run the default setUp method first
 		parent::setUp();
@@ -102,7 +102,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test inserting a valid User and verify that the actual mySQL data matches
-	 */
+	 **/
 	public function testInsertValidUser() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
@@ -129,7 +129,7 @@ Class UserTest extends MlbScoutTest {
 	 * test inserting a User that already exist
 	 *
 	 * @expectedException \PDOException
-	 */
+	 **/
 	public function testInsertInvalidUser() {
 		// create a User with a non null user id and watch it fail
 		$user = new User(MlbScoutTest::INVALID_KEY, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
@@ -138,7 +138,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test inserting a User, editing it, and then updating it
-	 */
+	 **/
 	public function testUpdateValidUser() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
@@ -174,7 +174,7 @@ Class UserTest extends MlbScoutTest {
 	 * test updating a User that already exist
 	 *
 	 * @expectedException \PDOException
-	 */
+	 **/
 	public function testUpdateInvalidUser() {
 		// create a User with a non null user id and watch it fail
 		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
@@ -183,7 +183,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test creating a User and then deleting it
-	 */
+	 **/
 	public function testDeleteValidUser() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
@@ -206,7 +206,7 @@ Class UserTest extends MlbScoutTest {
 	 * test deleting a User that does not exist
 	 *
 	 * @expectedException \PDOException
-	 */
+	 **/
 	public function testDeleteInvalidUser() {
 		// create a User and try to delete it without actually inserting it
 		$user = new User(null, $this->accessLevel->getAccessLevelId(), $this->VALID_USERACTIVATIONTOKEN, $this->VALID_USEREMAIL, $this->VALID_USERFIRSTNAME, $this->hash, $this->VALID_USERLASTNAME, $this->VALID_USERPHONENUMBER, $this->salt);
@@ -215,7 +215,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test inserting a User and regrabbing it from mySQL
-	 */
+	 **/
 	public function testGetValidUserByUserId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
@@ -241,7 +241,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test grabbing a User that does not exist
-	 */
+	 **/
 	public function testGetInvalidUserByUserId() {
 		// grab a user id that exceeds the maximum allowable user id
 		$user = User::getUserByUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
@@ -250,7 +250,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test grabbing a User by user email
-	 */
+	 **/
 	public function testGetValidUserByUserEmail() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
@@ -279,7 +279,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test grabbing a User by email that does not exist
-	 */
+	 **/
 	public function testGetInvalidUserByUserEmail() {
 		// grab a User by searching for email that does not exist
 		$user = User::getUserByUserEmail($this->getPDO(), "if nothing is what you seek, you have found what you are looking for");
@@ -289,7 +289,7 @@ Class UserTest extends MlbScoutTest {
 
 	/**
 	 * test grabbing all Users
-	 */
+	 **/
 	public function testGetAllValidUsers() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
