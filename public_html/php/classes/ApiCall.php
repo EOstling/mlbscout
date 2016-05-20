@@ -1,9 +1,8 @@
 <?php
 namespace Edu\Cnm\MlbScout;
-use MongoDB\Driver\Exception\InvalidArgumentException;
 
 require_once("autoload.php");
-class apiCall implements \JsonSerializable {
+class ApiCall implements \JsonSerializable {
 	use ValidateDate;
 	/**
 	 * ApiCall ID this is the Primary key
