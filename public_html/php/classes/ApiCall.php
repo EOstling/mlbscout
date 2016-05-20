@@ -107,11 +107,12 @@ class ApiCall implements \JsonSerializable {
 	 * @return INT
 	 */
 	public function getApiCallUserId() {
-		return ($this->apiCallUserId);
+		return($this->apiCallUserId);
 	}
 	/**
 	 * @param int $newApiCallUserId
-	 * throws RangeException
+	 * @throws \RangeException
+	 * @throws \TypeError
 	 */
 	public function setApiCallUserId(int $newApiCallUserId) {
 		if($newApiCallUserId <= 0) {
