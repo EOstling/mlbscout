@@ -132,7 +132,6 @@ class ApiCallTest extends MlbScoutTest {
 		$apiCall->setApiCallBrowser($this->VALID_ApiCallBrowser);
 		$apiCall->setApiCallDateTime($this->VALID_ApiCallDateTime);
 		$apiCall->setApiCallHttpVerb($this->VALID_ApiCallHttpVerb);
-		$apiCall->setApiCallHttpVerb($this->VALID_ApiCallHttpVerb2);
 		$apiCall->setApiCallIP($this->VALID_ApiCallIP);
 		$apiCall->setApiCallQueryString($this->VALID_ApiCallQueryString);
 		$apiCall->setApiCallPayload($this->VALID_ApiCallPayload);

@@ -333,18 +333,18 @@ class ApiCall implements \JsonSerializable {
 	/**
 	 * @throws \PdoException
 	 * @param \PDO $pdo
-	 * @param string $ApiCallId
-	 * @return ApiCall|null
+	 * @param string $apiCallId
+	 * @return apiCall|null
 	 */
-	public function getApiCallByApiCallId(\PDO $pdo, string $ApiCallId) {
-		if($ApiCallId <= 0) {
+	public function getApiCallByApiCallId(\PDO $pdo, int $apiCallId) {
+		if($apiCallId <= 0) {
 			throw(new \PDOException("User Id isn't positive"));
 		}
 		// create query template
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
 		// bind the UserId to the place holder in the template
-		$parameters = array("CallId" => $ApiCallId);
+		$parameters = array("ApiCallId" => $apiCallId);
 		$statement->execute($parameters);
 		try {
 			$apiCall = null;
@@ -357,7 +357,7 @@ class ApiCall implements \JsonSerializable {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($apiCall);
+		return($apiCall);
 	}
 	/**
 	 * @param \Pdo $pdo
