@@ -289,7 +289,7 @@ class Team implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT teamId, teamType, teamName, WHERE teamType LIKE :teamType";
+		$query = "SELECT teamId, teamType, teamName FROM team WHERE teamType LIKE :teamType";
 		$statement = $pdo->prepare($query);
 
 		// bind the team type to the place holder in the template
