@@ -32,7 +32,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 	 */
 	protected $VALID_USERID = "PHPUnit test passing";
 	/**
-	 * userAccessLevel acess level for the users;
+	 * userAccessLevel access level for the users;
 	 * @var AccessLevel
 	 */
 	protected $accessLevel = null;
@@ -123,6 +123,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 	public function testInsertInvalidPlayer() {
 		// create a Player with a non null player id and watch it fail
 		$player = new Player(MlbScoutTest::INVALID_KEY, $this->player->getPlayerId(), $this->user->getUserId());
+		$player->insert($this->getPDO());
 	}
 
 
