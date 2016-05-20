@@ -179,7 +179,7 @@ class ApiCallTest extends MlbScoutTest {
 	 **/
 	public function testDeleteInvalidApiCall() {
 		// create a ApiCall and try to delete it without actually inserting it
-		$ApiCall = new apiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
+		$ApiCall = new ApiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
 			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
 			$this->VALID_ApiCallUrl);
 		$ApiCall->delete($this->getPDO());
@@ -216,9 +216,39 @@ class ApiCallTest extends MlbScoutTest {
 		$apiCall = ApiCall::getApiCallByApiCallId($this->getPDO(), MlbScoutTest::INVALID_KEY);
 		$this->assertNull($apiCall);
 	}
-	/**
-	 *Getting a valid user id
-	 **/
 
+	/**
+	 * @throws \Exception
+	 * @throws \PDOException
+	 **/
+	public function testGetValidApiCallByApiCallUserId(){
+		$numRows = $this->getConnection()->getRowCount("apiCall");
+		$apiCall = new ApiCall(null, $this->user->getUserId(), $this->VALID_ApiCallBrowser, $this->VALID_ApiCallDateTime
+			, $this->VALID_ApiCallHttpVerb, $this->VALID_ApiCallIP, $this->VALID_ApiCallQueryString, $this->VALID_ApiCallPayload,
+			$this->VALID_ApiCallUrl);
+		$apiCall->insert($this->getPDO());
+		//Grab data from mySQl
+		$pdoApiCalls = ApiCall::getApiCallByApiCallUserId($this->getPDO(), $apiCall->getApiCallUserId());
+		foreach($pdoApiCalls as $pdoApiCall) {
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
+			$this->assertEquals($pdoApiCall->getApiCallUserId(), $this->user->getUserId());
+			$this->assertEquals($pdoApiCall->getApiCallQueryString(), $this->VALID_ApiCallQueryString);
+			$this->assertEquals($pdoApiCall->getApiCallDateTime(), $this->VALID_ApiCallDateTime);
+			$this->assertEquals($pdoApiCall->getApiCallUrl(), $this->VALID_ApiCallUrl);
+			$this->assertEquals($pdoApiCall->getApiCallHTTPVerb(), $this->VALID_ApiCallHttpVerb);
+			$this->assertEquals($pdoApiCall->getApiCallBrowser(), $this->VALID_ApiCallBrowser);
+			$this->assertEquals($pdoApiCall->getApiCallIP(), $this->VALID_ApiCallIP);
+			$this->assertEquals($pdoApiCall->getApiCallPayload(), $this->VALID_ApiCallPayload);
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function testGetInvalidApiCallByUserId(){
+		$apiCall = ApiCall::getApiCallByApiCallUserId($this->getPDO(), "nothing will be found");
+		$this->assertCount(0, $apiCall);
+
+	}
 
 }

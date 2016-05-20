@@ -360,10 +360,11 @@ class ApiCall implements \JsonSerializable {
 		return($apiCall);
 	}
 	/**
-	 * @throws \PDOException
-	 * @param string string $ApiCallUserId
+	 *@throws \Exception
+ 	* @throws \PDOException
+ 	* @param string string $ApiCallUserId
 	 * @return \SplFixedArray ApiCalls
-	 **/
+ **/
 	public function getApiCallByApiCallUserId(\Pdo $pdo, string $ApiCallUserId) {
 		$ApiCallUserId = trim($ApiCallUserId);
 		$ApiCallUserId = filter_var($ApiCallUserId, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
