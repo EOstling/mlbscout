@@ -79,9 +79,6 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
 
-		// create and insert a Player that a user can favorite
-		$this->player = new Player(null, $this->playerId);
-		$this->player->insert($this->getPDO());
 	}
 
 	/**

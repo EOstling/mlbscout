@@ -6,8 +6,8 @@
 			<!--<file>PlayerTest.php</file>-->
 			<!--<file>TeamTest.php</file>-->
 			<!--<file>ScheduleTest.php</file>-->
-			<file>ApiCallTest.php</file>
-			<!--<file>FavoritePlayerTest.php</file>-->
+			<!--<file>ApiCallTest.php</file>-->
+			<file>FavoritePlayerTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
