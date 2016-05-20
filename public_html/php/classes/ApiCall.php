@@ -3,7 +3,7 @@ namespace Edu\Cnm\MlbScout;
 use MongoDB\Driver\Exception\InvalidArgumentException;
 
 require_once("autoload.php");
-class ApiCall implements \JsonSerializable {
+class apiCall implements \JsonSerializable {
 	use ValidateDate;
 	/**
 	 * ApiCall ID this is the Primary key
@@ -282,28 +282,29 @@ class ApiCall implements \JsonSerializable {
 
 	/**
 	 * @param \Pdo $pdo
+	 * @throws \InvalidArgumentException
 	 */
 	public function insert(\Pdo $pdo) {
 		if($this->apiCallId !== null) {
 			throw(new \InvalidArgumentException("wat"));
 		}
 		//Lets create $query;
-		$query = "INSERT INTO apiCall(apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL)VALUES(:apiCallUserId, :apiCallBrowser, :apiCallDateTime, :apiCallHttpVerb, :apiCallIp, :apiCallQueryString, :apiCallPayload, :apiCallURL)";
+		$query = "INSERT INTO apiCall(apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL)VALUES(:apiCallUserId, :apiCallBrowser, :apiCallDateTime, :apiCallHttpVerb, :apiCallIP, :apiCallQueryString, :apiCallPayload, :apiCallURL)";
 		$statement = $pdo->prepare($query);
 		//Bind the data
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
-		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString, "apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser, "apiCallIp" => $this->apiCallIP, "apiCallPayload" => $this->apiCallPayload];
+		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString, "apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser, "apiCallIP" => $this->apiCallIP, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
 		//Give me the lastInsert Id:
 		$this->apiCallId	 = intval($pdo->lastInsertId());
 	}
 	/**
-	 * throws \PDOException
+	 * @throws \PDOException
 	 * @param \Pdo $pdo
 	 */
 	public function delete(\Pdo $pdo) {
 		if($this->apiCallUserId === null) {
-			throw(new \PDOException("Well we can't delte something that isn't there now can we"));
+			throw(new \PDOException("Well we can't delete something that isn't there now can we"));
 		}
 		//Delete By primary key
 		$query = "DELETE FROM apiCall where apiCallId = :apiCallId";
@@ -313,7 +314,7 @@ class ApiCall implements \JsonSerializable {
 	}
 	/**
 	 * @throws \PDOException
-	 * @param \PDO $pdo
+	 * @param \Pdo $pdo
 	 */
 	public function update(\PDO $pdo) {
 		if($this->apiCallId === null) {
@@ -333,7 +334,7 @@ class ApiCall implements \JsonSerializable {
 	/**
 	 * @throws \PdoException
 	 * @param \PDO $pdo
-	 * @param string $apiCallId
+	 * @param  $apiCallId
 	 * @return apiCall|null
 	 */
 	public function getApiCallByApiCallId(\PDO $pdo, int $apiCallId) {
@@ -351,7 +352,7 @@ class ApiCall implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$apiCall = new ApiCall($row["apiCallUserId"], $row["apiCallId"], $row["apiCallBrowser"], $row["apiCallDateTime"],$row["apiCallHttpVerb"],$row["apiCallIP"],$row["apiCallQueryString"],$row["apiCallPayload"], $row["apiCallURL"]);
+				$apiCall = new apiCall($row["apiCallUserId"], $row["apiCallId"], $row["apiCallBrowser"], $row["apiCallDateTime"],$row["apiCallHttpVerb"],$row["apiCallIP"],$row["apiCallQueryString"],$row["apiCallPayload"], $row["apiCallURL"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -360,7 +361,7 @@ class ApiCall implements \JsonSerializable {
 		return($apiCall);
 	}
 	/**
-	 * @param \Pdo $pdo
+	 * @throws \PDOException
 	 * @param string string $ApiCallUserId
 	 * @return \SplFixedArray ApiCalls
 	 */
@@ -391,6 +392,7 @@ class ApiCall implements \JsonSerializable {
 		return ($apiCalls);
 	}
 	/**
+	 * @throws \PDOException
 	 * @param \Pdo $pdo
 	 */
 	public function getAllApiCall(\Pdo $pdo){

@@ -165,7 +165,7 @@ class ApiCallTest extends MlbScoutTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$apiCall->delete($this->getPDO());
 		// grab the data from mySQL and enforce the ApiCall does not exist
-		$pdoApiCall = apiCall::getApiCallByUserId($this->getPDO(), $apiCall->getUserId());
+		$pdoApiCall = apiCall::getApiCallByApiCallId($this->getPDO(), $apiCall->getApiCallid());
 		$this->assertNull($pdoApiCall);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("apiCall"));
 	}
