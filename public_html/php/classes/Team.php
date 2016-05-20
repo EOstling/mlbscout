@@ -302,7 +302,7 @@ class Team implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$team = new Team($row["teamId"], $row["teamType"], $row["teamName"], $row["teamRoster"]);
+				$team = new Team($row["teamId"], $row["teamType"], $row["teamName"]);
 				$teams[$teams->key()] = $team;
 				$teams->next();
 			} catch(\Exception $exception) {
