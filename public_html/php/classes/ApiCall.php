@@ -1,5 +1,7 @@
 <?php
 namespace Edu\Cnm\MlbScout;
+use MongoDB\Driver\Exception\InvalidArgumentException;
+
 require_once("autoload.php");
 class ApiCall implements \JsonSerializable {
 	use ValidateDate;
@@ -61,6 +63,8 @@ class ApiCall implements \JsonSerializable {
 	 * @param string $newApiCallURL
 	 * @throws \Exception
 	 * @throws \TypeError
+	 * @throws \InvalidArgumentException
+	 * @throws \RangeException
 	 */
 	public function __construct(int $newApiCallId = null, int $newApiCallUserId, string $newApiCallBrowser, $newApiCallDateTime = null, string $newApiCallHttpVerb, string $newApiCallIp, string $newApiCallQueryString, string $newApiCallPayload, string $newApiCallURL) {
 		try {
@@ -104,7 +108,7 @@ class ApiCall implements \JsonSerializable {
 		$this->apiCallId = $newApiCallId;
 	}
 	/**
-	 * @return INT
+	 * @return INT ApiCallUserId
 	 */
 	public function getApiCallUserId() {
 		return($this->apiCallUserId);
@@ -128,8 +132,8 @@ class ApiCall implements \JsonSerializable {
 		return ($this->apiCallBrowser);
 	}
 	/**
-	 * Throws InvalidArgumentException
-	 * throws RangeException
+	 * @throws \InvalidArgumentException
+	 * @throws \RangeException
 	 * @param string $newApiCallBrowser
 	 */
 	public function setApiCallBrowser(string $newApiCallBrowser) {
@@ -168,7 +172,7 @@ class ApiCall implements \JsonSerializable {
 		return ($this->apiCallHttpVerb);
 	}
 	/**
-	 * throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 * @param string $newApiCallHttpVerb
 	 */
 	public function setApiCallHttpVerb(string $newApiCallHttpVerb) {
@@ -189,7 +193,7 @@ class ApiCall implements \JsonSerializable {
 		return (inet_ntop($this->apiCallIP));
 	}
 	/**
-	 * throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 * @param string $newApiCallIp
 	 */
 	public function setApiCallIP(string $newApiCallIp) {
@@ -216,8 +220,8 @@ class ApiCall implements \JsonSerializable {
 		return ($this->apiCallQueryString);
 	}
 	/**
-	 * throws InvalidArgumentException
-	 * throws RangeException
+	 * @throws \InvalidArgumentException
+	 * @throws \RangeException
 	 * @param  $newApiCallQueryString
 	 */
 	public function setApiCallQueryString(string $newApiCallQueryString) {
@@ -238,8 +242,8 @@ class ApiCall implements \JsonSerializable {
 		return ($this->apiCallPayload);
 	}
 	/**
-	 * throws InvalidArgumentException
-	 * throws RangeException
+	 * @throws \InvalidArgumentException
+	 * @throws \RangeException
 	 * @param  $newApiCallPayload
 	 */
 	public function setApiCallPayload(string $newApiCallPayload) {
@@ -260,9 +264,9 @@ class ApiCall implements \JsonSerializable {
 		return ($this->apiCallURL);
 	}
 	/**
-	 * throws InvalidArgumentException
-	 * throws RangeException
-	 * @param  $newApiCallURL
+	 * @throws \InvalidArgumentException
+	 * @throws \RangeException
+	 * @param  $newApiCallUrl
 	 */
 	public function setApiCallURL(string $newApiCallURL) {
 		$newApiCallURL = trim($newApiCallURL);
@@ -316,18 +320,18 @@ class ApiCall implements \JsonSerializable {
 			throw(new \PDOException("Well we can't update anything that doesn't exist now can we"));
 		}
 		$query = "UPDATE ApiCall SET apiCallId = :apiCallId, apiCallUserId = :apiCallUserId, apiCallBrowser=:apiCallBrowser,
-								apiCallDateTime = :apiCallDateTime, apiCallHttpVerb = :apiCallHttpVerb,apiCallIP= :apiCallIp,
+								apiCallDateTime = :apiCallDateTime, apiCallHttpVerb = :apiCallHttpVerb,apiCallIP= :apiCallIP,
 								apiCallQueryString = :apiCallQueryString, apiCallPayload= :apiCallPayload, apiCallURL= :apiCallURL";
 		$statement = $pdo->prepare($query);
 		//Bind the variable members
 		$formattedDate = $this->apiCallDateTime->format("Y-m-d H:i:s");
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString,
 			"apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser,
-			"apicallIP" => $this->apiCallIP, "apiCallPayload" => $this->apiCallPayload];
+			"apiCallIP" => $this->apiCallIP, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
 	}
 	/**
-	 * throws PdoException
+	 * @throws \PdoException
 	 * @param \PDO $pdo
 	 * @param string $ApiCallId
 	 * @return ApiCall|null

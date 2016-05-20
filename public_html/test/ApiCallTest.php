@@ -248,7 +248,7 @@ class ApiCallTest extends MlbScoutTest {
 	 */
 	public function testGetInvalidApiCallbyApiUserId() {
 //Grab an invalid Call Id that exceeds
-		$ApiCall = ApiCall::getApiCallByApiUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
-		$this->assertNull($ApiCall);
+		$apiCall = ApiCall::getApiCallByApiCallUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$this->assertNull($apiCall);
 	}
 }
