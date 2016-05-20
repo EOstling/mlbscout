@@ -190,7 +190,7 @@ class ApiCallTest extends MlbScoutTest {
 			$this->VALID_ApiCallUrl);
 		$apiCall->insert($this->getPDO());
 		//Grab data from mySQl
-		$pdoApiCall = apiCall::getApiCallbyApiCallUserId($this->getPDO(), $apiCall->getCallId());
+		$pdoApiCall = apiCall::getApiCallbyUserId($this->getPDO(), $apiCall->getCallId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$this->assertEquals($pdoApiCall->getUserId(), $this->user->getUserId()->getUserId());
 		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
