@@ -132,14 +132,14 @@ class ApiCallTest extends MlbScoutTest {
 		$pdoApiCall = apiCall::getApiCallByApiCallId($this->getPDO(), $apiCall->getApiCallId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
 		$this->assertEquals($pdoApiCall->getApiCallUserId(), $this->user->getUserId());
-		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
-		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_ApiCallDateTime);
-		$this->assertEquals($pdoApiCall->getUrl(), $this->VALID_ApiCallUrl);
+		$this->assertEquals($pdoApiCall->getApiCallQueryString(), $this->VALID_ApiCallQueryString);
+		$this->assertEquals($pdoApiCall->getApiCallDateTime(), $this->VALID_ApiCallDateTime);
+		$this->assertEquals($pdoApiCall->getApiCallUrl(), $this->VALID_ApiCallUrl);
 		//Send in Httpverb2
-		$this->assertEquals($pdoApiCall->getHttpVerb(), $this->VALID_ApiCallHttpVerb2);
-		$this->assertEquals($pdoApiCall->getBrowser(), $this->VALID_ApiCallBrowser);
-		$this->assertEquals($pdoApiCall->getIP(), $this->VALID_ApiCallIP);
-		$this->assertEquals($pdoApiCall->getPayload(), $this->VALID_ApiCallPayload);
+		$this->assertEquals($pdoApiCall->getApiCallHttpVerb(), $this->VALID_ApiCallHttpVerb2);
+		$this->assertEquals($pdoApiCall->getApiCallBrowser(), $this->VALID_ApiCallBrowser);
+		$this->assertEquals($pdoApiCall->getApiCallIP(), $this->VALID_ApiCallIP);
+		$this->assertEquals($pdoApiCall->getApiCallPayload(), $this->VALID_ApiCallPayload);
 	}
 	/**
 	 * Give an invalid ApiCall
@@ -192,14 +192,14 @@ class ApiCallTest extends MlbScoutTest {
 		//Grab data from mySQl
 		$pdoApiCall = apiCall::getApiCallByApiCallId($this->getPDO(), $apiCall->getApiCallId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("apiCall"));
-		$this->assertEquals($pdoApiCall->getUser(), $this->user->getUserId());
-		$this->assertEquals($pdoApiCall->getQuery(), $this->VALID_ApiCallQueryString);
-		$this->assertEquals($pdoApiCall->getDateTime(), $this->VALID_ApiCallDateTime);
-		$this->assertEquals($pdoApiCall->getUrl(), $this->VALID_ApiCallUrl);
-		$this->assertEquals($pdoApiCall->getHTTPVerb(), $this->VALID_ApiCallHttpVerb);
-		$this->assertEquals($pdoApiCall->getBrowser(), $this->VALID_ApiCallBrowser);
-		$this->assertEquals($pdoApiCall->getIP(), $this->VALID_ApiCallIP);
-		$this->assertEquals($pdoApiCall->getPayload(), $this->VALID_ApiCallPayload);
+		$this->assertEquals($pdoApiCall->getApiCallUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoApiCall->getApiCallQueryString(), $this->VALID_ApiCallQueryString);
+		$this->assertEquals($pdoApiCall->getApiCallDateTime(), $this->VALID_ApiCallDateTime);
+		$this->assertEquals($pdoApiCall->getApiCallUrl(), $this->VALID_ApiCallUrl);
+		$this->assertEquals($pdoApiCall->getApiCallHTTPVerb(), $this->VALID_ApiCallHttpVerb);
+		$this->assertEquals($pdoApiCall->getApiCallBrowser(), $this->VALID_ApiCallBrowser);
+		$this->assertEquals($pdoApiCall->getApiCallIP(), $this->VALID_ApiCallIP);
+		$this->assertEquals($pdoApiCall->getApiCallPayload(), $this->VALID_ApiCallPayload);
 	}
 	/**
 	 * Testing invalid api call id

@@ -296,7 +296,7 @@ class apiCall implements \JsonSerializable {
 		$parameters = ["apiCallUserId" => $this->apiCallUserId, "apiCallDateTime" => $formattedDate, "apiCallQueryString" => $this->apiCallQueryString, "apiCallURL" => $this->apiCallURL, "apiCallHttpVerb" => $this->apiCallHttpVerb, "apiCallBrowser" => $this->apiCallBrowser, "apiCallIP" => $this->apiCallIP, "apiCallPayload" => $this->apiCallPayload];
 		$statement->execute($parameters);
 		//Give me the lastInsert Id:
-		$this->apiCallId	 = intval($pdo->lastInsertId());
+		$this->apiCallId = intval($pdo->lastInsertId());
 	}
 	/**
 	 * @throws \PDOException
@@ -352,7 +352,7 @@ class apiCall implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$apiCall = new apiCall($row["apiCallUserId"], $row["apiCallId"], $row["apiCallBrowser"], $row["apiCallDateTime"],$row["apiCallHttpVerb"],$row["apiCallIP"],$row["apiCallQueryString"],$row["apiCallPayload"], $row["apiCallURL"]);
+				$apiCall = new apiCall($row["apiCallId"], $row["apiCallUserId"], $row["apiCallBrowser"], \DateTime::createFromFormat("Y-m-d H:i:s", $row["apiCallDateTime"]),$row["apiCallHttpVerb"],$row["apiCallIP"],$row["apiCallQueryString"],$row["apiCallPayload"], $row["apiCallURL"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -381,7 +381,7 @@ class apiCall implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$apiCall = new apiCall($row["apiCallId"], $row["apiCallUserId"], $row["apiCallBrowser"], $row["apiCallDateTime"], $row["apiCallHttpVerb"], $row["apiCallIP"], $row["apiCallQueryString"], $row["apiCallPayload"], $row["apiCallURL"]);
+				$apiCall = new apiCall($row["apiCallId"], $row["apiCallUserId"], $row["apiCallBrowser"], \DateTime::createFromFormat("Y-m-d H:i:s", $row["apiCallDateTime"]), $row["apiCallHttpVerb"], $row["apiCallIP"], $row["apiCallQueryString"], $row["apiCallPayload"], $row["apiCallURL"]);
 				$apiCalls[$apiCalls->key()] = $apiCall;
 				$apiCalls->next();
 			} catch(\Exception $exception) {
@@ -403,7 +403,7 @@ class apiCall implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$apiCall = new apiCall($row["CallId"], $row["UserId"], $row["Browser"], $row["ApiDateTime"], $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
+				$apiCall = new apiCall($row["CallId"], $row["UserId"], $row["Browser"], \DateTime::createFromFormat("Y-m-d H:i:s", $row["apiCallDateTime"]), $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
 				$apiCalls[$apiCalls->key()] = $apiCall;
 				$apiCalls->next();
 			} catch(\Exception $exception) {
