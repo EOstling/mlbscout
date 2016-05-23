@@ -2,7 +2,7 @@
 namespace Edu\Cnm\MlbScout\Test;
 
 use Edu\Cnm\MlbScout\{
-	Player, User, Team
+	FavoritePlayer, Player, User, Team
 };
 use Edu\Cnm\MlbScout\AccessLevel;
 use Edu\Cnm\MlbScout\Test\MlbScoutTest;
@@ -84,60 +84,122 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), "L", "yes", "playerFirtsName", "active", "75", "Denver", "playerLastName", "left fl", "R", "180");
 		$this->player->insert($this->getPDO());
 	}
-
 	/**
-	 * test inserting a valid User and verify that the mySQL data matches
-	 */
-	public function testInsertValidUser() {
+	 * test inserting a valid Favorite Player and verify that the actual mySQL data matches
+	 **/
+	public function testInsertValidFavoritePlayer() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("user");
-
-		// create a new User and insert to into mySQL
-		$user = new User(null, $this->user->getUserId(), $this->VALID_USERID, $this->VALID_PLAYERID);
-		$user->insert($this->getPDO());
-
+		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+		// create a new Favorite Player and insert to into mySQL
+		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
+		$favoritePlayer->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
-		$this->assertEquals($pdoUser->getUserId(), $this->user->getUserId());
+		$pdoFavoritePlayer = FavoritePlayer::getFavoriteByPlayerIdAndUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
+		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
 	}
-
 	/**
-	 * Test inserting a User that already exists
-	 * @expectedException \PDOException
-	 */
-	public function testInsertInvalidUser() {
-		// create a User with a non null user id and watch it fail
-		$user = new User(MlbScoutTest::INVALID_KEY, $this->user->getUserId(), $this->player->getPlayerId());
-		$user->insert($this->getPDO());
+	 * test creating Favorite Player
+	 *
+	 * @expectedException TypeError
+	 **/
+	public function testInsertInvalidFavoritePlayer() {
+		// create a favorite player without foreign keys
+		$favoritePlayer = new FavoritePlayer(null, null, null);
 	}
-
 	/**
-	 * test inserting a valid Player and verify that the mySQL data matches
-	 */
-	public function testInsertValidPlayer() {
+	 * test creating a Favorite Player and then deleting it
+	 **/
+	public function testDeleteValidFavoritePlayer() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("player");
-
-		// create a new Player and insert to into mySQL
-		$player = new Player(null, $this->player->getPlayerId(), $this->VALID_PLAYERID, $this->VALID_USERID);
-		$this->insert($this->getPDO());
-
-		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoPlayer = Player::getPlayerByPlayerId($this->getPDO(), $player->getPlayerId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("player"));
-		$this->assertEquals($pdoPlayer->getPlayerId(), $this->player->getPlayerId());
+		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+		// create a new Favorite and insert to into mySQL
+		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
+		$favoritePlayer->insert($this->getPDO());
+		// delete the Favorite Player from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
+		$favoritePlayer->delete($this->getPDO());
+		// grab the data from mySQL and enforce the Player does not exist
+		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByPlayerIdAndUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
+		$this->assertNull($pdoFavoritePlayer);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("favoritePlayer"));
 	}
-
 	/**
-	 * test inserting a Player that already exists
-	 * @expectedException \PDOException
-	 */
-	public function testInsertInvalidPlayer() {
-		// create a Player with a non null player id and watch it fail
-		$player = new Player(MlbScoutTest::INVALID_KEY, $this->player->getPlayerId(), $this->user->getUserId());
-		$player->insert($this->getPDO());
+	 * test inserting a Favorite player and regrabbing it from mySQL
+	 **/
+	public function testGetValidFavoritePlayerByPlayerIdAndUserId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+		// create a new Favorite Player and insert to into mySQL
+		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
+		$favoritePlayer->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoFavorite = FavoritePlayer::getFavoritePlayerByPlayerIdAndUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
+		$this->assertEquals($pdoFavorite->getPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavorite->getUserId(), $this->user->getUserId());
 	}
-
-
+	/**
+	 * test grabbing a Favorite Player that does not exist
+	 **/
+	public function testGetInvalidFavoritePlayerByPlayerIdAndUserId() {
+		// grab a player id and user id that exceeds the maximum allowable player id and user id
+		$favoritePlayer = FavoritePlayer::getFavoritePlayerByPlayerIdAndUsereId($this->getPDO(), MlbScoutTest::INVALID_KEY, MlbScoutTest::INVALID_KEY);
+		$this->assertNull($favoritePlayer);
+	}
+	/**
+	 * test grabbing a Favorite Player by player id
+	 **/
+	public function testGetValidFavoritePlayerByPlayerId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+		// create a new Favorite Player and insert to into mySQL
+		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
+		$favoritePlayer->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = FavoritePlayer::getFavoritePlayerByPlayerId($this->getPDO(), $this->player->getPlayerId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\FavoritePlayer", $results);
+		// grab the result from the array and validate it
+		$pdoFavoritePlayer = $results[0];
+		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
+	}
+	/**
+	 * test grabbing a Favorite Player by a player id that does not exist
+	 **/
+	public function testGetInvalidFavoriteByPlayerId() {
+		// grab a player id that exceeds the maximum allowable player id
+		$favoritePlayer = FavoritePlayer::getFavoritePlayerByPlayerId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$this->assertCount(0, $favoritePlayer);
+	}
+	/**
+	 * test grabbing a Favorite Player by user id
+	 **/
+	public function testGetValidFavoritePlayerByUserId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+		// create a new Favorite Player and insert to into mySQL
+		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
+		$favoritePlayer->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = FavoritePlayer::getFavoritePlayerByUserId($this->getPDO(), $this->user->getUserId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\FavoritePlayer", $results);
+		// grab the result from the array and validate it
+		$pdoFavoritePlayer = $results[0];
+		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
+	}
+	/**
+	 * test grabbing a Favorite Player by a user id that does not exist
+	 **/
+	public function testGetInvalidFavoritePlayerByUserId() {
+		// grab a player id that exceeds the maximum allowable user id
+		$favoritePlayer = FavoritePlayer::getFavoritePlayerByUserId($this->getPDO(), MlbScoutTest::INVALID_KEY);
+		$this->assertCount(0, $favoritePlayer);
+	}
 }
