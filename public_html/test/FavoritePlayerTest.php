@@ -79,6 +79,9 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->team = new Team(null, "teamName", "teamType");
 		$this->team->insert($this->getPDO());
 
+		// create and insert a Player that a user can favorite
+		$this->player = new Player(null, $this->player->getPlayerId);
+		$this->player->insert($this->getPDO());
 	}
 
 	/**
@@ -89,7 +92,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new User and insert to into mySQL
-		$user = new User(null, $this->user->getUserId(), $this->team->getTeamId);
+		$user = new User(null, $this->user->getUserId(), $this->VALID_USERID, $this->VALID_PLAYERID);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations

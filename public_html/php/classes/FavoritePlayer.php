@@ -20,7 +20,7 @@ class FavoritePlayer implements \JsonSerializable {
 	 * id for the player that was favorited; this is a foreign key
 	 * @var int $favoritePlayerFavoritePlayerPlayerId
 	 **/
-	private $favoritePlayerFavoritePlayerPlayerId;
+	private $favoritePlayerPlayerId;
 
 	/**
 	 * constructor for this favoritePlayer
