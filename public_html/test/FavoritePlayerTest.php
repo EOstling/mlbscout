@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\MlbScout\FavoritePlayerTest\Test;
+namespace Edu\Cnm\MlbScout\Test;
 
 use Edu\Cnm\MlbScout\{
 	Player, User, Team
@@ -64,6 +64,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 
 	/**
 	 * create dependent objects before running each test
+	 * @throws \PDOException
 	 */
 	public final function setUp() {
 		// run the default setUp() method first
@@ -80,7 +81,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->team->insert($this->getPDO());
 
 		// create and insert a Player that a user can favorite
-		$this->player = new Player(null, $this->user->getUserId, $this->team->getTeamId, "L", "yes", "playerFirtsName", "active", "75", "Denver", "playerLastName", "left fl", "R", "180");
+		$this->player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), "L", "yes", "playerFirtsName", "active", "75", "Denver", "playerLastName", "left fl", "R", "180");
 		$this->player->insert($this->getPDO());
 	}
 
