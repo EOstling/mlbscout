@@ -44,23 +44,25 @@ try {
 
 		// get a specific player or all players and update reply
 		if(empty($id) === false) {
-			$player = MlbScout\ApiCall::getApiCallByApiCallId($pdo, $id);
-			if($player !== null) {
-				$reply->data = $player;
+			$ApiCall = MlbScout\ApiCall::getApiCallByApiCallId($pdo, $id);
+			if($ApiCall !== null) {
+				$reply->data = $ApiCall;
 			}
 		} else {
-			$players = MlbScout\ApiCall::getApiCallByApiCallId($pdo, $id);
-			if($players !== null) {
+			$ApiCall =MlbScout\ApiCall::getApiCallByApiCallUserId($pdo, $id)
+			if($ApiCall !== null) {
 				$reply->data = $ApiCall;
-       }
+			}
 		}
+
 	} else if($method === "PUT" || $method === "POST") {
 
-		verifyXrsf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
+	verifyXsrf();
+	$requestContent = file_get_contents("php://input");
+	$requestObject = json_decode($requestContent);
 
-		// make sure player Batting is available
-		if(empty($requestObject->playerBatting) === true) {
-			throw(new \InvalidArgumentException ("no batting preference for the player", 405));
-		}
+	// make sure player Batting is available
+	if(empty($requestObject->playerBatting) === true) {
+		throw(new \InvalidArgumentException ("no batting preference for the player", 405));
+	}
+}
