@@ -81,7 +81,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->team->insert($this->getPDO());
 
 		// create and insert a Player that a user can favorite
-		$this->player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), "L", "yes", "playerFirtsName", "active", "75", "Denver", "playerLastName", "left fl", "R", "180");
+		$this->player = new Player(null, $this->team->getTeamId(), $this->user->getUserId(), "L", "yes", "playerFirstName", "active", "75", "Denver", "playerLastName", "left fl", "R", "180");
 		$this->player->insert($this->getPDO());
 	}
 	/**
@@ -94,7 +94,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
 		$favoritePlayer->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerIdAndFavoritePlayerUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
+		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
 		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
 		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
@@ -131,13 +131,14 @@ class FavoritePlayerTest extends MlbScoutTest {
 	public function testGetValidFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("favoritePlayer");
+
 		// create a new Favorite Player and insert to into mySQL
 		$favoritePlayer = new FavoritePlayer($this->player->getPlayerId(), $this->user->getUserId());
 		$favoritePlayer->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
-		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getFavoritePlayerPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->favoritePlayer->getFavoritePlayerPlayerId());
 		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getFavoritePlayerUserId());
 	}
 	/**
