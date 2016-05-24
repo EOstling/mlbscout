@@ -146,7 +146,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 	 **/
 	public function testGetInvalidFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId() {
 		// grab a player id and user id that exceeds the maximum allowable player id and user id
-		$favoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUsereId($this->getPDO(), MlbScoutTest::INVALID_KEY, MlbScoutTest::INVALID_KEY);
+		$favoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($this->getPDO(), MlbScoutTest::INVALID_KEY, MlbScoutTest::INVALID_KEY);
 		$this->assertNull($favoritePlayer);
 	}
 	/**
