@@ -1,24 +1,24 @@
 <?php
 
-require_once "autoloader";
+require_once "autoloader.php";
 require_once "/lib/xsrf.php";
-require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\MlbScout;
 
 
 /**
- * api for the player class
+ * api for the Player class
  *
  * @author Lucas Laudick <llaudick@cnm.edu>
  **/
 
-// verify the session, start if not active
-if(session_status() !== PHP_SESSION_ACTVIVE) {
+//verify the session, start if not active
+if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-// prepare an empty reply
+//prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
@@ -27,108 +27,110 @@ try {
 	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/mlbscout-mysql/player.ini");
 
-	// determine which http method was used
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER['HTTP_X_HTTP_METHOD'] : $_SERVER["REQUEST_METHOD"];
+	//determine which HTTP method was used
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	// sanitize input
-	$id = filter_input(INPUT_GET, "id", FILER_VALIDATE_INT);
+	//sanitize input
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-	// make sure the id is valid for methods tat require it
+	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(InvalidArgumentException("id cant be negative or empty", 405));
+		throw(new InvalidArgumentException("id cant be negative or empty", 405));
 	}
 
 
-	// handle GET request - if id is present, that player is returned, otherwise all players are returned
+	// handle GET request - if id is present, that tweet is returned, otherwise all tweets are returned
 	if($method === "GET") {
-		// set XSRF cookie
-		setXsrfCookie("/");
+		//set XSRF cookie
+		setXsrfCookie();
 
-		// get a specific player or all players and update reply
+		//get a specific tweet or all tweets and update reply
 		if(empty($id) === false) {
-			$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+			$tweet = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 			if($player !== null) {
-				$reply->data = $player;
+				$reply->data = $tweet;
 			}
-		} else {
-			$players = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+		}  else {
+			$players = MlbScout\Player::getAllPlayers($pdo);
 			if($players !== null) {
-				$reply->data = $players
-       }
+				$reply->data = $players;
+			}
 		}
 	} else if($method === "PUT" || $method === "POST") {
 
-		verifyXrsf();
+		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		// make sure player Batting is available
+		//make sure tweet content is available
 		if(empty($requestObject->playerBatting) === true) {
-			throw(new \InvalidArgumentException ("no batting preference for the player", 405));
+			throw(new \InvalidArgumentException ("No batting preference for player.", 405));
 		}
 
 
-		// perform the actual put or POST
+		//perform the actual put or post
 		if($method === "PUT") {
 
-			// retrieve the player to update
+			// retrieve the tweet to update
 			$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 			if($player === null) {
-				throw(new RuntimeException("player does not exist", 404));
+				throw(new RuntimeException("Tweet does not exist", 404));
 			}
 
-			// put the new player batting into the player and update
-			$player->setPlayerBatting($requestObject->playerBatting);
-			$player->update($pdo);
+			// put the new tweet content into the tweet and update
+			$tweet->setPlayerBatting($requestObject->tweetContent);
+			$tweet->update($pdo);
 
 			// update reply
-			$reply->message = "Player updated ok";
+			$reply->message = "Player was updated OK";
 
 		} else if($method === "POST") {
 
-			// make sure userId is available
+			//  make sure profileId is available
 			if(empty($requestObject->userId) === true) {
-				throw(new \InvalidArgumentException ("No User Id", 405));
+				throw(new \InvalidArgumentException ("No User ID.", 405));
 			}
 
-			// create new player and insert into the database
-			$player = new MlbScout\Player(null, $requestObject->userId, $requestObject->playerBatting, null);
+			// create new tweet and insert into the database
+			$player = new MlbScout\Player(null, $requestObject->userId, $requestObject->PlayerBatting, null);
 			$player->insert($pdo);
 
 			// update reply
-			$reply->message = "Player created ok";
-		} else if($method === "DELETE") {
-			verifyXrsf();
-
-			//retrieve the player to be deleted
-			$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
-			if($player === null) {
-				throw(new RuntimeException("player does not exist", 404));
-			}
-
-			// delete player
-			$player->delete($pdo);
-
-			// update reply
-			$reply->message = "Player deleted ok";
-		} else {
-			throw(new InvalidArgumentException("Invalid HTTP method request"));
+			$reply->message = "Player was created OK";
 		}
-		//update reply with exception information
-	} catch(Exception $exception) {
-		$reply->status = $exception->getCode();
-		$reply->message = $exception->getMessage();
-		$reply->trace = $exception->getTraceAsString();
-	} catch(TypeError $typeError) {
-		$reply->status = $typeError->getCode();
-		$reply->message = $typerError->getMessage();
+
+	} else if($method === "DELETE") {
+		verifyXsrf();
+
+		// retrieve the Tweet to be deleted
+		$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+		if($player === null) {
+			throw(new RuntimeException("Player does not exist", 404));
+		}
+
+		// delete tweet
+		$player->delete($pdo);
+
+		// update reply
+		$reply->message = "Player was deleted OK";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 
-	header("Content-type: application/json");
-	if($reply->data === null) {
-		unset($reply->data);
-	}
-
-	// encode and retunr reply to front end caller
-	echo json_encode($reply);
+	// update reply with exception information
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
