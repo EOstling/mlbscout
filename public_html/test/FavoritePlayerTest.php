@@ -102,7 +102,7 @@ class FavoritePlayerTest extends MlbScoutTest {
 	/**
 	 * test creating Favorite Player
 	 *
-	 * @expectedException TypeError
+	 * @expectedException \TypeError
 	 **/
 	public function testInsertInvalidFavoritePlayer() {
 		// create a favorite player without foreign keys
