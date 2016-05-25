@@ -276,4 +276,3 @@ class FavoritePlayer implements \JsonSerializable {
 		return ($fields);
 	}
 }
-
