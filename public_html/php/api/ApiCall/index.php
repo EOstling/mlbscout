@@ -13,9 +13,10 @@ use Edu\Cnm\MlbScout;
  **/
 
 // verify the session, start if not active
-if(session_status() !== PHP_SESSION_ACTVIVE) {
+if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
+
 //stdClass() boilerplate?
 $reply = new stdClass();
 $reply->status = 200;
