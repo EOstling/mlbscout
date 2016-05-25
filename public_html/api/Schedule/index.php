@@ -10,7 +10,7 @@ use Edu\Cnm\MlbScout;
 /**
  * api for the schedule class
  *
- * @author Lucas Laudick <llaudick@cnm.edu>
+ * @author Eliot Ostling <it.treugott@gmail.com>
  **/
 
 //verify the session, start if not active
