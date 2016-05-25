@@ -19,24 +19,16 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cartridge.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$playerUserId = filter_input(INPUT_GET, "partyId", FILTER_VALIDATE_INT);
-	$PlayerTeamId = filter_input(INPUT_GET, "senderId", FILTER_VALIDATE_INT);
+	$playerUserId = filter_input(INPUT_GET, "playerUserId", FILTER_VALIDATE_INT);
+	$PlayerTeamId = filter_input(INPUT_GET, "playerTeamId", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
-	//make sure the User id is valid for the method that requires it
-	if(($method === "GET") && (empty($playerUserId) === true || $playerUserId < 0)) {
-		throw(new InvalidArgumentException("party id cannot be empty or negative", 405));
-	}
-	//make sure the Team id is valid for the method that requires it
-	if(($method === "GET") && (empty($playerTeamId) === true || $playerTeamId < 0)) {
-		throw(new InvalidArgumentException("sender id cannot be empty or negative", 405));
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	// handle GET request - if id is present, that player is returned
 	if($method === "GET") {
@@ -45,15 +37,23 @@ try {
 		//get a specific player and update reply
 		if(empty($id) === false) {
 			$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
-			if($Player !== null) {
-				$reply->data = $Player;
+			if($player !== null) {
+				$reply->data = $player;
 			}
+		}
+		//make sure the User id is valid for the method that requires it
+		if(($method === "GET") && (empty($playerUserId) === true || $playerUserId < 0)) {
+			throw(new \InvalidArgumentException("player user id cannot be empty or negative", 405));
 		}
 		//get player by user id and update reply
 		if(empty($playerUserId) === false) {
 			$players = MlbScout\Player::getPlayerByPlayerUserId($pdo, $playerUserId);
 			if($players !== null) {
 				$reply->data = $players;
+			}
+			//make sure the Team id is valid for the method that requires it
+			if(($method === "GET") && (empty($playerTeamId) === true || $playerTeamId < 0)) {
+				throw(new \InvalidArgumentException("player team id cannot be empty or negative", 405));
 			}
 			//get player by team id and update reply
 			if(empty($playerTeamId) === false) {
