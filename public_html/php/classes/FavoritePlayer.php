@@ -24,7 +24,7 @@ class FavoritePlayer implements \JsonSerializable {
 
 	/**
 	 * constructor for this favoritePlayer
-	 * @param int $newFavoritePlayerUserId  id of the User that favorited the player
+	 * @param int $newFavoritePlayerUserId id of the User that favorited the player
 	 * @param int $newFavoritePlayerPlayerId id of the player that was favorited
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds
@@ -75,7 +75,7 @@ class FavoritePlayer implements \JsonSerializable {
 
 		// convert and store the player id
 		$this->favoritePlayerPlayerId = $newFavoritePlayerPlayerId;
-        }
+	}
 
 	/**
 	 * accessor method for favorite player user id
@@ -157,35 +157,35 @@ class FavoritePlayer implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId(\PDO $pdo, int $favoritePlayerPlayerId, int $favoritePlayerUserId) {
-            // sanitize the player id and user id before searching
-            if($favoritePlayerPlayerId <= 0) {
-                throw(new \PDOException("player id is not positive"));
-            }
-				if($favoritePlayerUserId <= 0) {
-						throw(new \PDOException("user id is not positive"));
-}
-
-	// create query template
-	$query = "SELECT favoritePlayerPlayerId, favoritePlayerUserId FROM favoritePlayer WHERE favoritePlayerPlayerId = :favoritePlayerPlayerId AND favoritePlayerUserId = :favoritePlayerUserId";
-	$statement = $pdo->prepare($query);
-
-	// bind the player id and user id to the place holder in the template
-	$parameters = ["favoritePlayerPlayerId" => $favoritePlayerPlayerId, "favoritePlayerUserId" => $favoritePlayerUserId];
-	$statement->execute($parameters);
-
-	// grab the favoritePlayer from mySQL
-	try {
-		$favoritePlayer = null;
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		$row = $statement->fetch();
-		if($row !== false) {
-			$favoritePlayer = new FavoritePlayer($row["favoritePlayerPlayerId"], $row["favoritePlayerUserId"]);
+		// sanitize the player id and user id before searching
+		if($favoritePlayerPlayerId <= 0) {
+			throw(new \PDOException("player id is not positive"));
 		}
-	} catch(\Exception $exception) {
-		// if the row couldn't be converted, rethrow it
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
-	}
-	return($favoritePlayer);
+		if($favoritePlayerUserId <= 0) {
+			throw(new \PDOException("user id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT favoritePlayerPlayerId, favoritePlayerUserId FROM favoritePlayer WHERE favoritePlayerPlayerId = :favoritePlayerPlayerId AND favoritePlayerUserId = :favoritePlayerUserId";
+		$statement = $pdo->prepare($query);
+
+		// bind the player id and user id to the place holder in the template
+		$parameters = ["favoritePlayerPlayerId" => $favoritePlayerPlayerId, "favoritePlayerUserId" => $favoritePlayerUserId];
+		$statement->execute($parameters);
+
+		// grab the favoritePlayer from mySQL
+		try {
+			$favoritePlayer = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$favoritePlayer = new FavoritePlayer($row["favoritePlayerPlayerId"], $row["favoritePlayerUserId"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($favoritePlayer);
 	}
 
 	/**
@@ -224,57 +224,56 @@ class FavoritePlayer implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($favoritePlayers);
+		return ($favoritePlayers);
 	}
 
-/**
- * gets the FavoritePlayer by favorite player player id
- *
- * @param \PDO $pdo PDO connection object
- * @param int $favoritePlayerPlayerId player id to search for
- * @return \SplFixedArray array of FavoritePlayers found or null if not found
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError when variables are not the correct data type
- **/
-public static function getFavoritePlayerByFavoritePlayerPlayerId(\PDO $pdo, int $favoritePlayerPlayerId) {
-	// sanitize the player id
-	if($favoritePlayerPlayerId <= 0) {
-		throw(new \PDOException("player id is not positive"));
-	}
-
-	// create query template
-	$query = "SELECT favoritePlayerUserId, favoritePlayerPlayerId FROM favoritePlayer WHERE favoritePlayerPlayerId = :favoritePlayerPlayerId";
-	$statement = $pdo->prepare($query);
-
-	// bind the member variables to the place holders in the template
-	$parameters = ["favoritePlayerPlayerId" => $favoritePlayerPlayerId];
-	$statement->execute($parameters);
-
-	// build an array of favoritePlayers
-	$favoritePlayers = new \SplFixedArray($statement->rowCount());
-	$statement->setFetchMode(\PDO::FETCH_ASSOC);
-	while(($row = $statement->fetch()) !== false) {
-		try {
-			$favoritePlayer = new FavoritePlayer($row["favoritePlayerPlayerId"], $row["favoritePlayerUserId"]);
-			$favoritePlayers[$favoritePlayers->key()] = $favoritePlayer;
-			$favoritePlayers->next();
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+	/**
+	 * gets the FavoritePlayer by favorite player player id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $favoritePlayerPlayerId player id to search for
+	 * @return \SplFixedArray array of FavoritePlayers found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getFavoritePlayerByFavoritePlayerPlayerId(\PDO $pdo, int $favoritePlayerPlayerId) {
+		// sanitize the player id
+		if($favoritePlayerPlayerId <= 0) {
+			throw(new \PDOException("player id is not positive"));
 		}
+
+		// create query template
+		$query = "SELECT favoritePlayerUserId, favoritePlayerPlayerId FROM favoritePlayer WHERE favoritePlayerPlayerId = :favoritePlayerPlayerId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["favoritePlayerPlayerId" => $favoritePlayerPlayerId];
+		$statement->execute($parameters);
+
+		// build an array of favoritePlayers
+		$favoritePlayers = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$favoritePlayer = new FavoritePlayer($row["favoritePlayerPlayerId"], $row["favoritePlayerUserId"]);
+				$favoritePlayers[$favoritePlayers->key()] = $favoritePlayer;
+				$favoritePlayers->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($favoritePlayers);
 	}
-	return($favoritePlayers);
+
+	/**
+	 * formats the state variables for JSON Serializable
+	 *
+	 * @return array resulting state variable to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return ($fields);
+	}
 }
 
-/**
- * formats the state variables for JSON Serializable
- *
- * @return array resulting state variable to serialize
- **/
-public function jsonSerialize() {
-	$fields = get_object_vars($this);
-	return($fields);
-}
-}
-
-?>
