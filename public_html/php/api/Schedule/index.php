@@ -189,7 +189,7 @@ try {
 		// retrieve the Schedule to be deleted
 		$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
 		if($schedule === null) {
-			throw(new RuntimeException("schedule does not exist", 404));
+			throw(new \RuntimeException("schedule does not exist", 404));
 		}
 
 		// delete schedule
