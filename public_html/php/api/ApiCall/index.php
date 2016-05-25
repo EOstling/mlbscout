@@ -37,8 +37,12 @@ try {
 	}
 	// handle GET request - if id is present, that ApiCall is returned
 	if($method === "GET") {
-		// set XSRF cookie
+		// set XSRF Cookie
 		setXsrfCookie("/");
+		//Verify My Cookies
+		verifyXsrf();
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
 
 
 		// get a specific ApiCallId and update reply
@@ -47,6 +51,29 @@ try {
 			if($ApiCall !== null) {
 				$reply->data = $ApiCall;
 			}
+		}  else {
+			$schedules = MlbScout\ApiCall::getAllApiCall($pdo);
+			if($ApiCall !== null) {
+				$reply->data = $ApiCall;
+			}
 		}
+
 	}
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
+
+
