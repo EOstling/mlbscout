@@ -96,8 +96,8 @@ class FavoritePlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
-		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
-		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getUserId());
 	}
 	/**
 	 * test creating Favorite Player
@@ -138,8 +138,8 @@ class FavoritePlayerTest extends MlbScoutTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoFavoritePlayer = FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($this->getPDO(), $this->player->getPlayerId(), $this->user->getUserId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("favoritePlayer"));
-		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getFavoritePlayerPlayerId());
-		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getFavoritePlayerUserId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getUserId());
 	}
 	/**
 	 * test grabbing a Favorite Player that does not exist
@@ -165,8 +165,8 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\FavoritePlayer", $results);
 		// grab the result from the array and validate it
 		$pdoFavoritePlayer = $results[0];
-		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
-		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getUserId());
 	}
 	/**
 	 * test grabbing a Favorite Player by a player id that does not exist
@@ -192,8 +192,8 @@ class FavoritePlayerTest extends MlbScoutTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\FavoritePlayer", $results);
 		// grab the result from the array and validate it
 		$pdoFavoritePlayer = $results[0];
-		$this->assertEquals($pdoFavoritePlayer->getPlayerId(), $this->player->getPlayerId());
-		$this->assertEquals($pdoFavoritePlayer->getUserId(), $this->user->getUserId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerPlayerId(), $this->player->getPlayerId());
+		$this->assertEquals($pdoFavoritePlayer->getFavoritePlayerUserId(), $this->user->getUserId());
 	}
 	/**
 	 * test grabbing a Favorite Player by a user id that does not exist
