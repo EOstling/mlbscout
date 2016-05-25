@@ -73,7 +73,7 @@ try {
 
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
-			if($tweet === null) {
+			if($schedule === null) {
 				throw(new RuntimeException("schedule does not exist", 404));
 			}
 
@@ -115,7 +115,7 @@ try {
 
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
-			if($tweet === null) {
+			if($schedule === null) {
 				throw(new RuntimeException("schedule does not exist", 404));
 			}
 
@@ -157,7 +157,7 @@ try {
 
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
-			if($tweet === null) {
+			if($schedule === null) {
 				throw(new RuntimeException("schedule does not exist", 404));
 			}
 
