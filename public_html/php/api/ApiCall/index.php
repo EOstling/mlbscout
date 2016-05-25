@@ -73,7 +73,7 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 
-// encode and return reply to front end caller
+// encoded and return reply to front end caller
 echo json_encode($reply);
 
 
