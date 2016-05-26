@@ -33,4 +33,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for the methods that require it
+	if(($method === "DELETE" ) && (eampty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
 }
