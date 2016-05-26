@@ -50,7 +50,7 @@ try {
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		}  else {
+		} else {
 			$schedules = MlbScout\Schedule::getAllschedules($pdo);
 			if($schedules !== null) {
 				$reply->data = $schedules;

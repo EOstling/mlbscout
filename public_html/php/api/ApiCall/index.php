@@ -40,22 +40,17 @@ try {
 	if($method === "GET") {
 		// set XSRF Cookie
 		setXsrfCookie("/");
-		//Verify My Cookies
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-
 
 		// get a specific ApiCallId and update reply
 		if(empty($id) === false) {
-			$ApiCall = MlbScout\ApiCall::getApiCallByApiCallId($pdo, $id);
-			if($ApiCall !== null) {
-				$reply->data = $ApiCall;
+			$apiCall = MlbScout\ApiCall::getApiCallByApiCallId($pdo, $id);
+			if($apiCall !== null) {
+				$reply->data = $apiCall;
 			}
-		}  else {
-			$schedules = MlbScout\ApiCall::getAllApiCall($pdo);
-			if($ApiCall !== null) {
-				$reply->data = $ApiCall;
+		} else {
+			$apiCall= MlbScout\ApiCall::getAllApiCall($pdo);
+			if($apiCall !== null) {
+				$reply->data = $apiCall;
 			}
 		}
 
