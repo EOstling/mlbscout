@@ -41,23 +41,16 @@ try {
 				$reply->data = $player;
 			}
 		}
-		//make sure the User id is valid for the method that requires it
-		if(($method === "GET") && (empty($playerUserId) === true || $playerUserId < 0)) {
-			throw(new \InvalidArgumentException("player user id cannot be empty or negative", 405));
-		}
 		//get player by user id and update reply
-		if(empty($playerUserId) === false) {
+		else if(empty($playerUserId) === false) {
 			$players = MlbScout\Player::getPlayerByPlayerUserId($pdo, $playerUserId);
 			if($players !== null) {
 				$reply->data = $players;
 			}
-			//make sure the Team id is valid for the method that requires it
-			if(($method === "GET") && (empty($playerTeamId) === true || $playerTeamId < 0)) {
-				throw(new \InvalidArgumentException("player team id cannot be empty or negative", 405));
-			}
+		}
 			//get player by team id and update reply
-			if(empty($playerTeamId) === false) {
-				$player = MlbScout\Player::getPlayerByPlayerTeamId($pdo, $playerTeamId);
+			else if(empty($playerTeamId) === false) {
+				$players = MlbScout\Player::getPlayerByPlayerTeamId($pdo, $playerTeamId);
 				if($players !== null) {
 					$reply->data = $players;
 				}
@@ -263,7 +256,7 @@ try {
 				}
 			}
 		}
-	}
+
 } // update reply with exception information
 catch(Exception $exception) {
 	$reply->status = $exception->getCode();
