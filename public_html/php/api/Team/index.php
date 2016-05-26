@@ -2,7 +2,7 @@
 
 require_once "autoloader.php";
 require_once "/lib/xsrf.php";
-require_once ();
+require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
 
 use Edu\Cnm\MlbScout;
 
@@ -56,34 +56,44 @@ try {
 		}
 	} else if($method === "PUT" || $method === "POST") {
 		verifyXsrf();
-		$requestNAME = file_get_contents("php://input");
-		$requestObject = json_decode($requestNAME);
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
 
-		// make sure team content is available
+		// make sure team name is available
 		if(empty($requestObject->teamName) === true) {
 			throw(new \InvalidArgumentException ("No Name for Team", 405));
 		}
 
-	// perform the actual put or post
-	if($method === "PUT") {
-		// retrieve the team to update
-		$team = MlbScout\Team::getTeamByTeamId($pdo, $id);
-		if($team === null) {
-			throw(new RuntimeException("Team does not exist, 404"));
+		// make sure team type is available
+		if(empty($requestObject->teamType) === true) {
+			throw(new \InvalidArgumentException ("No Type for Team", 405));
 		}
 
-		// put the new team name into the team and update
-		$team->setTeamName($requestObject->teamName);
-		$team->update($pdo);
+		// perform the actual put or post
+		if($method === "PUT") {
+			// retrieve the team to update
+			$team = MlbScout\Team::getTeamByTeamId($pdo, $id);
+			if($team === null) {
+				throw(new RuntimeException("Team does not exist, 404"));
+			}
 
-		// update reply
-		$reply->message = "Team updated OK";
-	}	else {
-		throw (new InvalidArgumentException("Invalid HTTP method request"));
+			// put the new team name into the team and update
+			$team->setTeamName($requestObject->teamName);
+			$team->update($pdo);
+
+			// put the new team type into the team and update
+			$team->setTeamType($requestObject->teamType);
+			$team->update($pdo);
+
+			// update reply
+			$reply->message = "Team updated OK";
+		} else {
+			throw (new InvalidArgumentException("Invalid HTTP method request"));
+		}
 	}
 
-	// update reply with exception information
-	} catch(Exception $exception) {
+}		// update reply with exception information
+catch(Exception $exception) {
 		$reply->status = $exception->getCode();
 		$reply->message = $exception->getMessage();
 		$reply->trace = $exception->getTraceAsString();
@@ -91,4 +101,9 @@ try {
 		$reply->status = $typeError->getCode();
 		$reply->message = $typeError->getMessage();
 	}
-}
+	header("Name-type: application/json");
+	if($reply->data === null) {
+		unset($reply->data);
+	}
+	// encode and return reply to front end caller
+	echo json_encode($reply);
