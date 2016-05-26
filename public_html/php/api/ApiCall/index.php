@@ -1,8 +1,8 @@
 <?php
 
-require_once "autoloader";
-require_once "/lib/xsrf.php";
-require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
+require_once dirname(__DIR__, 2) ."/classes/autoload.php";
+require_once dirname(__DIR__, 2) ."/lib/xsrf.php";
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\MlbScout;
 
@@ -24,7 +24,7 @@ $reply->data = null;
 
 try {
 	//grab the encrypted mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/mlbscout-mysql/ApiClass.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 
 	// determine which http method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER['HTTP_X_HTTP_METHOD'] : $_SERVER["REQUEST_METHOD"];

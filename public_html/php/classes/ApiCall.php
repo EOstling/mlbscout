@@ -336,7 +336,7 @@ class ApiCall implements \JsonSerializable {
 	 * @param  $apiCallId
 	 * @return apiCall|null
 	 **/
-	public function getApiCallByApiCallId(\PDO $pdo, int $apiCallId) {
+	public static function getApiCallByApiCallId(\PDO $pdo, int $apiCallId) {
 		if($apiCallId <= 0) {
 			throw(new \PDOException("User Id isn't positive"));
 		}
@@ -395,7 +395,7 @@ class ApiCall implements \JsonSerializable {
 	 * @throws \PDOException
 	 * @param \Pdo $pdo
 	 **/
-	public function getAllApiCall(\Pdo $pdo){
+	public static function getAllApiCall(\PDO $pdo){
 		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
@@ -411,6 +411,7 @@ class ApiCall implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
+		return $apiCalls;
 	}
 	/**
 	 * @return array

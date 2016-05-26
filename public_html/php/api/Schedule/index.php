@@ -35,7 +35,7 @@ try {
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
 
@@ -74,7 +74,7 @@ try {
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
 			if($schedule === null) {
-				throw(new RuntimeException("schedule does not exist", 404));
+				throw(new \RuntimeException("schedule does not exist", 404));
 			}
 
 			// put the new schedule location into the schedule and update
@@ -116,7 +116,7 @@ try {
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
 			if($schedule === null) {
-				throw(new RuntimeException("schedule does not exist", 404));
+				throw(new \RuntimeException("schedule does not exist", 404));
 			}
 
 			// put the new schedule location into the schedule and update
@@ -158,7 +158,7 @@ try {
 			// retrieve the schedule to update
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
 			if($schedule === null) {
-				throw(new RuntimeException("schedule does not exist", 404));
+				throw(new \RuntimeException("schedule does not exist", 404));
 			}
 
 			// put the new schedule location into the schedule and update
@@ -198,7 +198,7 @@ try {
 		// update reply
 		$reply->message = "Schedule deleted OK";
 	} else {
-		throw (new InvalidArgumentException("Invalid HTTP method request"));
+		throw (new \InvalidArgumentException("Invalid HTTP method request"));
 	}
 
 	// update reply with exception information
