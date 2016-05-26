@@ -26,6 +26,15 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$playerUserId = filter_input(INPUT_GET, "playerUserId", FILTER_VALIDATE_INT);
 	$playerTeamId = filter_input(INPUT_GET, "playerTeamId", FILTER_VALIDATE_INT);
+	$playerCommitment = filter_input(INPUT_GET, "playerCommitment", FILTER_SANITIZE_STRING);
+	$playerFirstName = filter_input(INPUT_GET, "playerFirstName", FILTER_SANITIZE_STRING);
+	$playerHomeTown = filter_input(INPUT_GET, "playerHomeTown", FILTER_SANITIZE_STRING);
+	$playerLastName = filter_input(INPUT_GET, "playerLastName", FILTER_SANITIZE_STRING);
+	$playerPosition = filter_input(INPUT_GET, "playerPosition", FILTER_SANITIZE_STRING);
+	$playerThrowingHand = filter_input(INPUT_GET, "playerThrowingHand", FILTER_SANITIZE_STRING);
+	$playerHealthStatus = filter_input(INPUT_GET, "playerHealthStatus", FILTER_SANITIZE_STRING);
+	$playerHeight = filter_input(INPUT_GET, "playerHeight", FILTER_VALIDATE_INT);
+	$playerWeight = filter_input(INPUT_GET, "playerWeight", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
@@ -47,8 +56,33 @@ try {
 				$reply->data = $players;
 			}
 		} //get player by team id and update reply
-		else {
+		else if(empty($playerTeamId) === false) {
 			$players = MlbScout\Player::getPlayerByPlayerTeamId($pdo, $playerTeamId);
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else if(empty($playerFirstName) === false) {
+			$players = MlbScout\Player::getPlayerByPlayerFirstName($pdo, $playerFirstName);
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else if(empty($playerHomeTown) === false) {
+			$players = MlbScout\Player::getPlayerByPlayerHomeTown($pdo, $playerHomeTown);
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else if(empty($playerPosition) === false) {
+			$players = MlbScout\Player::getPlayerByPlayerPosition($pdo, $playerPosition);
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else if(empty($playerThrowingHand) === false) {
+			$players = MlbScout\Player::getPlayerByPlayerThrowingHand($pdo, $playerThrowingHand);
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else {
+			$players = MlbScout\Player::getAllPlayers($pdo);
 			if($players !== null) {
 				$reply->data = $players;
 			}
@@ -66,8 +100,8 @@ try {
 //					throw(new \InvalidArgumentException ("No player commitment.", 405));
 //				}
 		//make sure player first name is available
-		if(empty($requestObject->playerFirstName) === true) {
-			throw(new \InvalidArgumentException ("No player First Name.", 405));
+		if(empty($requestObject->playerCommitment) === true && empty($requestObject->playerBatting) === true && empty($requestObject->playerFirstName) === true && empty($requestObject->playerHomeTown) === true && empty($requestObject->playerLastName) === true && empty($requestObject->playerPosition) === true && empty($requestObject->playerThrowingHand) === true && empty($requestObject->playerHealthStatus) === true && empty($requestObject->playerHeight) === true && empty($requestObject->playerWeight) === true) {
+			throw(new \InvalidArgumentException ("No player info.", 405));
 		}
 //				//make sure player health status is available
 //				if(empty($requestObject->playerHealthStatus) === true) {
@@ -77,22 +111,22 @@ try {
 //				if(empty($requestObject->playerHeight) === true) {
 //					throw(new \InvalidArgumentException ("No player Height.", 405));
 //				}
-		//make sure player home town is available
-		if(empty($requestObject->playerHomeTown) === true) {
-			throw(new \InvalidArgumentException ("No player Home Town.", 405));
-		}
-		//make sure player last name is available
-		if(empty($requestObject->playerLastName) === true) {
-			throw(new \InvalidArgumentException ("No player Last Name.", 405));
-		}
-		//make sure player position is available
-		if(empty($requestObject->playerPosition) === true) {
-			throw(new \InvalidArgumentException ("No player position.", 405));
-		}
-		//make sure player Throwing hand is available
-		if(empty($requestObject->playerThrowingHand) === true) {
-			throw(new \InvalidArgumentException ("No player Throwing Hand.", 405));
-		}
+//		//make sure player home town is available
+//		if(empty($requestObject->playerHomeTown) === true) {
+//			throw(new \InvalidArgumentException ("No player Home Town.", 405));
+//		}
+//		//make sure player last name is available
+//		if(empty($requestObject->playerLastName) === true) {
+//			throw(new \InvalidArgumentException ("No player Last Name.", 405));
+//		}
+//		//make sure player position is available
+//		if(empty($requestObject->playerPosition) === true) {
+//			throw(new \InvalidArgumentException ("No player position.", 405));
+//		}
+//		//make sure player Throwing hand is available
+//		if(empty($requestObject->playerThrowingHand) === true) {
+//			throw(new \InvalidArgumentException ("No player Throwing Hand.", 405));
+//		}
 //				//make sure player weight is available
 //				if(empty($requestObject->playerWeight) === true) {
 //					throw(new \InvalidArgumentException ("No player weight.", 405));
@@ -113,7 +147,7 @@ try {
 //						$reply->message = "player updated OK";
 //						// update player rating if it needs updated
 //					}
-			if(($requestObject->playerCommitment) === true) {
+			if(empty($requestObject->playerCommitment) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -125,34 +159,43 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-//					if(($requestObject->playerFirstName) === true) {
-//						// retrieve the player to update
-//						$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
-//						if($player === null) {
-//							throw(new RuntimeException("player does not exist", 404));
-//						}
-//						// put the new player First Name into the player and update
-//						$player->setPlayerFirstName($requestObject->playerFirstName);
-//						$player->update($pdo);
-//						// update reply
-//						$reply->message = "player updated OK";
-//						// update player rating if it needs updated
-//					}
-			if(($requestObject->playerHealthStatus) === true) {
+			} if(empty($requestObject->playerBatting) !== true) {
+				// retrieve the player to update
+				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+				if($player === null) {
+					throw(new RuntimeException("player does not exist", 404));
+				}
+				// put the new player Commitment into the player and update
+				$player->setPlayerBatting($requestObject->playerBatting);
+				$player->update($pdo);
+				// update reply
+				$reply->message = "player updated OK";
+				// update player rating if it needs updated
+			} if(empty($requestObject->playerFirstName) !== true) {
+				// retrieve the player to update
+				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+				if($player === null) {
+					throw(new RuntimeException("player does not exist", 404));
+				}
+				// put the new player First Name into the player and update
+				$player->setPlayerFirstName($requestObject->playerFirstName);
+				$player->update($pdo);
+				// update reply
+				$reply->message = "player updated OK";
+				// update player rating if it needs updated
+			} if(empty($requestObject->playerHealthStatus) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
 					throw(new RuntimeException("player does not exist", 404));
 				}
 				// put the new player Health Status into the player and update
-				$player->setPlayerHealthStatus($requestObject->playerHealthstatus);
+				$player->setPlayerHealthStatus($requestObject->playerHealthStatus);
 				$player->update($pdo);
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerHeight) === true) {
+			} if(empty($requestObject->playerHeight) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -164,8 +207,7 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerHomeTown) === true) {
+			} if(empty($requestObject->playerHomeTown) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -177,8 +219,7 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerLastName) === true) {
+			} if(empty($requestObject->playerLastName) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -190,21 +231,19 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerPosition) === true) {
+			} if(empty($requestObject->playerPosition) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
 					throw(new RuntimeException("player does not exist", 404));
 				}
 				// put the new player position into the player and update
-				$player->setPlayerPosition($requestObject->playerPostion);
+				$player->setPlayerPosition($requestObject->playerPosition);
 				$player->update($pdo);
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerThrowingHand) === true) {
+			} if(empty($requestObject->playerThrowingHand) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -216,8 +255,7 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			}
-			if(($requestObject->playerWeight) === true) {
+			} if(empty($requestObject->playerWeight) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -228,31 +266,31 @@ try {
 				$player->update($pdo);
 				// update reply
 				$reply->message = "player updated OK";
-			} else if($method === "POST") {
-				//  make sure playerUserId or playerTeamId is available
-				if(empty($requestObject->playerUserId) === true || empty($requestObject->playerTeamId) === true) {
-					throw(new \InvalidArgumentException ("No User or Team ID.", 405));
-				}
-				// create new player and insert into the database
-				$player = new MlbScout\Player(null, $requestObject->playerUserId, $requestObject->playerTeamId, $requestObject->playerBatting, $requestObject->playerCommitment, $requestObject->playerFirstName, $requestObject->playerHealthStatus, $requestObject->playerHeight, $requestObject->playerHomeTown, $requestObject->playerLastName, $requestObject->playerPosition, $requestObject->playerThrowingHand, $requestObject->playerWeight);
-				$player->insert($pdo);
-				// update reply
-				$reply->message = "player created OK";
 			}
-		} else if($method === "DELETE") {
-			verifyXsrf();
-			// retrieve the player to be deleted
-			$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
-			if($player === null) {
-				throw(new RuntimeException("player does not exist", 404));
+		} else if($method === "POST") {
+			//  make sure playerUserId or playerTeamId is available
+			if(empty($requestObject->playerUserId) === true || empty($requestObject->playerTeamId) === true) {
+				throw(new \InvalidArgumentException ("No User or Team ID.", 405));
 			}
-			// delete player
-			$player->delete($pdo);
+			// create new player and insert into the database
+			$player = new MlbScout\Player(null, $requestObject->playerTeamId, $requestObject->playerUserId, $requestObject->playerBatting, $requestObject->playerCommitment, $requestObject->playerFirstName, $requestObject->playerHealthStatus, $requestObject->playerHeight, $requestObject->playerHomeTown, $requestObject->playerLastName, $requestObject->playerPosition, $requestObject->playerThrowingHand, $requestObject->playerWeight);
+			$player->insert($pdo);
 			// update reply
-			$reply->message = "Player deleted OK";
-		} else {
-			throw (new InvalidArgumentException("Invalid HTTP method request"));
+			$reply->message = "player created OK";
 		}
+	} else if($method === "DELETE") {
+		verifyXsrf();
+		// retrieve the player to be deleted
+		$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
+		if($player === null) {
+			throw(new RuntimeException("player does not exist", 404));
+		}
+		// delete player
+		$player->delete($pdo);
+		// update reply
+		$reply->message = "Player deleted OK";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 
 
