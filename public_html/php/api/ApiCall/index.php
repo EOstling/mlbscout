@@ -48,6 +48,7 @@ try {
 				$reply->data = $apiCall;
 			}
 		} else {
+			//GetallApi
 			$apiCall= MlbScout\ApiCall::getAllApiCall($pdo);
 			if($apiCall !== null) {
 				$reply->data = $apiCall;
