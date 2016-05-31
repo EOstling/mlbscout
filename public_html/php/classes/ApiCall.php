@@ -396,14 +396,14 @@ class ApiCall implements \JsonSerializable {
 	 * @param \Pdo $pdo
 	 **/
 	public static function getAllApiCall(\PDO $pdo){
-		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall WHERE apiCallId = :apiCallId";
+		$query = "SELECT apiCallId, apiCallUserId, apiCallBrowser, apiCallDateTime, apiCallHttpVerb, apiCallIP, apiCallQueryString,apiCallPayload, apiCallURL FROM apiCall";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 		$apiCalls = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$apiCall = new apiCall($row["CallId"], $row["UserId"], $row["Browser"], \DateTime::createFromFormat("Y-m-d H:i:s", $row["apiCallDateTime"]), $row["ApiHttpVerb"], $row["ApiIp"], $row["ApiQueryString"], $row["ApiPayload"], $row["ApiURL"]);
+				$apiCall = new apiCall($row["apiCallId"], $row["apiCallUserId"], $row["apiCallBrowser"], \DateTime::createFromFormat("Y-m-d H:i:s", $row["apiCallDateTime"]), $row["apiCallHttpVerb"], $row["apiCallIP"], $row["apiCallQueryString"], $row["apiCallPayload"], $row["apiCallURL"]);
 				$apiCalls[$apiCalls->key()] = $apiCall;
 				$apiCalls->next();
 			} catch(\Exception $exception) {
