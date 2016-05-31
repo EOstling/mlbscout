@@ -97,7 +97,7 @@ Class UserTest extends MlbScoutTest {
 		$this->VALID_USERACTIVATIONTOKEN = bin2hex(random_bytes(16));
 		$this->VALID_USERACTIVATIONTOKEN2 = bin2hex(random_bytes(16));
 		$this->salt = bin2hex(random_bytes(32));
-		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096);
+		$this->hash = hash_pbkdf2("sha512", "123456", $this->salt, 4096, 128);
 	}
 
 	/**
