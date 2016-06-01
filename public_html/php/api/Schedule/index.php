@@ -54,22 +54,19 @@ try {
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		}
-		else if(empty($scheduleStartingPosition) === false) {
+		} else if(empty($scheduleStartingPosition) === false) {
 			$schedule = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $scheduleStartingPosition);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		}
-		else if(empty($scheduleByScheduleId)===false){
+		} else if(empty($scheduleByScheduleId) === false) {
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $scheduleId);
-			if($schedule !== null ){
+			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		}
-		else if(empty($scheduleAll)==false){
+		} else if(empty($scheduleAll) == false) {
 			$schedule = MlbScout\Schedule::getAllSchedules($pdo);
-			if($schedule !== null){
+			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
 		}
@@ -96,47 +93,16 @@ try {
 				throw(new \RuntimeException("schedule does not exist", 404));
 			}
 
-			// put the new schedule location into the schedule and update
-			$schedule->setScheduleLocation($requestObject->scheduleLocation);
-			$schedule->update($pdo);
-
-			// update reply
-			$reply->message = "schedule updated OK";
-
 			if(empty($requestObject->scheduleLocation) !== true) {
-				// retrieve the Location to update
-				$schedule = MlbScout\Schedule::getScheduleByScheduleLocation($pdo ,$scheduleLocation);
-				if($schedule === null) {
-					throw(new RuntimeException("Location Doesn't exits", 404));
-				}
-				// put the new Location into the Schedule and update
-				$player->setScheduleLocation($requestObject->scheduleLocation);
-				$player->update($pdo);
-				// update reply
-				$reply->message = "Location updated OK";
+				$schedule->setScheduleLocation($requestObject->scheduleLocation);
+			}
+			if(empty($requestObject->scheduleStartingPosition) !== true) {
+				$schedule->setScheduleStartingPosition($requestObject->scheduleStartingPosition);
+			}
 
-
-				//Starting Position
-				if(empty($requestObject->scheduleStartingPosition) !== true) {
-					// retrieve the player to update
-					$player = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $id);
-					if($player === null) {
-						throw(new RuntimeException("player does not exist", 404));
-					}
-					// put the new Starting position into the Schedule and update
-					$player->setScheduleStartingPosition($requestObject->scheduleStartingPosition);
-					$player->update($pdo);
-					// update reply
-					$reply->message = "Position updated OK";
-
-
-
-
-
-
-
-
-
+			$schedule->update($pdo);
+			// update reply
+			$reply->message = "Location updated OK";
 
 		} else if($method === "POST") {
 
@@ -148,7 +114,6 @@ try {
 			// create new schedule and insert into the database
 			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleLocation, null);
 			$schedule->insert($pdo);
-
 			// update reply
 			$reply->message = "schedule created OK";
 		}
@@ -194,49 +159,6 @@ try {
 			// update reply
 			$reply->message = "schedule created OK";
 		}
-	} else if($method === "PUT" || $method === "POST") {
-
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-
-		//make sure schedule location is available
-		if(empty($requestObject->scheduleTime) === true) {
-			throw(new \InvalidArgumentException ("No time for the schedule.", 405));
-		}
-
-
-		//perform the actual put or post
-		if($method === "PUT") {
-
-			// retrieve the schedule to update
-			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
-			if($schedule === null) {
-				throw(new \RuntimeException("schedule does not exist", 404));
-			}
-
-			// put the new schedule location into the schedule and update
-			$schedule->setScheduleTime($requestObject->scheduleTime);
-			$schedule->update($pdo);
-
-			// update reply
-			$reply->message = "schedule updated OK";
-
-		} else if($method === "POST") {
-
-			//  make sure schedule team Id is available
-			if(empty($requestObject->scheduleTeamId) === true) {
-				throw(new \InvalidArgumentException ("No schedule team ID.", 405));
-			}
-
-			// create new schedule and insert into the database
-			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleTime, null);
-			$schedule->insert($pdo);
-
-			// update reply
-			$reply->message = "schedule created OK";
-		}
-
 	} else if($method === "DELETE") {
 		verifyXsrf();
 
@@ -245,18 +167,16 @@ try {
 		if($schedule === null) {
 			throw(new \RuntimeException("schedule does not exist", 404));
 		}
-
 		// delete schedule
 		$schedule->delete($pdo);
-
 		// update reply
 		$reply->message = "Schedule deleted OK";
 	} else {
 		throw (new \InvalidArgumentException("Invalid HTTP method request"));
 	}
-
 	// update reply with exception information
-} catch(Exception $exception) {
+} catch
+(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 	$reply->trace = $exception->getTraceAsString();
