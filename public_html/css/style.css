@@ -9,7 +9,7 @@
 }
 
 body {
-	background-image: url(images/black-grey-gradient.svg);
+	background-image: url(../image/black-grey-gradient.svg);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
