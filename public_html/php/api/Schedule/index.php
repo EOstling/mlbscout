@@ -64,15 +64,14 @@ try {
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		} else if(empty($scheduleAll) == false) {
+		} else {
 			$schedule = MlbScout\Schedule::getAllSchedules($pdo);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
 		}
 
-		//
-	} else if($method === "PUT" || $method === "POST") {
+	} elseif($method === "PUT" || $method === "POST") {
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
@@ -114,48 +113,6 @@ try {
 			// create new schedule and insert into the database
 			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleLocation, null);
 			$schedule->insert($pdo);
-			// update reply
-			$reply->message = "schedule created OK";
-		}
-	} else if($method === "PUT" || $method === "POST") {
-
-		verifyXsrf();
-		$requestContent = file_get_contents("php://input");
-		$requestObject = json_decode($requestContent);
-
-		//make sure schedule starting position is available
-		if(empty($requestObject->scheduleStartingPosition) === true) {
-			throw(new \InvalidArgumentException ("No Starting position for the schedule.", 405));
-		}
-
-
-		//perform the actual put or post
-		if($method === "PUT") {
-
-			// retrieve the schedule to update
-			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
-			if($schedule === null) {
-				throw(new \RuntimeException("schedule does not exist", 404));
-			}
-
-			// put the new schedule location into the schedule and update
-			$schedule->setScheduleStartingPosition($requestObject->scheduleStartingPosition);
-			$schedule->update($pdo);
-
-			// update reply
-			$reply->message = "schedule updated OK";
-
-		} else if($method === "POST") {
-
-			//  make sure schedule team Id is available
-			if(empty($requestObject->scheduleTeamId) === true) {
-				throw(new \InvalidArgumentException ("No schedule team ID.", 405));
-			}
-
-			// create new schedule and insert into the database
-			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleStartingPosition, null);
-			$schedule->insert($pdo);
-
 			// update reply
 			$reply->message = "schedule created OK";
 		}
