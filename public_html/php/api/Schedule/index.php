@@ -1,7 +1,7 @@
 <?php
 
-require_once "autoloader.php";
-require_once "/lib/xsrf.php";
+require_once dirname(__DIR__, 2) . "/classes/autoload.php";
+require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
 
 use Edu\Cnm\MlbScout;
@@ -32,7 +32,11 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-
+	$scheduleId = filter_input(INPUT_GET, "scheduleId", FILTER_VALIDATE_INT);
+	$scheduleTeamId = filter_input(INPUT_GET, "scheduleTeamId", FILTER_VALIDATE_INT);
+	$scheduleLocation = filter_input(INPUT_GET, "scheduleLocation", FILTER_VALIDATE_INT);
+	$scheduleStartingPosition = filter_input(INPUT_GET, "scheduleStartingPosition", FILTER_VALIDATE_INT);
+	$scheduleTime = filter_input(INPUT_GET, "scheduleTime ", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
