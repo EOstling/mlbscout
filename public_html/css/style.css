@@ -1,0 +1,39 @@
+.p-y-4 {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+	background-color: transparent;
+}
+
+.navbar navbar-inverse {
+	background-color: blue;
+}
+
+/* header */
+header {
+	background: #ccc;
+}
+ul.centered-pills {
+	display: inline-block;
+}
+
+.row {
+	padding-top: 2rem;
+}
+
+
+/* footer */
+footer {
+	background: #ccc;
+}
+html { display: flex;}
+body { width: 100%;}
+
+.sfooter {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.sfooter-content {
+	flex: 1 0 auto;
+}
