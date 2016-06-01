@@ -9,9 +9,11 @@
 }
 
 body {
-	background-image: url(../image/black-grey-gradient.svg);
-	background-repeat: no-repeat;
-	background-attachment: fixed;
+	background: url(../image/black-grey-gradient.svg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 /* header */
 header {
@@ -24,11 +26,14 @@ ul.centered-pills {
 .row {
 	padding-top: 2rem;
 }
-
+.nav-center {
+	color: grey;
+}
 
 /* footer */
 footer {
 	background: #ccc;
+	color: white;
 }
 html { display: flex;}
 body { width: 100%;}
