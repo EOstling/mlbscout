@@ -111,7 +111,7 @@ try {
 			}
 
 			// create new schedule and insert into the database
-			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleLocation, null);
+			$schedule = new MlbScout\Schedule(null, $requestObject->scheduleTeamId, $requestObject->scheduleLocation, $requestObject->scheduleStartingPosition,$requestObject->scheduleTime);
 			$schedule->insert($pdo);
 			// update reply
 			$reply->message = "schedule created OK";
