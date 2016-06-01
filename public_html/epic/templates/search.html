@@ -31,8 +31,12 @@
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 							<ul class="nav navbar-nav navbar-right">
-								<li><a href="#">Have an Account? Sign Up</a></li>
-								<li><a href="#">Contact Me</a></li>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Players</a></li>
+								<li><a href="#">Search</a></li>
+								<li><a href="#">Profile</a></li>
+								<li><a href="#">Contact Us</a></li>
 							</ul>
 						</div><!-- /.navbar-collapse -->
 					</nav>
@@ -43,7 +47,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="well text-center">
-								<h1>User Login</h1>
+								<h1>Player Search</h1>
 							</div>
 						</div>
 					</div>
@@ -53,27 +57,46 @@
 							<div class="well text-center">
 								<form class="form-horizontal well" action="email.php">
 									<div class="form-group">
-										<label for="username">Username</label>
+										<label for="player">Player Name</label>
 										<div class="input-group">
 											<div class="input-group-addon">
 												<i class="fa fa-user" aria-hidden="true"></i>
 											</div>
-											<input type="text" class="form-control" id="username" name="username" placeholder="username">
+											<input type="text" class="form-control" id="player" name="player" placeholder="player">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="password">Password</label>
+										<label for="team">Team</label>
 										<div class="input-group">
 											<div class="input-group-addon">
 												<i class="fa fa-envelope" aria-hidden="true"></i>
 											</div>
-											<input type="email" class="form-control" id="password" name="password" placeholder="password">
+											<input type="text" class="form-control" id="team" name="team" placeholder="team">
 										</div>
 									</div>
-									<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Login</button>
+									<div class="form-group">
+										<label for="position">Position</label>
+										<div class="input-group">
+											<div class="input-group-addon">
+												<i class="fa fa-envelope" aria-hidden="true"></i>
+											</div>
+											<input type="text" class="form-control" id="position" name="position" placeholder="position">
+										</div>
+									</div>
+									<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Search</button>
 								</form>
 							</div>
 						</div>
+					</div>
+					<div class="nav-center">
+						<ul class="nav nav-pills nav-justified">
+							<li role="presentation"><a href="#">Home</a></li>
+							<li role="presentation"><a href="#">About Us</a></li>
+							<li role="presentation"><a href="#">Players</a></li>
+							<li role="presentation"><a href="#">Search</a></li>
+							<li role="presentation"><a href="#">Profile</a></li>
+							<li role="presentation"><a href="#">Contact Us</a></li>
+						</ul>
 					</div>
 				</div>
 			</main>
