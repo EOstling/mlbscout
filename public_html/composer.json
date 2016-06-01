@@ -1,2 +1,5 @@
-"require": {
-"swiftmailer/swiftmailer": "@stable"
+{
+  "require": {
+    "swiftmailer/swiftmailer": "@stable"
+  }
+}
