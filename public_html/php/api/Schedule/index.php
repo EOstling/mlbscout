@@ -2,7 +2,7 @@
 
 require_once dirname(__DIR__, 2) . "/classes/autoload.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
-require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\MlbScout;
 
@@ -25,7 +25,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/mlbscout-mysql/schedule.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -49,8 +49,8 @@ try {
 		setXsrfCookie();
 
 		//get a specific schedule or all scheduless and update reply
-		if(empty($id) === false) {
-			$player = MlbScout\Schedule::getScheduleByScheduleLocation($pdo, $id);
+		if(empty($scheduleLocation) === false) {
+			$schedule = MlbScout\Schedule::getScheduleByScheduleLocation($pdo, $scheduleLocation);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
@@ -59,8 +59,8 @@ try {
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		} else if(empty($scheduleByScheduleId) === false) {
-			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $scheduleId);
+		} else if(empty($id) === false) {
+			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
