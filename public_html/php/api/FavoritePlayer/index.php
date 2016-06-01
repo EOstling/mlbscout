@@ -33,7 +33,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for the methods that require it
-	if(($method === "DELETE" ) && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -44,7 +44,7 @@ try {
 
 		// get a specific favorite player or all favoritePLayers and update reply
 		if(empty($id) === false) {
-			$favoritePlayer = MlbScout\FavoritePlayer:: getFavoritePlayerByFavoritePlayerId($pdo, $id);
+			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
 			if($favoritePlayer !== null) {
 				$reply->data = $favoritePlayer;
 			}
@@ -81,7 +81,7 @@ try {
 		verifyXsrf();
 
 		// retrieve the FavoritePlayer to be deleted
-		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerId($pdo, $id);
+		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
 		if($favoritePlayer === null) {
 			throw(new RangeException("FavoritePlayer does not exist", 404));
 		}

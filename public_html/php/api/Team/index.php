@@ -87,9 +87,37 @@ try {
 
 			// update reply
 			$reply->message = "Team updated OK";
-		} else {
-			throw (new InvalidArgumentException("Invalid HTTP method request"));
+		} else if($method === "POST") {
+
+			// make sure teamId is available
+			if(empty($requestObject->teamId) === true) {
+				throw(new \InvalidArgumentException ("No Team ID", 405));
+			}
+
+			// create new team and insert into the database
+			$team = new MlbScout\Team(null, $requestObject->teamId, $requestObject->teamName, null);
+			$team->insert($pdo);
+
+			// update reply
+			$reply->message = "Team created OK";
 		}
+
+		} else if($method === "DELETE") {
+			verifyXsrf();
+
+			// retrieve the Team to be deleted
+			$team = MlbScout\Team::getTeamByTeamId($pdo, $id);
+			if($team === null) {
+				throw (new RangeException("Team does not exist", 404));
+			}
+
+			// delete team
+		$team->delete($pdo);
+
+			// update reply
+			$reply->message = "Team deleted OK";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
 	}
 
 }		// update reply with exception information
