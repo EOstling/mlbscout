@@ -68,12 +68,11 @@ try {
 			}
 		}
 		else if(empty($scheduleAll)==false){
-			$schedule = MlbScout\Schedule::getAllSchedules($pdo, $schedule);
+			$schedule = MlbScout\Schedule::getAllSchedules($pdo);
 			if($schedule !== null){
 				$reply->data = $schedule;
 			}
 		}
-
 
 		//
 	} else if($method === "PUT" || $method === "POST") {
@@ -103,6 +102,41 @@ try {
 
 			// update reply
 			$reply->message = "schedule updated OK";
+
+			if(empty($requestObject->scheduleLocation) !== true) {
+				// retrieve the Location to update
+				$schedule = MlbScout\Schedule::getScheduleByScheduleLocation($pdo ,$scheduleLocation);
+				if($schedule === null) {
+					throw(new RuntimeException("Location Doesn't exits", 404));
+				}
+				// put the new Location into the Schedule and update
+				$player->setScheduleLocation($requestObject->scheduleLocation);
+				$player->update($pdo);
+				// update reply
+				$reply->message = "Location updated OK";
+
+
+				//Starting Position
+				if(empty($requestObject->scheduleStartingPosition) !== true) {
+					// retrieve the player to update
+					$player = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $id);
+					if($player === null) {
+						throw(new RuntimeException("player does not exist", 404));
+					}
+					// put the new Starting position into the Schedule and update
+					$player->setScheduleStartingPosition($requestObject->scheduleStartingPosition);
+					$player->update($pdo);
+					// update reply
+					$reply->message = "Position updated OK";
+
+
+
+
+
+
+
+
+
 
 		} else if($method === "POST") {
 
