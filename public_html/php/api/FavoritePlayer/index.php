@@ -1,6 +1,6 @@
 <?php
 
-require_once "autoloader.php";
+require_once "autoload.php";
 require_once "/lib/xsrf.php";
 require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
 
@@ -33,7 +33,7 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for the methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -42,19 +42,13 @@ try {
 		// set XSRF cookie
 		setXsrfCookie();
 
-		// get a specific favorite player or all favoritePlayers and update reply
+		// get a specific favorite player and update reply
 		if(empty($id) === false) {
 			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
 			if($favoritePlayer !== null) {
 				$reply->data = $favoritePlayer;
 			}
-		} else {
-			$favoritePlayers = MlbScout\FavoritePlayer::getAllFavoritePlayers($pdo);
-			if($favoritePlayers !== null) {
-				$reply->data = $favoritePlayers;
-			}
-		}
-	} else if($method === "POST") {
+		} else if($method === "POST") {
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
@@ -65,13 +59,20 @@ try {
 			throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
 		}
 
+
 	//perform the actual post
 	if($method === "POST") {
 
-		// make sure favoritePlayerId is available
-		if(empty($requestObject->favoritePlayerId) == true) {
+		// make sure favoritePlayerPlayerId is available
+		if(empty($requestObject->favoritePlayerPlayerId) == true) {
 			throw(new \InvalidArgumentException ("No FavoritePlayer Id, 405"));
 		}
+
+		// make sure favoritePlayerUserId is available
+		if(empty($requestObject->favoritePlayerUserId) == true) {
+			throw(new \InvalidArgumentException ("No FavoritePlayerUserId, 405"));
+		}
+	}
 
 		// create new favoritePlayer and insert into the database
 		$favoritePlayer = new MlbScout\FavoritePlayer(null, $requestObject->favoritePlayerId, $requestObject->userId, $requestObject->playerId, null);
