@@ -8,6 +8,11 @@
 	background-color: blue;
 }
 
+body {
+	background-image: url(images/black-grey-gradient.svg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
 /* header */
 header {
 	background: #ccc;
