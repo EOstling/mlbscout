@@ -50,16 +50,32 @@ try {
 
 		//get a specific schedule or all scheduless and update reply
 		if(empty($id) === false) {
-			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
+			$player = MlbScout\Schedule::getScheduleByScheduleLocation($pdo, $id);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
-		} else {
-			$schedules = MlbScout\Schedule::getAllschedules($pdo);
-			if($schedules !== null) {
-				$reply->data = $schedules;
+		}
+		else if(empty($scheduleStartingPosition) === false) {
+			$schedule = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $scheduleStartingPosition);
+			if($schedule !== null) {
+				$reply->data = $schedule;
 			}
 		}
+		else if(empty($scheduleByScheduleId)===false){
+			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $scheduleId);
+			if($schedule !== null ){
+				$reply->data = $schedule;
+			}
+		}
+		else if(empty($scheduleAll)==false){
+			$schedule = MlbScout\Schedule::getAllSchedules($pdo, $schedule);
+			if($schedule !== null){
+				$reply->data = $schedule;
+			}
+		}
+
+
+		//
 	} else if($method === "PUT" || $method === "POST") {
 
 		verifyXsrf();
