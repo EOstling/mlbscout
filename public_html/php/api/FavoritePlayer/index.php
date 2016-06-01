@@ -42,7 +42,7 @@ try {
 		// set XSRF cookie
 		setXsrfCookie();
 
-		// get a specific favorite player or all favoritePLayers and update reply
+		// get a specific favorite player or all favoritePlayers and update reply
 		if(empty($id) === false) {
 			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
 			if($favoritePlayer !== null) {
@@ -105,7 +105,7 @@ try {
 	$reply->message = $typeError->getMessage();
 }
 
-header("Content-typer: application/json");
+header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
