@@ -92,12 +92,10 @@ try {
 			verifyXsrf();
 
 			// retrieve the FavoritePlayer to be deleted
-			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $id, $_SESSION["user"]->getFavoritePlayerUserId());
+			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $id, $_SESSION["user"]->getUserId());
 			if($favoritePlayer === null) {
 				throw(new RangeException("FavoritePlayer does not exist", 404));
 			}
-
-// end of the if statement
 
 			// delete favoritePlayer
 			$favoritePlayer->delete($pdo);
@@ -109,7 +107,7 @@ try {
 		}
 	}
 
-	// update reply with exception information
+		// update reply with exception information
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
@@ -124,5 +122,5 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 
-// encode and return reply to fron end caller
+// encode and return reply to from end caller
 echo json_encode($reply);
