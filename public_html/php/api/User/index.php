@@ -176,6 +176,4 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 // encode and return reply to front end caller
-echo json_decode($reply);
-
-
+echo json_encode($reply);
