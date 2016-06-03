@@ -33,7 +33,7 @@ try {
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
 	// handle GET request - if id is present, that access level is returned, otherwise all access levels are returned
@@ -61,14 +61,14 @@ try {
 
 		// make sure access level name is available
 		if(empty($requestObject->accessLevelName) === true) {
-			throw(new InvalidArgumentException("No Access Level Name.", 405));
+			throw(new \InvalidArgumentException("No Access Level Name.", 405));
 		}
 		// perform the actual put or post
 		if($method === "PUT") {
 			// retrieve the access level to update
 			$accessLevel = MlbScout\AccessLevel::getAccessLevelByAccessLevelId($pdo, $id);
 			if($accessLevel === null) {
-				throw(new RuntimeException("Access Level does not exist", 404));
+				throw(new \RuntimeException("Access Level does not exist", 404));
 			}
 			//put the new access level name into the access level and update
 			$accessLevel->setAccessLevelName($requestObject->accessLevelName);
@@ -79,7 +79,7 @@ try {
 		} else if($method === "POST") {
 			// make sure access level id is available
 			if(empty($requestObject->accessLevelId) === true) {
-				throw(new InvalidArgumentException("No Access Level id.",405));
+				throw(new \InvalidArgumentException("No Access Level id.",405));
 			}
 			// create new access level and insert into the database
 			$accessLevel = new MlbScout\AccessLevel(null, $requestObject->accessLevelName, null);
@@ -95,7 +95,7 @@ try {
 		// retrieve the Access Level to be deleted
 		$accessLevel = MlbScout\AccessLevel::getAccessLevelByAccessLevelId($pdo, $id);
 		if($accessLevel === null) {
-			throw(new RuntimeException("Access Level does not exist!!!!",404));
+			throw(new \RuntimeException("Access Level does not exist!!!!",404));
 		}
 
 		// delete access level
@@ -104,7 +104,7 @@ try {
 		// update reply
 		$reply->message = "ACCESS LEVEL DELETED, NO MORE CONTENT FOR YOU!";
 	} else {
-		throw(new InvalidArgumentException("Invalid HTTP method request"));
+		throw(new \InvalidArgumentException("Invalid HTTP method request"));
 	}
 	// update reply with exception information
 } catch(Exception $exception) {
