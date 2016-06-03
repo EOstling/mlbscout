@@ -53,7 +53,7 @@ try {
 				$reply->data = $user;
 			}
 		} else {
-			$users = MlbScout\User::getAllUsers($pdo);
+			$users = MlbScout\User::getAllUsers($pdo)->toArray();
 			if($users !== null) {
 				$reply->data = $users;
 			}
