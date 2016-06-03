@@ -34,8 +34,8 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$scheduleId = filter_input(INPUT_GET, "scheduleId", FILTER_VALIDATE_INT);
 	$scheduleTeamId = filter_input(INPUT_GET, "scheduleTeamId", FILTER_VALIDATE_INT);
-	$scheduleLocation = filter_input(INPUT_GET, "scheduleLocation", FILTER_VALIDATE_INT);
-	$scheduleStartingPosition = filter_input(INPUT_GET, "scheduleStartingPosition", FILTER_VALIDATE_INT);
+	$scheduleLocation = filter_input(INPUT_GET, "scheduleLocation", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$scheduleStartingPosition = filter_input(INPUT_GET, "scheduleStartingPosition", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 	$scheduleTime = filter_input(INPUT_GET, "scheduleTime ", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -48,14 +48,14 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		//get a specific schedule or all scheduless and update reply
+		//get a specific schedule or all schedules and update reply
 		if(empty($scheduleLocation) === false) {
-			$schedule = MlbScout\Schedule::getScheduleByScheduleLocation($pdo, $scheduleLocation);
+			$schedule = MlbScout\Schedule::getScheduleByScheduleLocation($pdo, $scheduleLocation)->toArray();
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
 		} else if(empty($scheduleStartingPosition) === false) {
-			$schedule = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $scheduleStartingPosition);
+			$schedule = MlbScout\Schedule::getScheduleByScheduleStartingPosition($pdo, $scheduleStartingPosition)->toArray();
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
@@ -65,7 +65,7 @@ try {
 				$reply->data = $schedule;
 			}
 		} else {
-			$schedule = MlbScout\Schedule::getAllSchedules($pdo);
+			$schedule = MlbScout\Schedule::getAllSchedules($pdo)->toArray();
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}
