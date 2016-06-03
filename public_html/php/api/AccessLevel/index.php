@@ -48,7 +48,7 @@ try {
 				$reply->data = $accessLevel;
 			}
 		} else {
-			$accessLevels = MlbScout\AccessLevel::getAllAccessLevels($pdo);
+			$accessLevels = MlbScout\AccessLevel::getAllAccessLevels($pdo)->toArray();
 			if($accessLevels !== null) {
 				$reply->data = $accessLevels;
 			}
@@ -77,10 +77,6 @@ try {
 			// update reply
 			$reply->message = "Access Level Updated!";
 		} else if($method === "POST") {
-			// make sure access level id is available
-			if(empty($requestObject->accessLevelId) === true) {
-				throw(new \InvalidArgumentException("No Access Level id.",405));
-			}
 			// create new access level and insert into the database
 			$accessLevel = new MlbScout\AccessLevel(null, $requestObject->accessLevelName, null);
 			$accessLevel->insert($pdo);
