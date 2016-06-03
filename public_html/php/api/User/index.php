@@ -24,6 +24,8 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	// sanitize input
 	$id = filter_input(INPUT_GET, "Id", FILTER_VALIDATE_INT);
+	$userEmail = filter_input(INPUT_GET, "userEmail", FILTER_SANITIZE_STRING);
+	$userActivationToken = filter_input(INPUT_GET, "userActivationToken". FILTER_SANITIZE_STRING);
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
