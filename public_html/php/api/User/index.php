@@ -25,7 +25,6 @@ try {
 	// sanitize input
 	$id = filter_input(INPUT_GET, "Id", FILTER_VALIDATE_INT);
 	$userEmail = filter_input(INPUT_GET, "userEmail", FILTER_SANITIZE_STRING);
-	$userActivationToken = filter_input(INPUT_GET, "userActivationToken". FILTER_SANITIZE_STRING);
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -34,7 +33,7 @@ try {
 	if ($method === "GET") {
 		// set XSRF cookie
 		setXsrfCookie();
-		// get a specific user and update reply
+		// get a specific user and  reply
 		if (empty ($id) === false) {
 			$user = MlbScout\User::getUserByUserId($pdo, $Id);
 			if($user !== null) {
@@ -104,7 +103,7 @@ try {
 				throw(new InvalidArgumentException ("No Access Level ID.", 405));
 			}
 			// create new User and insert it into the database
-			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
+			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
 			$user->insert($pdo);
 			// update reply
 			$reply->message = "User Created!";
