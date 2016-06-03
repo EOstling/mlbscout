@@ -100,6 +100,10 @@ try {
 			// update reply
 			$reply->message = "User Updated!";
 		} else if($method === "POST") {
+			// make sure the access level id is available
+			if (empty($requestObject->userAccessLevelId) === true) {
+				throw (new \InvalidArgumentException ("NO ACCESS LEVLEL ID.", 405));
+			}
 			// Hash the password and set it
 			$password = bin2hex(openssl_random_pseudo_bytes(32));
 			$salt = bin2hex(random_bytes(32));
