@@ -28,12 +28,13 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// sanitize input
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$favoritePlayerUserId = filter_input(INPUT_GET, "favoritePlayerUserId", FILTER_VALIDATE_INT);
-	$favoritePlayerPlayerId = filter_input(INPUT_GET, "favoritePlayerPlayerId", FILTER_VALIDATE_INT);
+	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
+	$favoritePlayerId = filter_input(INPUT_GET, "favoritePlayerId", FILTER_VALIDATE_INT);
+//	$favoritePlayerUserId = filter_input(INPUT_GET, "favoritePlayerUserId", FILTER_VALIDATE_INT);
+//	$favoritePlayerPlayerId = filter_input(INPUT_GET, "favoritePlayerPlayerId", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for the methods that require it
-	if(($method === "DELETE") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE") && (empty($userId) === true || $userId < 0)) {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -43,8 +44,8 @@ try {
 		setXsrfCookie();
 
 		// get a specific favorite player and update reply
-		if(empty($id) === false) {
-			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
+		if(empty($userId) === false) {
+			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $userId);
 			if($favoritePlayer !== null) {
 				$reply->data = $favoritePlayer;
 			}
@@ -56,39 +57,39 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		// make sure favoritePlayer Player Id is available
-		if(empty($requestObject->favoritePlayerPlayerId) === true) {
+		if(empty($requestObject->favoritePlayerId) === true) {
 			throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
 		}
 
 		// make sure favoritePlayer User Id is available
-		if(empty($requestObject->favoritePlayerUserId) === true) {
-			throw(new \InvalidArgumentException ("No User Id for FavoritePlayer"));
+		if(empty($requestObject->userId) === true) {
+			throw(new \InvalidArgumentException ("No User Id for FavoritePlayer", 405));
 		}
 
 
 		//perform the actual post
 		// add if statement user session exists
-		if(session_status() !== PHP_SESSION_ACTIVE) {
-			session_start();
-		}
+//		if(session_status() !== PHP_SESSION_ACTIVE) {
+//			session_start();
+//		}
 
 
 
-			if($method === "POST") {
+//			if($method === "POST") {
 
 				// make sure favoritePlayerPlayerId is available
-				if(empty($requestObject->favoritePlayerPlayerId) == true) {
-					throw(new \InvalidArgumentException ("No FavoritePlayer Id, 405"));
-				}
+//				if(empty($requestObject->favoritePlayerPlayerId) == true) {
+//					throw(new \InvalidArgumentException ("No FavoritePlayer Id, 405"));
+//				}
 
 				// make sure favoritePlayerUserId is available
-				if(empty($requestObject->favoritePlayerUserId) == true) {
-					throw(new \InvalidArgumentException ("No FavoritePlayerUserId, 405"));
-				}
-			}
+//				if(empty($requestObject->favoritePlayerUserId) == true) {
+//					throw(new \InvalidArgumentException ("No FavoritePlayerUserId, 405"));
+//				}
+
 
 			// create new favoritePlayer and insert into the database
-			$favoritePlayer = new MlbScout\FavoritePlayer(null, $requestObject->favoritePlayerId, $requestObject->userId, $requestObject->playerId, null);
+			$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerId, $requestObject->userId);
 			$favoritePlayer->insert($pdo);
 
 			// update reply
@@ -96,9 +97,23 @@ try {
 		}
 	 else if($method === "DELETE") {
 		verifyXsrf();
+		 $requestContent = file_get_contents("php://input");
+		 $requestObject = json_decode($requestContent);
+
+		 }
+
+		 // make sure favoritePlayer User Id is available
+		 if(empty($requestObject->userId) === true) {
+			 throw(new \InvalidArgumentException ("No User Id for FavoritePlayer", 405));
+		 }
+
+
+	// make sure favoritePlayer Player Id is available
+	if(empty($requestObject->favoritePlayerId) === true) {
+		throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
 
 		// retrieve the FavoritePlayer to be deleted
-		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $id, $_SESSION["user"]->getUserId());
+		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, ($requestObject->favoritePlayerId), ($requestObject->userId));
 		if($favoritePlayer === null) {
 			throw(new \RangeException("FavoritePlayer does not exist", 404));
 		}
