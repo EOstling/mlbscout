@@ -1,31 +1,25 @@
 <?php
-
-require_once "autoloader.php";
-require_once "/lib/xsrf.php";
-require_once("/etc/apache2/mlbscout-mysql/encrypted-config.php");
-
 use Edu\Cnm\MlbScout;
 
+require_once dirname(__DIR__, 2) . "/classes/autoload.php";
+require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 /**
- * api for the Team class
+ * api for the Player class
  *
- * @author Francisco Garcia <fgarcia132@cnm.edu>
- */
-
-// verify the session, start if not active
+ * @author Francisco Garcia based on code by Derek Mauldin
+ **/
+//verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
-
-// prepare an empty reply
+//prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
-
 try {
-	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/mlbscout-mysql/team.ini");
-
+	//grab the mySQL connection	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 	// determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
@@ -89,13 +83,8 @@ try {
 			$reply->message = "Team updated OK";
 		} else if($method === "POST") {
 
-			// make sure teamId is available
-			if(empty($requestObject->teamId) === true) {
-				throw(new \InvalidArgumentException ("No Team ID", 405));
-			}
-
-			// create new team and insert into the database
-			$team = new MlbScout\Team(null, $requestObject->teamId, $requestObject->teamName, null);
+						// create new team and insert into the database
+			$team = new MlbScout\Team(null, $requestObject->teamType, $requestObject->teamName);
 			$team->insert($pdo);
 
 			// update reply

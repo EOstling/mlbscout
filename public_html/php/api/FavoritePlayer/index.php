@@ -28,8 +28,8 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// sanitize input
-	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
 	$favoritePlayerId = filter_input(INPUT_GET, "favoritePlayerId", FILTER_VALIDATE_INT);
+	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
 //	$favoritePlayerUserId = filter_input(INPUT_GET, "favoritePlayerUserId", FILTER_VALIDATE_INT);
 //	$favoritePlayerPlayerId = filter_input(INPUT_GET, "favoritePlayerPlayerId", FILTER_VALIDATE_INT);
 
@@ -56,14 +56,14 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		// make sure favoritePlayer Player Id is available
+		 //make sure favoritePlayer Player Id is available
 		if(empty($requestObject->favoritePlayerId) === true) {
 			throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
 		}
 
 		// make sure favoritePlayer User Id is available
 		if(empty($requestObject->userId) === true) {
-			throw(new \InvalidArgumentException ("No User Id for FavoritePlayer", 405));
+			throw(new \InvalidArgumentException ("No User", 402));
 		}
 
 
@@ -100,17 +100,18 @@ try {
 		 $requestContent = file_get_contents("php://input");
 		 $requestObject = json_decode($requestContent);
 
-		 }
+
 
 		 // make sure favoritePlayer User Id is available
-		 if(empty($requestObject->userId) === true) {
-			 throw(new \InvalidArgumentException ("No User Id for FavoritePlayer", 405));
-		 }
+		 //if(empty($requestObject->userId) === true) {
+			// throw(new \InvalidArgumentException ("FavoritePlayer", 405));
+		 //}
 
 
 	// make sure favoritePlayer Player Id is available
 	if(empty($requestObject->favoritePlayerId) === true) {
-		throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
+		//throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
+	}
 
 		// retrieve the FavoritePlayer to be deleted
 		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, ($requestObject->favoritePlayerId), ($requestObject->userId));
