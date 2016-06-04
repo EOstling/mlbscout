@@ -151,7 +151,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Commitment into the player and update
 				$player->setPlayerCommitment($requestObject->playerCommitment);
@@ -163,7 +163,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Commitment into the player and update
 				$player->setPlayerBatting($requestObject->playerBatting);
@@ -175,7 +175,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player First Name into the player and update
 				$player->setPlayerFirstName($requestObject->playerFirstName);
@@ -187,7 +187,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Health Status into the player and update
 				$player->setPlayerHealthStatus($requestObject->playerHealthStatus);
@@ -199,7 +199,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Height into the player and update
 				$player->setPlayerHeight($requestObject->playerHeight);
@@ -211,7 +211,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Home Town into the player and update
 				$player->setPlayerHomeTown($requestObject->playerHomeTown);
@@ -223,7 +223,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Last Name into the player and update
 				$player->setPlayerLastName($requestObject->playerLastName);
@@ -235,7 +235,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player position into the player and update
 				$player->setPlayerPosition($requestObject->playerPosition);
@@ -247,7 +247,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player Throwing Hand into the player and update
 				$player->setPlayerThrowingHand($requestObject->playerThrowingHand);
@@ -259,7 +259,7 @@ try {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
-					throw(new RuntimeException("player does not exist", 404));
+					throw(new \RuntimeException("player does not exist", 404));
 				}
 				// put the new player commitment into the feedback and update
 				$player->setplayerWeight($requestObject->playerWeight);
@@ -283,7 +283,7 @@ try {
 		// retrieve the player to be deleted
 		$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 		if($player === null) {
-			throw(new RuntimeException("player does not exist", 404));
+			throw(new \RuntimeException("player does not exist", 404));
 		}
 		// delete player
 		$player->delete($pdo);
