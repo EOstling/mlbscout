@@ -80,7 +80,7 @@ try {
 			// retrieve the user to update
 			$user = MlbScout\User::getUserByUserId($pdo, $id);
 			if($user === null) {
-				throw(new RuntimeException("User does not exist.",404));
+				throw(new \RuntimeException("User does not exist.",404));
 			}
 			// put the user content into the user and update it
 			$user->setUserEmail($requestObject->userEmail);
@@ -93,7 +93,7 @@ try {
 				$user->setUserHash($hash);
 			}
 			if(empty($requestObject->userPassword) === true) {
-				throw(new PDOException("Password is required"));
+				throw(new \PDOException("Password is required"));
 			}
 			if($user->getUserId() === false && ($requestObject->userPassword !==null))
 				$user->update($pdo);
@@ -111,7 +111,7 @@ try {
 			$userActivationToken = bin2hex(random_bytes(16));
 			// make sure accessLevelId is available
 			if(empty($requestObject->userAccessLevelId) === true) {
-				throw(new InvalidArgumentException ("No Access Level ID.", 405));
+				throw(new \InvalidArgumentException ("No Access Level ID.", 405));
 			}
 			// create new User and insert it into the database
 			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
@@ -141,7 +141,7 @@ try {
 			$urlglue = $basePath . "/controllers/emailConfirmation?emailActivation=" . $user->getUserEmail();
 			$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 			$message = <<< EOF
-			<h1> You're now registered for Real Time Scout!
+			<h1> You're now registered for Real Time Scout!<h1>
 			<p>Visit the following URL to set a new password and complete the registration process: </p>
 			<a href="$confirmLink">$confirmLink</a>
 EOF;
@@ -157,7 +157,7 @@ EOF;
 			 * the send method returns the number of recipients that accepted the Email
 			 **/
 			if($numSent !== count($recipients)) {
-				throw(new RuntimeException("Unable to send email", 404));
+				throw(new \RuntimeException("Unable to send email", 404));
 			}
 		} 
 	} else if($method === "DELETE") {
@@ -165,14 +165,14 @@ EOF;
 		// retrieve the User to be deleted 
 		$user = MlbScout\User::getUserByUserId($pdo, $id);
 		if($user === null) {
-			throw(new RuntimeException("User does not exist", 404));
+			throw(new \RuntimeException("User does not exist", 404));
 		}
 		// delete user
 		$user->delete($pdo);
 		// update reply
 		$reply->message = "User Deleted!";
 	} else {
-		throw(new InvalidArgumentException("Invalid HTTP method requuest"));
+		throw(new \InvalidArgumentException("Invalid HTTP method requuest"));
 	}
 	// update reply with exception information
 } catch(Exception $exception) {
