@@ -89,7 +89,7 @@ try {
 			$user->setUserLastName($requestObject->userLastName);
 			$user->setUserPhoneNumber($requestObject->userPhoneNumber);
 			// require a password. Hash the password and set it.
-			if(($requestObject->userPassword) !== null) {
+			if(isset($requestObject->userPassword) !== null) {
 				$hash = hash_pbkdf2("sha512", $requestObject->userPassword, $user->getUserSalt(), 40196, 128);
 				$user->setUserHash($hash);
 			}
