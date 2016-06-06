@@ -1,6 +1,7 @@
 <?php
 use Edu\Cnm\MlbScout;
 
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 2) . "/classes/autoload.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
@@ -119,16 +120,16 @@ try {
 			// update reply
 			$reply->message = "User Created!";
 			// create swift message to send email confirmation
-			$swiftMessage = Swift_Message::newInstance();
+			$swiftMessage = \Swift_Message::newInstance();
 			// Attach sender to the message
-			$swiftMessage->setForm(["foo@bar.com => RealTimeScout"]);
+			$swiftMessage->setFrom(["RealTimeScout@gmail.com"]);
 			/**
 			 * attach the recipients to the message
 			 **/
 			$recipients = [$requestObject->userEmail];
-			$swiftMessage = setTo($recipients);
+			$swiftMessage -> setTo($recipients);
 			// attach the subject line to the message
-			$swiftMessage->setSubject("Please confirm your RTS account");
+			$swiftMessage->setSubject("Please confirm your RealTimeScout account");
 			/**
 			 * attach the message to the email
 			 **/
