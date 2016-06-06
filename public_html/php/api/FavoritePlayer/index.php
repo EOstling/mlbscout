@@ -56,33 +56,40 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		 //make sure favoritePlayer Player Id is available
+		//make sure favoritePlayer Player Id is available
 		if(empty($requestObject->favoritePlayerId) === true) {
-			throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
+			throw(new \InvalidArgumentException ("No FavoritePlayerPlayerId", 405));
 		}
 
-		// make sure favoritePlayer User Id is available
+		// make sure User Id is available
 		if(empty($requestObject->userId) === true) {
 			throw(new \InvalidArgumentException ("No User", 402));
 		}
 
+		// perform the actual post
+		if($method === "POST") {
+			// retrieve the favoritePlayer to update
+			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $favoritePlayerId);
+			if($favoritePlayer === null) {
+				throw(new RuntimeException("FavoritePlayer does not exist, 404"));
+			}
 
-		//perform the actual post
-		// add if statement user session exists
+
+			//perform the actual post
+			// add if statement user session exists
 //		if(session_status() !== PHP_SESSION_ACTIVE) {
 //			session_start();
 //		}
 
 
-
 //			if($method === "POST") {
 
-				// make sure favoritePlayerPlayerId is available
+			// make sure favoritePlayerPlayerId is available
 //				if(empty($requestObject->favoritePlayerPlayerId) == true) {
 //					throw(new \InvalidArgumentException ("No FavoritePlayer Id, 405"));
 //				}
 
-				// make sure favoritePlayerUserId is available
+			// make sure favoritePlayerUserId is available
 //				if(empty($requestObject->favoritePlayerUserId) == true) {
 //					throw(new \InvalidArgumentException ("No FavoritePlayerUserId, 405"));
 //				}
@@ -95,23 +102,22 @@ try {
 			// update reply
 			$reply->message = "FavoritePlayer created OK";
 		}
-	 else if($method === "DELETE") {
+	} else if($method === "DELETE") {
 		verifyXsrf();
-		 $requestContent = file_get_contents("php://input");
-		 $requestObject = json_decode($requestContent);
+		$requestContent = file_get_contents("php://input");
+		$requestObject = json_decode($requestContent);
 
 
+		// make sure favoritePlayer User Id is available
+		//if(empty($requestObject->userId) === true) {
+		// throw(new \InvalidArgumentException ("FavoritePlayer", 405));
+		//}
 
-		 // make sure favoritePlayer User Id is available
-		 //if(empty($requestObject->userId) === true) {
-			// throw(new \InvalidArgumentException ("FavoritePlayer", 405));
-		 //}
 
-
-	// make sure favoritePlayer Player Id is available
-	if(empty($requestObject->favoritePlayerId) === true) {
-		//throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
-	}
+		// make sure favoritePlayer Player Id is available
+		if(empty($requestObject->favoritePlayerId) === true) {
+			//throw(new \InvalidArgumentException ("No content for FavoritePlayer", 405));
+		}
 
 		// retrieve the FavoritePlayer to be deleted
 		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, ($requestObject->favoritePlayerId), ($requestObject->userId));
@@ -128,8 +134,8 @@ try {
 		throw (new \InvalidArgumentException("Invalid HTTP method request"));
 	}
 
-	// update reply with exception information
-} catch(Exception $exception) {
+}   // update reply with exception information
+catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 	$reply->trace = $exception->getTraceAsString();
