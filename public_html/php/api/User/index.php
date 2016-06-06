@@ -35,7 +35,7 @@ try {
 	$userSalt = filter_input(INPUT_GET, "userSalt", FILTER_SANITIZE_STRING);
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	// handle GET request - if id is present, that player is returned
 	if ($method === "GET") {
@@ -65,16 +65,16 @@ try {
 		$requestObject = json_decode($requestContent);
 		// make sure user email is available
 		if(empty($requestObject->userEmail) === true) {
-			throw(new InvalidArgumentException("No email for User.", 405));
+			throw(new \InvalidArgumentException("No email for User.", 405));
 		}
 		if(empty($requestObject->userFirstName) === true) {
-			throw(new InvalidArgumentException("No first name for User, Y U No Have First Name?", 405));
+			throw(new \InvalidArgumentException("No first name for User, Y U No Have First Name?", 405));
 		}
 		if(empty($requestObject->userLastName) === true) {
-			throw(new InvalidArgumentException("No last name for User.", 405));
+			throw(new \InvalidArgumentException("No last name for User.", 405));
 		}
 		if(empty($requestObject->userPhoneNumber) === true) {
-			throw(new InvalidArgumentException("No phone number for User.", 405));
+			throw(new \InvalidArgumentException("No phone number for User.", 405));
 		}
 		// perform the actual put or post
 		if($method === "PUT") {
