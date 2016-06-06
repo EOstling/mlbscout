@@ -1,8 +1,8 @@
 <?php
 use Edu\Cnm\MlbScout;
 
-require_once dirname(__DIR__, 2) . "/classes/autoload.php";
-require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
+require_once dirname(__DIR__, 2) . "../classes/autoload.php";
+require_once dirname(__DIR__, 2) . "../lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 /**
  * api for the User Class
@@ -114,7 +114,7 @@ try {
 				throw(new \InvalidArgumentException ("No Access Level ID.", 405));
 			}
 			// create new User and insert it into the database
-			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
+			$user = new MlbScout\User(null, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
 			$user->insert($pdo);
 			// update reply
 			$reply->message = "User Created!";
@@ -172,7 +172,7 @@ EOF;
 		// update reply
 		$reply->message = "User Deleted!";
 	} else {
-		throw(new \InvalidArgumentException("Invalid HTTP method requuest"));
+		throw(new \InvalidArgumentException("Invalid HTTP method request"));
 	}
 	// update reply with exception information
 } catch(Exception $exception) {
