@@ -9,11 +9,12 @@ use Edu\Cnm\MlbScout;
  *
  * @author Eliot Robert Ostling <it.treugott@gmail.com>
  **/
-//POST is another possibility but were using "GET"
+//POST is another way of doing signout however we are using "GET"
 if($method === "GET"){
 	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
 	}
-	$_SESSION = []''
+	$_SESSION = [];
 }
+
 ?>
