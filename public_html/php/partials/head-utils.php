@@ -17,6 +17,8 @@ $PREFIX = str_repeat("../", $DEPTH_DIFFERENCE);
 	<head>
 		<meta charset="utf-8">
 		<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+		<!-- Font Awesome -->
+		<link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="<?php echo $PREFIX; ?> css/style.css" type="text/css" />
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
