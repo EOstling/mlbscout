@@ -25,6 +25,8 @@ try {
 
 	// sanitize method
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$teamName = filter_input(INPUT_GET, "teamName", FILTER_SANITIZE_STRING);
+	$teamType = filter_input(INPUT_GET, "teamType", FILTER_SANITIZE_STRING);
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
