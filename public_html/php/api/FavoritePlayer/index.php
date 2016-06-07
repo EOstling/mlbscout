@@ -43,7 +43,7 @@ try {
 		// set xsrf cookie
 		setXsrfCookie();
 		// get a specific favorite player and update reply
-		if(empty($userId) === false) {
+		if(empty($favoritePlayer) === false) {
 			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $userId);
 			if($favoritePlayer !== null) {
 				$reply->data = $favoritePlayer;
