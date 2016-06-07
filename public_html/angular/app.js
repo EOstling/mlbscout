@@ -1,1 +1,1 @@
-var app = angular.module("AngularNav", ["ui.bootstrap"]);
+var app = angular.module("MlbScout", ["ui.bootstrap"]);
