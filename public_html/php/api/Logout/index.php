@@ -6,7 +6,6 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use Edu\Cnm\MlbScout;
 /**
  * api for signout
- *
  * @author Eliot Robert Ostling <it.treugott@gmail.com>
  **/
 //POST is another way of doing signout however we are using "GET"
@@ -16,5 +15,4 @@ if($method === "GET"){
 	}
 	$_SESSION = [];
 }
-
 ?>

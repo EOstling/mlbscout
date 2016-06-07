@@ -34,7 +34,7 @@ try {
 //	$favoritePlayerPlayerId = filter_input(INPUT_GET, "favoritePlayerPlayerId", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for the methods that require it
-	if(($method === "DELETE") && (empty($userId) === true || $userId < 0)) {
+	if(($method === "DELETE" || $method==="PUT") && (empty($userId) === true || $userId < 0)) {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -42,7 +42,6 @@ try {
 	if($method === "GET") {
 		// set xsrf cookie
 		setXsrfCookie();
-
 		// get a specific favorite player and update reply
 		if(empty($userId) === false) {
 			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $userId);
@@ -51,16 +50,13 @@ try {
 			}
 		}
 	} else if($method === "POST") {
-
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-
 		//make sure favoritePlayer Player Id is available
 		if(empty($requestObject->favoritePlayerId) === true) {
 			throw(new \InvalidArgumentException ("No FavoritePlayerPlayerId", 405));
 		}
-
 		// make sure User Id is available
 		if(empty($requestObject->userId) === true) {
 			throw(new \InvalidArgumentException ("No User", 402));
@@ -73,8 +69,6 @@ try {
 			if($favoritePlayer === null) {
 				throw(new RuntimeException("FavoritePlayer does not exist, 404"));
 			}
-
-
 			//perform the actual post
 			// add if statement user session exists
 //		if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -88,17 +82,13 @@ try {
 //				if(empty($requestObject->favoritePlayerPlayerId) == true) {
 //					throw(new \InvalidArgumentException ("No FavoritePlayer Id, 405"));
 //				}
-
 			// make sure favoritePlayerUserId is available
 //				if(empty($requestObject->favoritePlayerUserId) == true) {
 //					throw(new \InvalidArgumentException ("No FavoritePlayerUserId, 405"));
 //				}
-
-
 			// create new favoritePlayer and insert into the database
 			$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerId, $requestObject->userId);
 			$favoritePlayer->insert($pdo);
-
 			// update reply
 			$reply->message = "FavoritePlayer created OK";
 		}

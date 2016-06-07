@@ -29,7 +29,6 @@ try {
 	//perform the actual POST
 	else if($method === "POST") {
 		verifyXsrf();
-		// convert JSON to an object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//check that username and password fields have been filled, and sanitize
