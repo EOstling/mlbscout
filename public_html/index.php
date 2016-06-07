@@ -1,1 +1,1 @@
-<?php header("Location: ..", true, 301);?>
+<?php require_once("php/partials/head-utils.php");?>
