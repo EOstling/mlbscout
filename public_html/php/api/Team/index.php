@@ -18,7 +18,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	//grab the mySQL connection	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
+	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 	// determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -45,7 +45,7 @@ try {
 				$reply->data = $team;
 			}
 		} else {
-			$teams = MlbScout\Team::getAllTeams($pdo);
+			$teams = MlbScout\Team::getAllTeams($pdo)->toArray();
 			if($teams !== null) {
 				$reply->data = $teams;
 			}
@@ -120,7 +120,7 @@ catch(Exception $exception) {
 		$reply->status = $typeError->getCode();
 		$reply->message = $typeError->getMessage();
 	}
-	header("Name-type: application/json");
+	header("Content-type: application/json");
 	if($reply->data === null) {
 		unset($reply->data);
 	}
