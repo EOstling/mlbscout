@@ -1,4 +1,4 @@
-
+//Session start goes here-->
 <!DOCTYPE html>
 <html lang="en" ng-app="MlbScout">
 	<head>
