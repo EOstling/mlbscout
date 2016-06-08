@@ -42,7 +42,7 @@ $PREFIX = str_repeat("../", $DEPTH_DIFFERENCE);
 		<script type="text/javascript" src="angular/route-config.js"></script>
 		<script type="text/javascript" src="angular/bootstrap-breakpoint.js"></script>
 		<script type="text/javascript" src="angular/controllers/user-login-controller.js"></script>
-		<script type="text/javascript" src="angular/nav-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/about-us-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/sign-up-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/player-profile-controller.js"></script>
