@@ -17,7 +17,7 @@ app.config(function($routeProvider, $locationProvider) {
 		// route for the sign up page
 		.when('/sign-up', {
 			controller  : 'signupController',
-			templateUrl : 'angular/pages/sign-up.php'
+			templateUrl : 'angular/templates/sign-up.php'
 		})
 
 		// otherwise redirect to home
