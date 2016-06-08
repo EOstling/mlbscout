@@ -1,0 +1,28 @@
+{
+  "pages": [
+    {
+      "href": "/",
+      "name": "Home"
+    },
+    {
+      "href": "about-us",
+      "name": "About Us"
+    },
+    {
+      "href": "sign-up",
+      "name": "Sign up"
+    },
+    {
+      "href": "player-profile",
+      "name": "Player Profile"
+    },
+    {
+      "href": "search",
+      "name": "search"
+    },
+    {
+      "href": "contact-us",
+      "name": "Contact Us "
+    }
+  ]
+}
