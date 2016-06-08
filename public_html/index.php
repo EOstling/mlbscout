@@ -1,6 +1,5 @@
-<?php $CURRENT_DIR = __DIR__;
+<?php
  require_once("php/partials/head-utils.php");
- require_once("php/partials/nav.php");
 ?>
 
 <body class="sfooter">
