@@ -119,6 +119,7 @@ catch
 	} catch(TypeError $typeError) {
 		$reply->status = $typeError->getCode();
 		$reply->message = $typeError->getMessage();
+	//wat
 	}
 
 header("Content-type: application/json");
