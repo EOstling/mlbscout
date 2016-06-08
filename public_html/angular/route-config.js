@@ -5,13 +5,13 @@ app.config(function($routeProvider, $locationProvider) {
 	// route for the home page
 		.when('/', {
 			controller  : 'user-login',
-			templateUrl : 'angular/template/userLogin.html'
+			templateUrl : 'angular/template/userLogin.php'
 		})
 
 		// route for the about page
 		.when('/about', {
 			controller  : 'aboutController',
-			templateUrl : 'angular/pages/about.php'
+			templateUrl : 'angular/templates/about.php'
 		})
 
 		// route for the sign up page
