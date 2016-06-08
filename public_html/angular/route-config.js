@@ -15,13 +15,13 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the sign up page
-		.when('/sign-up', {
+		.when('/signUp', {
 			controller  : 'signUpController',
 			templateUrl : 'angular/templates/signUp.php'
 		})
 
 		// route for the player profile page
-		.when('/player-profile', {
+		.when('/playerProfile', {
 			controller  : 'playerProfileController',
 			templateUrl : 'angular/templates/playerProfile.php'
 		})
@@ -33,13 +33,13 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the search results page
-		.when('/search-results', {
+		.when('/searchResults', {
 			controller  : 'searchResultsController',
 			templateUrl : 'angular/templates/searchResults.php'
 		})
 
 		// route for the contact us page
-		.when('/contact-us', {
+		.when('/contactUs', {
 			controller  : 'contactUsController',
 			templateUrl : 'angular/templates/contactUs.php'
 		})
