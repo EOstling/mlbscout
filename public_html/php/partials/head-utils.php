@@ -26,12 +26,12 @@
 		<script type="text/javascript" src="angular/app.js"></script>
 		<script type="text/javascript" src="angular/route-config.js"></script>
 		<script type="text/javascript" src="angular/bootstrap-breakpoint.js"></script>
-		<script type="text/javascript" src="angular/controllers/user-login-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/user-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/about-us-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/sign-up-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/player-profile-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/about-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/signup-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/player-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/search-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/search-results-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/contact-us-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/results-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/contact-controller.js"></script>
 	</head>

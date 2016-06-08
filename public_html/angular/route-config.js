@@ -4,43 +4,43 @@ app.config(function($routeProvider, $locationProvider) {
 
 	// route for the home page
 		.when('/', {
-			controller  : 'user-login',
+			controller  : 'userController',
 			templateUrl : 'angular/template/userLogin.php'
 		})
 
 		// route for the about page
-		.when('/about', {
-			controller  : 'aboutUsController',
+		.when('about-us', {
+			controller  : 'aboutController',
 			templateUrl : 'angular/templates/aboutUs.php'
 		})
 
 		// route for the sign up page
-		.when('/signUp', {
-			controller  : 'signUpController',
+		.when('sign-up', {
+			controller  : 'signupController',
 			templateUrl : 'angular/templates/signUp.php'
 		})
 
 		// route for the player profile page
-		.when('/playerProfile', {
-			controller  : 'playerProfileController',
+		.when('player-profile', {
+			controller  : 'playerController',
 			templateUrl : 'angular/templates/playerProfile.php'
 		})
 
 		// route for the search page
-		.when('/search', {
+		.when('search', {
 			controller  : 'searchController',
 			templateUrl : 'angular/templates/search.php'
 		})
 
 		// route for the search results page
-		.when('/searchResults', {
-			controller  : 'searchResultsController',
+		.when('search-results', {
+			controller  : 'resultsController',
 			templateUrl : 'angular/templates/searchResults.php'
 		})
 
 		// route for the contact us page
-		.when('/contactUs', {
-			controller  : 'contactUsController',
+		.when('contact-us', {
+			controller  : 'contactController',
 			templateUrl : 'angular/templates/contactUs.php'
 		})
 
