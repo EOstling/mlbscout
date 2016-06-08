@@ -2,10 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
-		<link rel="stylesheet" href="../../css/style.css" />
-		<script data-require="jquery@*" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script data-require="bootstrap.js@*" data-semver="3.3.6" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet"
+				href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css"/>
+		<link rel="stylesheet" href="../../css/style.css"/>
+		<script data-require="jquery@*" data-semver="2.2.0"
+				  src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+		<script data-require="bootstrap.js@*" data-semver="3.3.6"
+				  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		<script src="script.js"></script>
 		<title>RealTimeScout</title>
 	</head>
@@ -13,12 +16,15 @@
 		<div class="sfooter-content">
 
 			<!-- header -->
-			<header class="p-y-4">
+			<header ng-controller="NavController">
+				<bootstrap-breakpoint></bootstrap-breakpoint>
+
 				<div class="container">
 					<nav class="navbar navbar-inverse">
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+									  data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-click="navCollapsed =!navCollapsed">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
@@ -31,12 +37,12 @@
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 							<ul class="nav navbar-nav navbar-right">
-									<li><a href="#">Home</a></li>
-									<li><a href="#">About Us</a></li>
-									<li><a href="#">Players</a></li>
-									<li><a href="#">Search</a></li>
-									<li><a href="#">Profile</a></li>
-									<li><a href="#">Contact Us</a></li>
+								<li><a href="#">Home</a></li>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Players</a></li>
+								<li><a href="#">Search</a></li>
+								<li><a href="#">Profile</a></li>
+								<li><a href="#">Contact Us</a></li>
 							</ul>
 						</div><!-- /.navbar-collapse -->
 					</nav>
