@@ -4,11 +4,8 @@ require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use Edu\Cnm\MlbScout\User;
 /**
- * controller/api for activation token
- *
  * @author Eliot Robert Ostling <it.treugott@gmail.com>
  */
-//verify the xsrf challenge
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
