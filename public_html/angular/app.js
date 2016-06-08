@@ -1,1 +1,1 @@
-var app = angular.module("MlbScout", ["ui.bootstrap"]);
+var app = angular.module("MlbScout", ["ngRoute", "ui.bootstrap", "ngMessages"]);
