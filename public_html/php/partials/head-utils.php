@@ -1,4 +1,3 @@
-//Session start goes here-->
 <!DOCTYPE html>
 <html lang="en" ng-app="MlbScout">
 	<head>
@@ -9,14 +8,14 @@
 		<!-- set base for relative links - to enable pretty URLs -->
 		<base href="<?php echo dirname($_SERVER["PHP_SELF"]) . "/";?>">
 
-
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+
 		<!-- Font Awesome -->
 		<link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="<?php echo $PREFIX; ?> css/style.css" type="text/css" />
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
 
 		<!--Angular JS Libraries-->
-		<?php $ANGULAR_VERSION = "1.5.5";?>
+		<?php $ANGULAR_VERSION = "1.5.6";?>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-messages.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/<?php echo $ANGULAR_VERSION;?>/angular-route.js"></script>
@@ -25,7 +24,7 @@
 		<!-- Angular app files -->
 		<script type="text/javascript" src="angular/app.js"></script>
 		<script type="text/javascript" src="angular/route-config.js"></script>
-		<script type="text/javascript" src="angular/bootstrap-breakpoint.js"></script>
+		<script type="text/javascript" src="angular/directives/bootstrap-breakpoint.js"></script>
 		<script type="text/javascript" src="angular/controllers/user-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/about-controller.js"></script>

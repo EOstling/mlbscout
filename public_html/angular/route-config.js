@@ -9,37 +9,37 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the about page
-		.when('about-us', {
+		.when('/about-us', {
 			controller  : 'aboutController',
 			templateUrl : 'angular/templates/aboutUs.php'
 		})
 
 		// route for the sign up page
-		.when('sign-up', {
+		.when('/sign-up', {
 			controller  : 'signupController',
 			templateUrl : 'angular/templates/signUp.php'
 		})
 
 		// route for the player profile page
-		.when('player-profile', {
+		.when('/player-profile', {
 			controller  : 'playerController',
 			templateUrl : 'angular/templates/playerProfile.php'
 		})
 
 		// route for the search page
-		.when('search', {
+		.when('/search', {
 			controller  : 'searchController',
 			templateUrl : 'angular/templates/search.php'
 		})
 
 		// route for the search results page
-		.when('search-results', {
+		.when('/search-results', {
 			controller  : 'resultsController',
 			templateUrl : 'angular/templates/searchResults.php'
 		})
 
 		// route for the contact us page
-		.when('contact-us', {
+		.when('/contact-us', {
 			controller  : 'contactController',
 			templateUrl : 'angular/templates/contactUs.php'
 		})

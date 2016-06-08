@@ -13,20 +13,19 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">RealTimeScout</a>
+				<a class="navbar-brand" href="/">RealTimeScout</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<div uib-collapse="navCollapsed" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Have an Account? Sign Up</a></li>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">About Us</a></li>
-					<li><a href="#">Players</a></li>
-					<li><a href="#">Search</a></li>
-					<li><a href="#">Profile</a></li>
-					<li><a href="#">Contact Us</a></li>
+					<li><a href="sign-up">Have an Account? Sign Up</a></li>
+					<li><a href="/">Home</a></li>
+					<li><a href="about-us">About Us</a></li>
+					<li><a href="search">Search</a></li>
+					<li><a href="player-profile">Profile</a></li>
+					<li><a href="contact-us">Contact Us</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
