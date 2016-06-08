@@ -1,18 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet"
-				href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css"/>
-		<link rel="stylesheet" href="../../css/style.css"/>
-		<script data-require="jquery@*" data-semver="2.2.0"
-				  src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-		<script data-require="bootstrap.js@*" data-semver="3.3.6"
-				  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script src="script.js"></script>
-		<title>RealTimeScout</title>
-	</head>
-	<body class="sfooter">
+
+
 		<div class="sfooter-content">
 
 			<!-- header -->
@@ -87,5 +74,3 @@
 				</div>
 			</div>
 		</footer>
-	</body>
-</html>
