@@ -11,12 +11,12 @@
 		<div class="well text-center">
 			<form class="form-horizontal well" action="email.php">
 				<div class="form-group">
-					<label for="Username">Username</label>
+					<label for="Email">Email</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-user" aria-hidden="true"></i>
 						</div>
-						<input type="text" class="form-control" id="Username" name="Username" placeholder="Username">
+						<input type="text" class="form-control" id="Email" name="Email" placeholder="Email">
 					</div>
 				</div>
 				<div class="form-group">
