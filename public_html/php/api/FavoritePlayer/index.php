@@ -84,7 +84,7 @@ try {
 			}
 
 			if(empty($requestObject->favoritePlayerPlayerId) !== true) {
-				$favoritePlayer->setFavoritePlayerPlayerId($requestObject->favoritePlayerPlayerId);
+				$favoritePlayer->setfavoritePlayerPlayerId($requestObject->favoritePlayerPlayerId);
 			}
 			if(empty($requestObject->favoritePlayerUserId) !== true) {
 				$favoritePlayer->setFavoritePlayerUserId($requestObject->favoritePlayerUserId);
@@ -126,6 +126,5 @@ header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
-
 // encode and return reply to front end caller
 echo json_encode($reply);
