@@ -263,7 +263,7 @@ Class UserTest extends MlbScoutTest {
 		$results = User::getUserByUserActivationToken($this->getPDO(), $user->getUserActivationToken());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\MlbScout\\User", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\MlbScout\\User", $results);
 
 		// grab the result from the array and validate it
 		$pdoUser = $results [0];
