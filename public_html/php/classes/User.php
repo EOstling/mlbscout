@@ -434,7 +434,7 @@ class User implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getUserByUserId(\PDO $pdo, int $userId) {
+	public static function getUserByUserId(\PDO $pdo,  $userId) {
 		// sanitize the userId before searching
 		if($userId <= 0) {
 			throw(new \PDOException("user id is not positive"));
@@ -460,6 +460,48 @@ class User implements \JsonSerializable {
 		return($user);
 	}
 	/**
+	 * gets the User by userActivationToken
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $userActivationToken user activation token to reach for
+	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @throws \TypeError when variable are not the correct data type
+	 */
+	public static function getUserByUserActivationToken(\PDO $pdo,  $userActivationToken) {
+		// sanitize the description before searching
+		$userActivationToken = trim($userActivationToken);
+		$userActivationToken = filter_var($userActivationToken, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($userActivationToken) === true) {
+			throw(new \PDOException ("user activation token is invalid"));
+		}
+
+		// create querry template
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userActivationToken LIKE :userActivationToken";
+		$statement = $pdo->prepare($query);
+
+		// bind the user activation token to the place holder in the template
+		$userActivationToken = "%userActivationToken%";
+		$parameters = array("userActivationToken" => $userActivationToken);
+		$statement->execute($parameters);
+
+		// build an array of users
+		$users = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		WHILE(($row = $statement->fetch()) !== false) {
+			try {
+				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
+				$users[$users->key()] = $user;
+				$users->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($users);
+	}
+
+	 */
+	/**
 	 * gets the User by userEmail
 	 *
 	 * @param \PDO $pdo PDO connection object
@@ -467,7 +509,7 @@ class User implements \JsonSerializable {
 	 * @return \SplFixedArray SPLFixedArray of Users found
 	 * @throws \TypeError when variable are not the correct data type
 	 **/
-	public static function getUserByUserEmail(\PDO $pdo, string $userEmail) {
+	public static function getUserByUserEmail(\PDO $pdo,  $userEmail) {
 		// sanitize the description before searching
 		$userEmail = trim($userEmail);
 		$userEmail = filter_var($userEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
