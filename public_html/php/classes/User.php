@@ -499,8 +499,7 @@ class User implements \JsonSerializable {
 		}
 		return ($users);
 	}
-
-	 */
+	
 	/**
 	 * gets the User by userEmail
 	 *
