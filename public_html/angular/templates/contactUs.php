@@ -49,7 +49,7 @@
 				</div>
 
 				<!-- reCAPTCHA -->
-				<div class="g-recaptcha" data-sitekey="6Ld2NiITAAAAAODmIut5DbUuD1w3aOVcNX3oemb3"></div>
+				<div class="g-recaptcha" data-sitekey="6LeyMyITAAAAAMjgq3-9qHuNxF0p3WugaJtBtWFw"></div>
 
 				<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Send</button>
 				<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i> Reset</button>

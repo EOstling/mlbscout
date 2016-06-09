@@ -46,7 +46,8 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// otherwise redirect to home
 		.otherwise({
-			redirectTo: "/"
+			controller  : 'userController',
+			templateUrl : 'angular/templates/userLogin.php'
 		});
 
 	//use the HTML5 History API
