@@ -26,7 +26,7 @@
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 
 		<!-- Your JavaScript Form Validator -->
-		<script src="<?php echo $PREFIX; ?>js/form-validate.js"></script>
+		<script src="js/form-validate.js"></script>
 
 		<!--Angular JS Libraries-->
 		<?php $ANGULAR_VERSION = "1.5.6";?>

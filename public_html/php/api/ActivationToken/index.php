@@ -24,11 +24,11 @@ try {
 		if(empty($userActivationToken)) {
 			throw(new \RangeException ("No ActivationToken Code"));
 		}
-		$user = User::getUserByUserEmail($pdo, $userEmail );//HERE TOO
+		$user = User::getUserByUserActivationToken($pdo, $userActivationToken);//HERE TOO
 		if(empty($user)) {
 			throw(new \InvalidArgumentException ("no user for activation token")); //THIS IS DYLAN QUESTION>>>>>SI
 		}
-		$user->getUserByUserEmail(null);
+		$user->getUserByActivationToken(null);
 		$user->update($pdo);
 	} else {
 		throw(new \Exception("Invalid HTTP method"));

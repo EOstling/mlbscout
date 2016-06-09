@@ -3,17 +3,16 @@
  * require all composer dependencies; requiring the autoload file loads all composer packages at once
  **/
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
-
-/**
- * require mailer-config.php
- **/
-require_once("mailer-config.php");
-
-// verify user's reCAPTCHA input
-$recaptcha = new \ReCaptcha\ReCaptcha($secret);
-$resp = $recaptcha->verify($_POST["g-recaptcha-response"], $_SERVER["REMOTE_ADDR"]);
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 try {
+	// read encrypted config
+	$config = readConfig("/etc/apache2/capstone-mysql/mlbscout.ini");
+	$captchaConfig = json_decode($config["captcha"]);
+
+	// verify user's reCAPTCHA input
+	$recaptcha = new \ReCaptcha\ReCaptcha($captchaConfig->secretKey);
+	$resp = $recaptcha->verify($_POST["g-recaptcha-response"], $_SERVER["REMOTE_ADDR"]);
 
 	// if reCAPTCHA error, output the error code to the user
 	if (!$resp->isSuccess()) {
