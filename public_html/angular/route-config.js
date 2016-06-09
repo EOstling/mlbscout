@@ -5,7 +5,7 @@ app.config(function($routeProvider, $locationProvider) {
 	// route for the home page
 		.when('/', {
 			controller  : 'userController',
-			templateUrl : 'angular/template/userLogin.php'
+			templateUrl : 'angular/templates/userLogin.php'
 		})
 
 		// route for the about page
