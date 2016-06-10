@@ -474,13 +474,12 @@ class User implements \JsonSerializable {
 		if(empty($userActivationToken) === true) {
 			throw(new \PDOException ("user activation token is invalid"));
 		}
-
 		// create querry template
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userActivationToken LIKE :userActivationToken";
 		$statement = $pdo->prepare($query);
 
-		// bind the user activation token to the place holder in the template
-		$userActivationToken = "%userActivationToken%";
+		// bind the user Email to the place holder in the template
+		$userActivationToken = "%$userActivationToken%";
 		$parameters = array("userActivationToken" => $userActivationToken);
 		$statement->execute($parameters);
 
@@ -499,7 +498,7 @@ class User implements \JsonSerializable {
 		}
 		return ($users);
 	}
-	
+
 	/**
 	 * gets the User by userEmail
 	 *
@@ -518,10 +517,12 @@ class User implements \JsonSerializable {
 		// create querry template
 		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userEmail LIKE :userEmail";
 		$statement = $pdo->prepare($query);
+		
 		// bind the user Email to the place holder in the template
 		$userEmail = "%$userEmail%";
 		$parameters = array("userEmail" => $userEmail);
 		$statement->execute($parameters);
+		
 		// build an array of users
 		$users = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
