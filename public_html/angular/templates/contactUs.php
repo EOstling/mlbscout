@@ -42,7 +42,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-pencil"></i>
 						</div>
-						<input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" ng-model="formData.subject" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
+						<input type="text" id="subject" name="subject" class="form-control" placeholder="Subject" ng-model="formData.subject" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
 					<label for="fullName">Message</label>
 					<div class="input-group">
