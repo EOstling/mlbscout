@@ -18,7 +18,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-user"></i>
 						</div>
-						<input type="text" id="fullName" name="fullName" class="form-control" ng-model="formData.fullName" ng-minlength="4" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="fullName" name="fullName" class="form-control" placeholder="Name" ng-model="formData.fullName" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.fullName.$error" ng-if="sampleForm.fullName.$touched" ng-hide="sampleForm.fullName.$valid">
 						<p ng-message="minlength">Name is too short.</p>
@@ -30,7 +30,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-envelope"></i>
 						</div>
-						<input type="text" id="email" name="email" class="form-control" ng-model="formData.email" ng-minlength="4" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="email" name="email" class="form-control" placeholder="Email" ng-model="formData.email" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.email.$error" ng-if="sampleForm.email.$touched" ng-hide="sampleForm.email.$valid">
 						<p ng-message="minlength">Email is too short.</p>
@@ -49,7 +49,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-comment"></i>
 						</div>
-						<input type="text" id="message" name="message" class="form-control" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
+						<input type="text" id="message" name="message" class="form-control" placeholder="Message" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.message.$error" ng-if="sampleForm.message.$touched" ng-hide="sampleForm.message.$valid">
 						<p ng-message="minlength">Message is too short.</p>
