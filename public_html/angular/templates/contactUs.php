@@ -11,7 +11,7 @@
 		<div class="well text-center">
 			<!--Begin Contact Form-->
 			<form name="sampleForm" id="sampleForm" class="form-horizontal well" ng-controller="AngularFormController" ng-submit="submit(formData, sampleForm.$valid);" novalidate>
-				<h3>Important Form</h3>
+				<h3>Email Form</h3>
 				<div class="form-group" ng-class="{ 'has-error': sampleForm.fullName.$touched && sampleForm.fullName.$invalid }">
 					<label for="fullName">Full Name</label>
 					<div class="input-group">
