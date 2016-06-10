@@ -53,7 +53,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</div>
-						<input type="text" class="form-control" id="Password" name="Password" placeholder="Password">
+						<input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,7 +62,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</div>
-						<input type="text" class="form-control" id="Confirm Password" name="Confirm Password"
+						<input type="password" class="form-control" id="Confirm Password" name="Confirm Password"
 								 placeholder="Confirm Password">
 					</div>
 				</div>

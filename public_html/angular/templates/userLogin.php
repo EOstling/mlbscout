@@ -25,7 +25,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</div>
-						<input type="text" class="form-control" id="Password" name="Password" placeholder="Password">
+						<input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
 					</div>
 				</div>
 				<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Login</button>
