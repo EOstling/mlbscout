@@ -12,8 +12,8 @@
  **/
 
 // your Google reCAPTCHA keys here
-$siteKey = '6LeyMyITAAAAAMjgq3-9qHuNxF0p3WugaJtBtWFw';
-$secret = '6LeyMyITAAAAAKSJRJXbC5Ho6Eap7uyCJOnR5qLC';
+// $siteKey = '6LeyMyITAAAAAMjgq3-9qHuNxF0p3WugaJtBtWFw';
+// $secret = '6LeyMyITAAAAAKSJRJXbC5Ho6Eap7uyCJOnR5qLC';
 
 /**
  * attach the recipients to the message

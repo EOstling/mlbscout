@@ -10,57 +10,56 @@
 	<div class="col-xs-12">
 		<div class="well text-center">
 			<!--Begin Contact Form-->
-			<form id="contact-form" action="php/mailer.php" method="post">
-				<div class="form-group">
-					<label for="name">Name <span class="text-danger">*</span></label>
+			<form name="sampleForm" id="sampleForm" class="form-horizontal well" ng-controller="AngularFormController" ng-submit="submit(formData, sampleForm.$valid);" novalidate>
+				<h3>Important Form</h3>
+				<div class="form-group" ng-class="{ 'has-error': sampleForm.fullName.$touched && sampleForm.fullName.$invalid }">
+					<label for="fullName">Full Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-user" aria-hidden="true"></i>
+							<i class="fa fa-user"></i>
 						</div>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Name">
+						<input type="text" id="fullName" name="fullName" class="form-control" ng-model="formData.fullName" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="email">Email <span class="text-danger">*</span></label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.fullName.$error" ng-if="sampleForm.fullName.$touched" ng-hide="sampleForm.fullName.$valid">
+						<p ng-message="minlength">Name is too short.</p>
+						<p ng-message="maxlength">Name is too long.</p>
+						<p ng-message="required">Please enter your name.</p>
+					</div>
+					<label for="fullName">Email</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-envelope"></i>
 						</div>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+						<input type="text" id="email" name="email" class="form-control" ng-model="formData.email" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="subject">Subject</label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.email.$error" ng-if="sampleForm.email.$touched" ng-hide="sampleForm.email.$valid">
+						<p ng-message="minlength">Email is too short.</p>
+						<p ng-message="maxlength">Email is too long.</p>
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+					<label for="fullName">Subject</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-pencil" aria-hidden="true"></i>
+							<i class="fa fa-pencil"></i>
 						</div>
-						<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+						<input type="text" id="subject" name="subject" class="form-control" ng-model="formData.subject" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="message">Message <span class="text-danger">*</span></label>
+					<label for="fullName">Message</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-comment" aria-hidden="true"></i>
+							<i class="fa fa-comment"></i>
 						</div>
-						<textarea class="form-control" rows="5" id="message" name="message" placeholder="Message (2000 characters max)"></textarea>
+						<input type="text" id="message" name="message" class="form-control" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
 					</div>
-				</div>
-
-				<!-- reCAPTCHA -->
-				<div class="g-recaptcha" data-sitekey="6LeyMyITAAAAAMjgq3-9qHuNxF0p3WugaJtBtWFw"></div>
-
-				<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Send</button>
-				<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i> Reset</button>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.message.$error" ng-if="sampleForm.message.$touched" ng-hide="sampleForm.message.$valid">
+						<p ng-message="minlength">Message is too short.</p>
+						<p ng-message="maxlength">Message is too long.</p>
+						<p ng-message="required">Please enter your message.</p>
+					</div>
+					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Send</button>
+					<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();"><i class="fa fa-ban"></i>&nbsp;Reset</button>
+					<hr />
 			</form>
-
-			<!--empty area for form error/success output-->
-			<div class="row">
-				<div class="col-xs-12">
-					<div id="output-area"></div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

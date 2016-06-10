@@ -7,17 +7,17 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 try {
 	// read encrypted config
-	$config = readConfig("/etc/apache2/capstone-mysql/mlbscout.ini");
-	$captchaConfig = json_decode($config["captcha"]);
+	// $config = readConfig("/etc/apache2/capstone-mysql/mlbscout.ini");
+	// $captchaConfig = json_decode($config["captcha"]);
 
 	// verify user's reCAPTCHA input
-	$recaptcha = new \ReCaptcha\ReCaptcha($captchaConfig->secretKey);
-	$resp = $recaptcha->verify($_POST["g-recaptcha-response"], $_SERVER["REMOTE_ADDR"]);
+	// $recaptcha = new \ReCaptcha\ReCaptcha($captchaConfig->secretKey);
+	// $resp = $recaptcha->verify($_POST["g-recaptcha-response"], $_SERVER["REMOTE_ADDR"]);
 
 	// if reCAPTCHA error, output the error code to the user
-	if (!$resp->isSuccess()) {
-		throw(new Exception("reCAPTCHA error!"));
-	}
+	// if (!$resp->isSuccess()) {
+		// throw(new Exception("reCAPTCHA error!"));
+	// }
 
 	// sanitize the inputs from the form: name, email, subject, and message
 	// this assumes jQuery (not Angular will be submitting the form, so we're using the $_POST superglobal
