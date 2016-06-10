@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
 	<div class="col-xs-12">
 		<div class="well text-center">
 			<h1>Contact Us</h1>
@@ -49,7 +49,8 @@
 						<div class="input-group-addon">
 							<i class="fa fa-comment"></i>
 						</div>
-						<input type="text" id="message" name="message" class="form-control" placeholder="Message" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
+						<textarea rows="5" type="text" id="message" name="message" class="form-control"  placeholder="Message" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
+						
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.message.$error" ng-if="sampleForm.message.$touched" ng-hide="sampleForm.message.$valid">
 						<p ng-message="minlength">Message is too short.</p>
