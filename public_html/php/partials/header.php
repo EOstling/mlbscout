@@ -20,7 +20,13 @@
 			<div uib-collapse="navCollapsed" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 				<ul class="nav navbar-nav navbar-right">
+					<?php
+					// if (there is NOT a user in the session)
+					 { if($user !==$_SESSION)
+						 return()
+					?>
 					<li><a href="sign-up">Have an Account? Sign Up</a></li>
+					<?php } ?>
 					<li><a href="user-login">Home</a></li>
 					<li><a href="about-us">About Us</a></li>
 					<li><a href="search">Search</a></li>
