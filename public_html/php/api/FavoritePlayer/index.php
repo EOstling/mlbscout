@@ -31,7 +31,7 @@ try {
 	$favoritePlayerPlayerId = filter_input(INPUT_GET, "favoritePlayerPlayerId", FILTER_VALIDATE_INT);
 	$favoritePlayerUserId = filter_input(INPUT_GET, "favoritePlayerUserId", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
-	if(($method === "DELETE") && ((empty($favoritePlayerPlayerId) === true || $favoritePlayerPlayerId < 0) || (empty($favoritePlayerUserId) === true || $favoritePlayerUserId < 0))) {
+	if(($method === "DELETE") && ((empty($favoritePlayerPlayerId) === true || $favoritePlayerPlayerId <= 0) || (empty($favoritePlayerUserId) === true || $favoritePlayerUserId <= 0))) {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	// handle GET request - if id is present, that tweet is returned, otherwise all tweets are returned
@@ -58,15 +58,15 @@ try {
 //				$reply->data = $favoritePlayer;
 //			}
 		}
-	} elseif($method === "POST") {
+	} else if($method === "POST") {
 
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
-		//make sure  is available
-		if(empty($requestObject->favoritePlayerPlayerId) === true || empty($requestObject->favoritePlayerUserId === true)) {
-			throw(new \InvalidArgumentException ("No Favorite Player Exists.", 405));
+		//make sure is available
+		if(empty($requestObject->favoritePlayerPlayerId) === true || empty($requestObject->favoritePlayerUserId) === true) {
+			throw(new \InvalidArgumentException ("No Favorite Player Exists. So there.", 405));
 		}
 		$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerPlayerId, $requestObject->favoritePlayerUserId);
 		$favoritePlayer->insert($pdo);
@@ -75,52 +75,30 @@ try {
 
 		$reply->message = "FavoritePlayer created OK";
 
-		if($method === "PUT") {
-
-			// retrieve the favorite Player Id  to update
-			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerId($pdo, $id);
-			if($favoritePlayer === null) {
-				throw(new \RuntimeException("DNE:Does not exist", 404));
-			}
-
-			if(empty($requestObject->favoritePlayerPlayerId) !== true) {
-				$favoritePlayer->setfavoritePlayerPlayerId($requestObject->favoritePlayerPlayerId);
-			}
-			if(empty($requestObject->favoritePlayerUserId) !== true) {
-				$favoritePlayer->setFavoritePlayerUserId($requestObject->favoritePlayerUserId);
-			}
-
-			$schedule->update($pdo);
-			// update reply
-			$reply->message = "Favorite Player updated Finally!";
-
-		} else if($method === "DELETE") {
-			verifyXsrf();
-			// retrieve the Favorite Player to be deleted
-			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $favoritePlayerPlayerId, $favoritePlayerPlayerId);
-			if($favoritePlayer === null) {
-				throw(new \RuntimeException("DNE: Does not exist", 404));
-			}
-			// delete FavoritePlayer
-			$favoritePlayer->delete($pdo);
-			// update reply
-			$reply->message = "Favorite Player deleted OK";
-		} else {
-			throw (new \InvalidArgumentException("Invalid HTTP method request"));
+	} else if($method === "DELETE") {
+		verifyXsrf();
+		// retrieve the Favorite Player to be deleted
+		$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $favoritePlayerPlayerId, $favoritePlayerUserId);
+		if($favoritePlayer === null) {
+			throw(new \RuntimeException("DNE: Does not exist", 404));
 		}
-
+		// delete FavoritePlayer
+		$favoritePlayer->delete($pdo);
+		// update reply
+		$reply->message = "Favorite Player deleted OK";
+	} else {
+		throw (new \InvalidArgumentException("Invalid HTTP method request"));
 	}
-}
-catch
-	(Exception $exception) {
-		$reply->status = $exception->getCode();
-		$reply->message = $exception->getMessage();
-		$reply->trace = $exception->getTraceAsString();
-	} catch(TypeError $typeError) {
-		$reply->status = $typeError->getCode();
-		$reply->message = $typeError->getMessage();
+} catch
+(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTraceAsString();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 	//wat
-	}
+}
 
 header("Content-type: application/json");
 if($reply->data === null) {
