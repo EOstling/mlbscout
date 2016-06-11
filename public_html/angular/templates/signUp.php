@@ -1,73 +1,82 @@
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-md-3"> </div>
+	<div class="col-md-6">
 		<div class="well text-center">
-			<h1>Sign Up</h1>
+			<h1>Sign Up, BETCH!</h1>
 		</div>
 	</div>
 </div>
 <!-- main content-->
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
 		<div class="well text-center">
-			<form class="form-horizontal well" action="email.php">
-				<div class="form-group">
-					<label for="First Name">First Name</label>
+			<form name="sampleForm" id="sampleForm" class="form-horizontal well" ng-controller="AngularFormController" ng-submit="submit(formData, sampleForm.$valid);" novalidate>
+				<div class="form-group" ng-class="{ 'has-error': sampleForm.fullName.$touched && sampleForm.fullName.$invalid }">
+					<label for="firstName">First Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-user" aria-hidden="true"></i>
+							<i class="fa fa-key"></i>
 						</div>
-						<input type="text" class="form-control" id="First Name" name="First Name" placeholder="First Name">
+						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="Last Name">Last Name</label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
+						<p ng-message="minlength">First name is too short.</p>
+						<p ng-message="maxlength">First name is too long.</p>
+						<p ng-message="required">Please enter your first name.</p>
+					</div>
+					<label for="lastName">Last Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-key"></i>
 						</div>
-						<input type="text" class="form-control" id="Last Name" name="Last Name" placeholder="Last Name">
+						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="Phone Number">Phone Number</label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
+						<p ng-message="minlength">Last Name is too short.</p>
+						<p ng-message="maxlength">Last Name is too long.</p>
+						<p ng-message="required">Please enter your last name.</p>
+					</div>
+					<label for="phoneNumber">Phone Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-key"></i>
 						</div>
-						<input type="text" class="form-control" id="Phone Number" name="Phone Number"
-								 placeholder="Phone Number">
+						<input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" ng-model="formData.password" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="email">Email address</label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
+						<p ng-message="minlength">Phone number is too short.</p>
+						<p ng-message="maxlength">Phone number is too long.</p>
+						<p ng-message="required">Please enter your phone number.</p>
+					</div>
+					<label for="email">Email</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-envelope"></i>
 						</div>
-						<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+						<input type="text" id="email" name="email" class="form-control" placeholder="Email" ng-model="formData.email" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="Password">Password</label>
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.email.$error" ng-if="sampleForm.email.$touched" ng-hide="sampleForm.email.$valid">
+						<p ng-message="minlength">Email is too short.</p>
+						<p ng-message="maxlength">email is too long.</p>
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+					<label for="password">Password</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+							<i class="fa fa-key"></i>
 						</div>
-						<input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
+						<input type="text" id="password" name="password" class="form-control" placeholder="Password" ng-model="formData.password" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="Confirm Password">Confirm Password</label>
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</div>
-						<input type="password" class="form-control" id="Confirm Password" name="Confirm Password"
-								 placeholder="Confirm Password">
+					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
+						<p ng-message="minlength">Password is too short.</p>
+						<p ng-message="maxlength">Password is too long.</p>
+						<p ng-message="required">Please enter your password.</p>
 					</div>
-				</div>
-				<button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Submit</button>
+					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Send</button>
+					<hr />
 			</form>
-		</div>
-	</div>
-</div>
+		</div> <!-- form group end -->
+	</div> <!-- well text center end -->
+</div> <!-- col-6-end -->
+</div> <!-- row end -->

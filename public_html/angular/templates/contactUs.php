@@ -49,7 +49,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-comment"></i>
 						</div>
-						<textarea rows="5" type="text" id="message" name="message" class="form-control"  placeholder="Message" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" />
+						<input  rows="5" type="text" id="message" name="message" class="form-control"  placeholder="Message" ng-model="formData.message" ng-minlength="4" ng-maxlength="2000" ng-required="true" /input>
 						
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.message.$error" ng-if="sampleForm.message.$touched" ng-hide="sampleForm.message.$valid">
