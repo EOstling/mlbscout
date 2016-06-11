@@ -37,8 +37,7 @@
 						<p ng-message="maxlength">Password is too long.</p>
 						<p ng-message="required">Please enter your password.</p>
 					</div>
-					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Send</button>
-					<button class="btn btn-lg btn-warning" type="reset" ng-click="reset();"><i class="fa fa-ban"></i>&nbsp;Reset</button>
+					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Submit</button>
 					<hr />
 			</form>
 		</div>
