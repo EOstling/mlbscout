@@ -5,6 +5,10 @@
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
+//prepare an empty reply
+$reply = new stdClass();
+$reply->status = 200;
+$reply->data = null;
 try {
 	// read encrypted config
 	// $config = readConfig("/etc/apache2/capstone-mysql/mlbscout.ini");
@@ -21,12 +25,20 @@ try {
 
 	// sanitize the inputs from the form: name, email, subject, and message
 	// this assumes jQuery (not Angular will be submitting the form, so we're using the $_POST superglobal
-	$name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
-	$subject = filter_input(INPUT_POST, "subject", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$message = filter_input(INPUT_POST, "message", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+//	$name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+//	$email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+//	$subject = filter_input(INPUT_POST, "subject", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+//	$message = filter_input(INPUT_POST, "message", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	// create Swift message
+	verifyXsrf();
+	$requestContent = file_get_contents("php://input");
+	$requestObject = json_decode($requestContent);
+
+	if(empty($requestObject->name) === true && empty($requestObject->email) === true && empty($requestObject->subject) === true && empty($requestObject->message) === true) {
+		throw(new \InvalidArgumentException ("No email info.", 405));
+	}
+
+		// create Swift message
 	$swiftMessage = Swift_Message::newInstance();
 
 	// attach the sender to the message
@@ -73,8 +85,18 @@ try {
 	}
 
 	// report a successful send
-	echo "<div class=\"alert alert-success\" role=\"alert\">Email successfully sent.</div>";
-
-} catch(Exception $exception) {
-	echo "<div class=\"alert alert-danger\" role=\"alert\"><strong>Oh snap!</strong> Unable to send email: " . $exception->getMessage() . "</div>";
+	$reply->message = "Email successfully sent.";
 }
+catch(\Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
+}
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+// encode and return reply to front end caller
+echo json_encode($reply);
