@@ -1,5 +1,6 @@
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-md-3"> </div>
+	<div class="col-md-6">
 		<div class="well text-center">
 			<h1>User Login</h1>
 		</div>
@@ -7,11 +8,12 @@
 </div>
 <!-- main content-->
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
 		<div class="well text-center">
 			<form name="sampleForm" id="sampleForm" class="form-horizontal well" ng-controller="AngularFormController" ng-submit="submit(formData, sampleForm.$valid);" novalidate>
 				<div class="form-group" ng-class="{ 'has-error': sampleForm.fullName.$touched && sampleForm.fullName.$invalid }">
-					<label for="fullName">Full Name</label>
+					<label for="fullName">Email</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-envelope"></i>
@@ -23,6 +25,7 @@
 						<p ng-message="maxlength">email is too long.</p>
 						<p ng-message="required">Please enter your email.</p>
 					</div>
+					<label for="password">Password</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-key"></i>
@@ -40,4 +43,5 @@
 			</form>
 		</div>
 	</div>
+</div>
 </div>
