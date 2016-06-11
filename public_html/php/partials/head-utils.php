@@ -39,7 +39,7 @@
 		<script type="text/javascript" src="angular/app.js"></script>
 		<script type="text/javascript" src="angular/route-config.js"></script>
 
-		<!-- services-->
+		<!-- services -->
 		<script type="text/javascript" src="angular/services/accesslevel-services.js"></script>
 		<script type="text/javascript" src="angular/services/apicall-services.js"></script>
 		<script type="text/javascript" src="angular/services/favoriteplayer-services.js"></script>
@@ -50,14 +50,14 @@
 		<script type="text/javascript" src="angular/services/user-services.js"></script>
 
 
-
+		<!-- controllers -->
 		<script type="text/javascript" src="angular/directives/bootstrap-breakpoint.js"></script>
-		<script type="text/javascript" src="angular/controllers/user-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/search-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/about-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/signup-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/contact-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/player-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/results-controller.js"></script>
-		<script type="text/javascript" src="angular/controllers/contact-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/search-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/signup-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/user-controller.js"></script>
 	</head>
