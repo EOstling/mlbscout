@@ -16,7 +16,7 @@
 					<label for="firstName">First Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-key"></i>
+							<i class="fa fa-bomb"></i>
 						</div>
 						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
@@ -28,7 +28,7 @@
 					<label for="lastName">Last Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-key"></i>
+							<i class="fa fa-rocket"></i>
 						</div>
 						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
@@ -40,7 +40,7 @@
 					<label for="phoneNumber">Phone Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
-							<i class="fa fa-key"></i>
+							<i class="fa fa-phone"></i>
 						</div>
 						<input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" ng-model="formData.password" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
