@@ -7,8 +7,7 @@
 </div>
 <!-- main content-->
 <!--Begin Contact Form-->
-<form name="contactForm" id="contactForm" class="form-horizontal well" ng-controller="AngularFormController"
-		ng-submit="submit(formData, contactForm.$valid);" novalidate>
+<form name="contactForm" id="contactForm" class="form-horizontal well" ng-submit="submit(formData, contactForm.$valid);" novalidate>
 	<h3>Email Form</h3>
 	<div class="form-group" ng-class="{ 'has-error': contactForm.fullName.$touched && contactForm.fullName.$invalid }">
 		<label for="fullName">Full Name</label>
