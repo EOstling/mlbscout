@@ -4,7 +4,7 @@ app.service("MailerService", function($http, MAILER_ENDPOINT) {
 		return(MAILER_ENDPOINT);
 	}
 
-	this.create = function(mailer) {
+	this.sendEmail = function(mailer) {
 		return($http.post(getUrl(), mailer));
 	};
 });
