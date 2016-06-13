@@ -14,6 +14,5 @@ if($method === "GET"){
 		session_start();
 	}
 	$_SESSION = [];
-	session_abort();
 }
 ?>
