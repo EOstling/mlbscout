@@ -2,7 +2,7 @@
 	<div class="col-md-3"> </div>
 	<div class="col-md-6">
 		<div class="well text-center">
-			<h1>Sign Up, BETCH!</h1>
+			<h1>Sign Up!</h1>
 		</div>
 	</div>
 </div>
