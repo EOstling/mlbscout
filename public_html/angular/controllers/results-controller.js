@@ -1,3 +1,3 @@
-app.controller('resultsController', function($scope) {
+app.controller('resultsController', [function($scope) {
 
-});
+}]);

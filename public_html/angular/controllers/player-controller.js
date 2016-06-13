@@ -1,3 +1,3 @@
-app.controller('playerController', function($scope) {
+app.controller('playerController', [function($scope) {
 
-});
+}]);

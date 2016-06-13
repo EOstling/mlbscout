@@ -1,3 +1,3 @@
-app.controller('signupController', function($scope) {
+app.controller('signupController', [function($scope) {
 
-});
+}]);

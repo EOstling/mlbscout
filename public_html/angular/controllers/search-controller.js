@@ -1,3 +1,3 @@
-app.controller('searchController', function($scope) {
+app.controller('searchController', [function($scope) {
 
-});
+}]);
