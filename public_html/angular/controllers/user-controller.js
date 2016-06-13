@@ -10,4 +10,26 @@ app.controller('userController', ["$scope", "$window",function($scope) {
 				}
 			});
 	};
+	$scope.updateUser = function(user, validated) {
+		if(validated === true) {
+			UserService.update(signup.userId, user)
+				.then(function(result) {
+					$scope.displayStatus(result.data);
+					$scope.cancelEditing();
+					$scope.getUser();
+				});
+		}
+	};
+
+	$scope.setEditedUser = function(user) {
+		$window.scrollTo(0, 0);
+		$scope.editedUser = angular.copy(user);
+		$scope.isEditing = true;
+	};
+
+	$scope.cancelEditing = function() {
+		$scope.editedUser = null;
+		$scope.isEditing = false;
+	};
+
 }]);
