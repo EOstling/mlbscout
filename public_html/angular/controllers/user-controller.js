@@ -1,3 +1,3 @@
-app.controller('userController', function($scope) {
+app.controller('userController', ["$scope", "$window",function($scope) {
 
-});
+}]);
