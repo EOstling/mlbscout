@@ -44,22 +44,61 @@
 						<p ng-message="maxlength">Last Name is too long.</p>
 						<p ng-message="required">Please enter your last name.</p>
 					</div>
-					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							Dropdown
-							<span class="caret"></span>
+					<div ng-controller="ExampleController">
+						<!--						<form name="myForm">-->
+						<label for="playerBatting"> Throwing Hand: </label><br>
+						<select name="PlayerBatting" ng-model="data.singleSelect">
+							<option value="option-1">R</option>
+							<option value="option-2">L</option>
+							<option value="option-3">S</option>
+						</select>
+						<label for="playerPosition"> Position: </label><br>
+						<select name="playerPosition" ng-model="data.singleSelect">
+							<option value="option-1">1st</option>
+							<option value="option-2">2nd</option>
+							<option value="option-3">3rd</option>
+							<option value="option-4">SS</option>
+							<option value="option-5">Catcher</option>
+							<option value="option-6">R.Field</option>
+							<option value="option-7">L.Field</option>
+							<option value="option-8">Center</option>
+							<option value="option-9">Pitcher</option>
+						</select>
+<!--						// player height dropdown-->
+						<div class="form-group" ng-class="{ 'has-error': sampleForm.bid.$touched && sampleForm.bid.$invalid }">
+							<label for="playerHeight">Height</label>
+							<div class="input-group">
+								<div class="input-group-addon">
+									<i class="fa fa-usd"></i>
+								</div>
+								<input type="number" name="playerHeight" id="playerHeight" min="40" step="0.1" max="89" class="form-control" ng-model="formData.bid" ng-required="true" />
+							</div>
+							<div class="alert alert-danger" role="alert" ng-messages="sampleForm.bid.$error" ng-if="sampleForm.bid.$touched" ng-hide="sampleForm.bid.$valid">
+								<p ng-message="min">Height is too small.</p>
+								<p ng-message="max">Height is too large.</p>
+								<p ng-message="required">Please enter a height.</p>
+							</div>
+						</div>
+<!--						player weight dropdown box-->
+						<div class="form-group" ng-class="{ 'has-error': sampleForm.bid.$touched && sampleForm.bid.$invalid }">
+							<label for="playerWeight">Weight</label>
+							<div class="input-group">
+								<div class="input-group-addon">
+									<i class="fa fa-usd"></i>
+								</div>
+								<input type="number" name="weight" id="playerWeight" min="100" step="1" max="315" class="form-control" ng-model="formData.bid" ng-required="true" />
+							</div>
+							<div class="alert alert-danger" role="alert" ng-messages="sampleForm.bid.$error" ng-if="sampleForm.bid.$touched" ng-hide="sampleForm.bid.$valid">
+								<p ng-message="min">Bid is too small.</p>
+								<p ng-message="max">Bid is too large.</p>
+								<p ng-message="required">Please enter a bid.</p>
+							</div>
+						</div>
+
+						<h1></h1>
+						<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Update
 						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<li><a href="#">L</a></li>
-							<li><a href="#">R</a></li>
-							<li><a href="#">S</a></li>
-							<li role="separator" class="divider"></li>
-							<li><a href="#">Separated link</a></li>
-						</ul>
-					</div>
-					<h1></h1>
-					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-paper-plane"></i>&nbsp;Update</button>
-					<hr/>
+						<hr/>
 			</form>
 		</div>
 	</div>
