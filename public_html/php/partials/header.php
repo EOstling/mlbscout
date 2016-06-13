@@ -31,6 +31,7 @@
 					<li><a href="search">Search</a></li>
 					<li><a href="player-profile">Profile</a></li>
 					<li><a href="contact-us">Contact Us</a></li>
+					<li><a href="contact-us">Logout</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
