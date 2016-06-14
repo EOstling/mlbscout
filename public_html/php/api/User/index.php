@@ -140,7 +140,7 @@ try {
 			$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 			$message = <<< EOF
 			<h1> You're now registered for Real Time Scout!<h1>
-			<p>Visit the following URL to set a new password and complete the registration process: </p>
+			<p>Visit the following URL to finish activating your account: </p>
 			<a href="$confirmLink">$confirmLink</a>
 EOF;
 			$swiftMessage->setBody($message, "TEXT/HTML");
