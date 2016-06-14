@@ -1,9 +1,9 @@
 app.controller('searchController', ["$scope",function($scope) {
 
-	$scope.getSearchs = function() {
+	$scope.getSearch = function() {
 		SearchService.all()
 			.then(function(result) {
-				$scope.searchs = result.data.data;
+				$scope.search = result.data.data;
 			});
 	};
 	$scope.setEditedSearch = function(search) {

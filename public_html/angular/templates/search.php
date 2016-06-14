@@ -11,8 +11,8 @@
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 		<div class="well text-center">
-			<form name="sampleForm" id="sampleForm" class="form-horizontal well" ng-submit="submit(formData, sampleForm.$valid);" novalidate>
-				<div class="form-group" ng-class="{ 'has-error': sampleForm.fullName.$touched && sampleForm.fullName.$invalid }">
+			<form name="searchForm" id="searchForm" class="form-horizontal well" ng-submit="getSearch(formData, searchForm.$valid);" novalidate>
+				<div class="form-group" ng-class="{ 'has-error': searchForm.fullName.$touched && searchForm.fullName.$invalid }">
 					<label for="fullName">Search</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -20,7 +20,7 @@
 						</div>
 						<input type="text" id="search" name="search" class="form-control" placeholder="search" ng-model="formData.search" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.search.$error" ng-if="sampleForm.search.$touched" ng-hide="sampleForm.search.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="searchForm.search.$error" ng-if="searchForm.search.$touched" ng-hide="searchForm.search.$valid">
 						<p ng-message="minlength">Search is too short.</p>
 						<p ng-message="maxlength">Search is too long.</p>
 						<p ng-message="required">Please enter your search.</p>
