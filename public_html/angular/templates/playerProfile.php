@@ -16,7 +16,7 @@
 		<div class="col-md-6">
 			<div class="well">
 				<h4>Player Stats</h4>
-				<p>First Name: Jeffery</p>
+				<p>First Name: {{ player.playerFirstName }}</p>
 				<p>Last Name: McJeffery</p>
 				<p>Batting: Right</p>
 				<p>Position: First Base</p>
