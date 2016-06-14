@@ -51,6 +51,7 @@ setXsrfCookie();
 		<script type="text/javascript" src="angular/services/accesslevel-services.js"></script>
 		<script type="text/javascript" src="angular/services/apicall-services.js"></script>
 		<script type="text/javascript" src="angular/services/favoriteplayer-services.js"></script>
+		<script type="text/javascript" src="angular/services/login-services.js"></script>
 		<script type="text/javascript" src="angular/services/mailer-services.js"></script>
 		<script type="text/javascript" src="angular/services/player-services.js"></script>
 		<script type="text/javascript" src="angular/services/schedule-services.js"></script>
@@ -62,6 +63,7 @@ setXsrfCookie();
 		<script type="text/javascript" src="angular/directives/bootstrap-breakpoint.js"></script>
 		<script type="text/javascript" src="angular/controllers/about-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/contact-controller.js"></script>
+		<script type="text/javascript" src="angular/controllers/login-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/nav-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/player-controller.js"></script>
 		<script type="text/javascript" src="angular/controllers/results-controller.js"></script>
