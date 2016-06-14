@@ -1,4 +1,4 @@
-app.controller('signupController', "$scope",[function($scope) {
+app.controller('signupController', ["$scope",function($scope) {
 
 	$scope.createSignup = function(signup, validated) {
 		if(validated === true) {
