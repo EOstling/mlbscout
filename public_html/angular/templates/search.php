@@ -18,7 +18,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-search"></i>
 						</div>
-						<input type="text" id="search" name="search" class="form-control" placeholder="search" ng-model="formData.search" ng-minlength="4" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="search" name="search" class="form-control" placeholder="search" ng-model="formData.search" ng-minlength="1" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="searchForm.search.$error" ng-if="searchForm.search.$touched" ng-hide="searchForm.search.$valid">
 						<p ng-message="minlength">Search is too short.</p>
