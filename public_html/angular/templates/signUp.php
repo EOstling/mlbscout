@@ -18,7 +18,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-bomb"></i>
 						</div>
-						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="firstName" name="firstName" class="form-control" placeholder="First Name" ng-model="formData.firstName" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
 						<p ng-message="minlength">First name is too short.</p>
@@ -30,7 +30,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-rocket"></i>
 						</div>
-						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" ng-model="formData.password" ng-minlength="2" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last Name" ng-model="formData.lastName" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
 						<p ng-message="minlength">Last Name is too short.</p>
@@ -42,7 +42,7 @@
 						<div class="input-group-addon">
 							<i class="fa fa-phone"></i>
 						</div>
-						<input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" ng-model="formData.password" ng-minlength="4" ng-maxlength="32" ng-required="true" />
+						<input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" ng-model="formData.phoneNumber" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
 					<div class="alert alert-danger" role="alert" ng-messages="sampleForm.password.$error" ng-if="sampleForm.password.$touched" ng-hide="sampleForm.password.$valid">
 						<p ng-message="minlength">Phone number is too short.</p>
