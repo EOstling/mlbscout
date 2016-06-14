@@ -1,4 +1,4 @@
-app.constant("SEARCH_ENDPOINT", "api/search/");
+app.constant("SEARCH_ENDPOINT", "php/api/search/");
 app.service("SearchService", function($http, SEARCH_ENDPOINT) {
 	function getUrl() {
 		return(SEARCH_ENDPOINT);
