@@ -1,4 +1,4 @@
-app.constant("PLAYER_ENDPOINT", "api/player/");
+app.constant("PLAYER_ENDPOINT", "php/api/player/");
 app.service("PlayerService", function($http, PLAYER_ENDPOINT) {
 	function getUrl() {
 		return(PLAYER_ENDPOINT);

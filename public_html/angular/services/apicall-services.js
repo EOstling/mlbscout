@@ -1,4 +1,4 @@
-app.constant("APICALL_ENDPOINT", "api/apiCall/");
+app.constant("APICALL_ENDPOINT", "php/api/apiCall/");
 app.service("ApiCallService", function($http, APICALL_ENDPOINT) {
 	function getUrl() {
 		return(APICALL_ENDPOINT);

@@ -1,4 +1,4 @@
-app.constant("TEAM_ENDPOINT", "api/service/");
+app.constant("TEAM_ENDPOINT", "php/api/service/");
 app.service("TeamService", function($http, TEAM_ENDPOINT) {
 	function getUrl() {
 		return(TEAM_ENDPOINT);

@@ -1,4 +1,4 @@
-app.constant("ACCESSLEVEL_ENDPOINT", "api/accessLevel/");
+app.constant("ACCESSLEVEL_ENDPOINT", "php/api/accessLevel/");
 app.service("AccessLevelService", function($http, ACCESSLEVEL_ENDPOINT) {
 	function getUrl() {
 		return(ACCESSLEVEL_ENDPOINT);

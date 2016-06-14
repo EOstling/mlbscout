@@ -1,4 +1,4 @@
-app.constant("SCHEDULE_ENDPOINT", "api/schedule/");
+app.constant("SCHEDULE_ENDPOINT", "php/api/schedule/");
 app.service("ScheduleService", function($http, SCHEDULE_ENDPOINT) {
 	function getUrl() {
 		return(SCHEDULE_ENDPOINT);
