@@ -6,9 +6,9 @@ app.controller('signupController', [function($scope) {
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
-						$scope.sampleForm = {firstName: null, Lastname: null, phoneNumber: null, email: null, password: null};
-						$scope.signUp.$setPristine();
-						$scope.signUp.$setUntouched();
+						$scope.formData = {firstName: null, Lastname: null, phoneNumber: null, email: null, password: null};
+						$scope.sampleForm.$setPristine();
+						$scope.sampleForm.$setUntouched();
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
 					}
