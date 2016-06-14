@@ -1,4 +1,4 @@
-app.constant("FavoritePlayer_ENDPOINT", "php/api/favoriteplayer/");
+app.constant("FAVORITEPLAYER_ENDPOINT", "php/api/favoritePlayer/");
 app.service("FavoritePlayerService", function($http, FAVORITEPLAYER_ENDPOINT) {
 	function getUrl() {
 		return(FavoritePlayer_ENDPOINT);
