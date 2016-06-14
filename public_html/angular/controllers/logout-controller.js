@@ -1,7 +1,7 @@
-app.controller("LogoutController", ["$scope", "LogoutService", "$window", function($scope, LogoutService, $window){
+app.controller("logoutController", ["$scope", "logoutService", "$window", function($scope, logoutService, $window){
 
 	$scope.logout = function() {
-		LogoutService.logout();
-		$window.location.assign("public_html/template/userLogin.php")
+		logoutService.logout();
+		$window.location.href="userLogin/"
 	}
 }]);

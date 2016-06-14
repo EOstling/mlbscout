@@ -1,4 +1,4 @@
-app.service("LogoutService", function($http) {
+app.service("logoutService", function($http) {
 	this.LOGOUT_ENDPOINT = "public_html/php/Logout/index.php";
 
 	this.logout = function() {
