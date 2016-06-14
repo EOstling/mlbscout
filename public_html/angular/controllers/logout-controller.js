@@ -1,4 +1,4 @@
-app.controller("LogoutController", ["$scope", "logoutService", "$window", function($scope, logoutService, $window){
+app.controller("LogoutController", ["$scope", "LogoutService", "$window", function($scope, LogoutService, $window){
 
 	$scope.logout = function() {
 		LogoutService.logout();
