@@ -1,4 +1,4 @@
-app.controller('searchController',["$scope",function($scope) {
+app.controller('searchController', ["$scope",function($scope) {
 
 	$scope.getSearchs = function() {
 		SearchService.all()

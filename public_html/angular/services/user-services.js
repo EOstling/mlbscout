@@ -1,4 +1,4 @@
-app.constant("USER_ENDPOINT", "api/user/");
+app.constant("USER_ENDPOINT", "php/api/User/");
 app.service("UserService", function($http, USER_ENDPOINT) {
 	function getUrl() {
 		return(USER_ENDPOINT);

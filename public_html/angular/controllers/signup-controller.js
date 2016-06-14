@@ -1,12 +1,12 @@
-app.controller('signupController', ["$scope",function($scope) {
+app.controller('signupController', ["$scope", "UserService", function($scope, UserService) {
 
-	$scope.createSignup = function(signup, validated) {
+	$scope.createSignup = function(formData, validated) {
 		if(validated === true) {
-			signupService.create(formData)
+			UserService.create(formData)
 				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
-						$scope.formData = {firstName: null, Lastname: null, phoneNumber: null, email: null, password: null};
+						$scope.formData = {userFirstName: null, userLastName: null, userPhoneNumber: null, userEmail: null, userPassword: null};
 						$scope.sampleForm.$setPristine();
 						$scope.sampleForm.$setUntouched();
 					} else {

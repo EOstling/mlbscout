@@ -1,7 +1,7 @@
 <?php
 use Edu\Cnm\MlbScout;
 
-require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
+require_once dirname(__DIR__, 4) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 2) . "/classes/autoload.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
@@ -103,17 +103,14 @@ try {
 		} else if($method === "POST") {
 			// make sure the access level id is available
 			if (empty($requestObject->userAccessLevelId) === true) {
-				throw (new \InvalidArgumentException ("NO ACCESS LEVLEL ID.", 405));
+				$requestObject->userAccessLevelId = 1;
 			}
 			// Hash the password and set it
 			$password = bin2hex(openssl_random_pseudo_bytes(32));
 			$salt = bin2hex(random_bytes(32));
 			$hash = hash_pbkdf2("sha512", $password, $salt, 40196, 128);
 			$userActivationToken = bin2hex(random_bytes(16));
-			// make sure accessLevelId is available
-			if(empty($requestObject->userAccessLevelId) === true) {
-				throw(new \InvalidArgumentException ("No Access Level ID.", 405));
-			}
+
 			// create new User and insert it into the database
 			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
 			$user->insert($pdo);
