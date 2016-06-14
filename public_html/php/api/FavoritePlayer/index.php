@@ -65,10 +65,14 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		//make sure is available
-		if(empty($requestObject->favoritePlayerPlayerId) === true || empty($requestObject->favoritePlayerUserId) === true) {
+		if(empty($requestObject->favoritePlayerPlayerId) === true) {
 			throw(new \InvalidArgumentException ("No Favorite Player Exists. So there.", 405));
 		}
-		$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerPlayerId, $requestObject->favoritePlayerUserId);
+		if(empty($_SESSION["user"]) === true) {
+			throw(new RuntimeException("Cannot favorite gulag prisoner without logging in.", 401));
+		}
+
+		$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerPlayerId, $_SESSION["user"]->getUserId());
 		$favoritePlayer->insert($pdo);
 
 		// update reply

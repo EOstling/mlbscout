@@ -25,6 +25,7 @@
 				<p>HomeTown: {{ player.playerHomeTown }}</p>
 				<p>Health Status: {{ player.playerHealthStatus }}</p>
 			</div>
+			<button type="button" ng-click="favoritePlayer();">Favorite Prisoner</button>
 		</div>
 		<div class="col-md-12">
 			<div class="well text-center">

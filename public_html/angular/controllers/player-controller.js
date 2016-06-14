@@ -1,4 +1,4 @@
-app.controller('playerController', ["$routeParams", "$scope", "PlayerService", function($routeParams, $scope, PlayerService) {
+app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerService", "PlayerService", function($routeParams, $scope, FavoritePlayerService, PlayerService) {
 	$scope.player = null;
 
 	$scope.getPlayer = function() {
@@ -7,6 +7,14 @@ app.controller('playerController', ["$routeParams", "$scope", "PlayerService", f
 				if(result.data.status === 200) {
 					$scope.player = result.data.data;
 				}
+			});
+	};
+
+	$scope.favoritePlayer = function() {
+		var postPlayer = {favoritePlayerPlayerId: $scope.player.playerId};
+		FavoritePlayerService.create(postPlayer)
+			.then(function(result) {
+				// TODO: use "Misquote style" alerts
 			});
 	};
 
