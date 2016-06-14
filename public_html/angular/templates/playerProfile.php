@@ -17,7 +17,7 @@
 			<div class="well">
 				<h4>Player Stats</h4>
 				<p>First Name: {{ player.playerFirstName }}</p>
-				<p>Last Name:{{ player.playerLastName }}</p>
+				<p>Last Name: {{ player.playerLastName }}</p>
 				<p>Batting: {{ player.playerBatting }}</p>
 				<p>Position: {{ player.playerPosition }}</p>
 				<p>Height: {{ player.playerHeight }} inches</p>
