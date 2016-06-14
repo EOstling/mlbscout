@@ -64,13 +64,30 @@
 							<option value="option-8">Center</option>
 							<option value="option-9">Pitcher</option>
 						</select>
+						<label for="playerHealthStatus"> Health Status: </label><br>
+						<select name="PlayerBatting" ng-model="data.singleSelect">
+							<option value="option-1">Active</option>
+							<option value="option-2">Inactive</option>
+						</select>
+						<label for="playerHometown"> Hometown: </label><br>
+						<select name="playerHometown" ng-model="data.singleSelect">
+							<option value="option-1">Albuquerque, NM</option>
+							<option value="option-2">Santa Fe, NM</option>
+							<option value="option-3">Las Cruces, NM</option>
+							<option value="option-4">Taos, NM</option>
+							<option value="option-5">Roswell, NM</option>
+							<option value="option-6">Rio Rancho, NM</option>
+							<option value="option-7">Farmington, NM</option>
+							<option value="option-8">Ruidoso, NM</option>
+							<option value="option-9">Alamogordo, NM</option>
+						</select>
 <!--						// player height dropdown-->
 						<div class="form-group" ng-class="{ 'has-error': sampleForm.bid.$touched && sampleForm.bid.$invalid }">
 							<label for="playerHeight">Height</label>
 							<div class="input-group">
-								<div class="input-group-addon">
-									<i class="fa fa-usd"></i>
-								</div>
+<!--								<div class="input-group-addon">-->
+<!--									<i class="fa fa-usd"></i>-->
+<!--								</div>-->
 								<input type="number" name="playerHeight" id="playerHeight" min="40" step="0.1" max="89" class="form-control" ng-model="formData.bid" ng-required="true" />
 							</div>
 							<div class="alert alert-danger" role="alert" ng-messages="sampleForm.bid.$error" ng-if="sampleForm.bid.$touched" ng-hide="sampleForm.bid.$valid">
@@ -83,15 +100,15 @@
 						<div class="form-group" ng-class="{ 'has-error': sampleForm.bid.$touched && sampleForm.bid.$invalid }">
 							<label for="playerWeight">Weight</label>
 							<div class="input-group">
-								<div class="input-group-addon">
-									<i class="fa fa-usd"></i>
-								</div>
+<!--								<div class="input-group-addon">-->
+<!--									<i class="fa fa-usd"></i>-->
+<!--								</div>-->
 								<input type="number" name="weight" id="playerWeight" min="100" step="1" max="315" class="form-control" ng-model="formData.bid" ng-required="true" />
 							</div>
 							<div class="alert alert-danger" role="alert" ng-messages="sampleForm.bid.$error" ng-if="sampleForm.bid.$touched" ng-hide="sampleForm.bid.$valid">
-								<p ng-message="min">Bid is too small.</p>
-								<p ng-message="max">Bid is too large.</p>
-								<p ng-message="required">Please enter a bid.</p>
+								<p ng-message="min">Weight is too small.</p>
+								<p ng-message="max">Weight is too large.</p>
+								<p ng-message="required">Please enter a weight.</p>
 							</div>
 						</div>
 
