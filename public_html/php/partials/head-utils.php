@@ -51,7 +51,7 @@ setXsrfCookie();
 		<script type="text/javascript" src="angular/services/accesslevel-services.js"></script>
 		<script type="text/javascript" src="angular/services/apicall-services.js"></script>
 		<script type="text/javascript" src="angular/services/favoriteplayer-services.js"></script>
-		<script type="text/javascript" src="angular/services/login-services.js"></script>
+		<script type="text/javascript" src="angular/services/login-service.js"></script>
 		<script type="text/javascript" src="angular/services/mailer-services.js"></script>
 		<script type="text/javascript" src="angular/services/player-services.js"></script>
 		<script type="text/javascript" src="angular/services/schedule-services.js"></script>

@@ -2,7 +2,7 @@
 require_once dirname(__DIR__, 2) . "/classes/autoload.php";
 require_once dirname(__DIR__, 2) . "/lib/xsrf.php";
 require_once "/etc/apache2/capstone-mysql/encrypted-config.php";
-use Edu\Cnm\MlbScout;{user:};
+use Edu\Cnm\MlbScout;{User:};
 /**
  * api for signing in
  *
@@ -21,21 +21,20 @@ try {
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/mlbscout.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
-	if($method === "GET") {
 		//set xsrf cookie
 		setXsrfCookie();
-	}
+
 
 	//perform the actual POST
-	else if($method === "POST") {
+	if($method === "POST") {
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//check that username and password fields have been filled, and sanitize
-		if(empty($requestObject->userName) === true) {
-			throw(new \InvalidArgumentException("Give me username", 405));
+		if(empty($requestObject->userEmail) === true) {
+			throw(new \InvalidArgumentException("Give me the Email Sir/Ma'am", 405));
 		} else {
-			$userName = filter_var($requestObject->userName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+			$userEmail = filter_var($requestObject->userEmail, FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
 		}
 		if (empty($requestObject->userPassword) === true) {
 			throw(new \InvalidArgumentException ("Give me cryptic password", 405));
@@ -43,7 +42,7 @@ try {
 			$password = filter_var($requestObject->userPassword, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		}
 		//create the user
-		$user = user::getUserByUserUsername($pdo, $userName);
+		$user = MlbScout\User::getUserByUserEmail($pdo, $userEmail);
 		if(empty($user)) {
 			throw (new \InvalidArgumentException("Both are incorrect", 401));
 		}
@@ -53,8 +52,10 @@ try {
 			throw(new \InvalidArgumentException("YunoSignupforAccount", 401));
 		}
 		//get the hash
-		$hash =  hash_pbkdf2("sha512", $password, $user->getUserSalt(), 262144);
+		$hash = hash_pbkdf2("sha512", $password, $user->getUserSalt(), 40196, 128);
 		//check the hash against inputted data-- no match, throw exception
+		$reply->hash = $hash;
+		$reply->DBhash = $user->getUserHash();
 		if($hash !== $user->getUserHash()) {
 			throw(new \InvalidArgumentException("Tough Day? Try again", 401));
 		}

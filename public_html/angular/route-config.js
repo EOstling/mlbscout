@@ -3,7 +3,7 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 
 	// route for the home page
-		.when('/user-login', {
+		.when('/', {
 			controller  : 'LoginController',
 			templateUrl : 'angular/templates/userLogin.php'
 		})
@@ -46,7 +46,7 @@ app.config(function($routeProvider, $locationProvider) {
 
 		// otherwise redirect to home
 		.otherwise({
-			controller  : 'userController',
+			controller  : 'LoginController',
 			templateUrl : 'angular/templates/userLogin.php'
 		});
 

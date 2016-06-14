@@ -523,7 +523,7 @@ class User implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $userEmail user email to reach for
-	 * @return \SplFixedArray SPLFixedArray of Users found
+	 * @return \Edu\Cnm\MlbScout\User
 	 * @throws \TypeError when variable are not the correct data type
 	 **/
 	public static function getUserByUserEmail(\PDO $pdo, $userEmail) {
@@ -534,28 +534,25 @@ class User implements \JsonSerializable {
 			throw(new \PDOException ("user email is invalid"));
 		}
 		// create querry template
-		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userEmail LIKE :userEmail";
+		$query = "SELECT userId, userAccessLevelId, userActivationToken, userEmail, userFirstName, userHash, userLastName, userPhoneNumber, userSalt FROM user WHERE userEmail = :userEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind the user Email to the place holder in the template
-		$userEmail = "%$userEmail%";
 		$parameters = array("userEmail" => $userEmail);
 		$statement->execute($parameters);
 
 		// build an array of users
-		$users = new \SplFixedArray($statement->rowCount());
+
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		WHILE(($row = $statement->fetch()) !== false) {
+		$row = $statement->fetch();
 			try {
 				$user = new User($row["userId"], $row["userAccessLevelId"], $row["userActivationToken"], $row["userEmail"], $row["userFirstName"], $row["userHash"], $row["userLastName"], $row["userPhoneNumber"], $row["userSalt"]);
-				$users[$users->key()] = $user;
-				$users->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}
-		return ($users);
+
+		return ($user);
 	}
 
 	/**

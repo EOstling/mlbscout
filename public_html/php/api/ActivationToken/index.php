@@ -21,7 +21,7 @@ try {
 	if($method === "GET") {
 //set Xsrf cookie
 		setXsrfCookie("/");
-		$userActivationToken = $_GET["id"];
+		$userActivationToken = $_GET["ActivationToken"];
 		if(empty($userActivationToken) === true|| ctype_xdigit($userActivationToken) === false) {
 			throw(new \RangeException ("No ActivationToken Code"));
 		}

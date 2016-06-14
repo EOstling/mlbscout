@@ -38,17 +38,17 @@ try {
 		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	// handle GET request - if id is present, that player is returned
-	if ($method === "GET") {
+	if($method === "GET") {
 		// set XSRF cookie
 		setXsrfCookie();
 		// get a specific user and  reply
-		if (empty ($id) === false) {
+		if(empty ($id) === false) {
 			$user = MlbScout\User::getUserByUserId($pdo, $Id);
 			if($user !== null) {
 				$reply->data = $user;
 			}
 		} // get user by email and update reply
-		else if (empty($userEmail) === false) {
+		else if(empty($userEmail) === false) {
 			$user = MlbScout\User::getUserByUserEmail($pdo, $userEmail);
 			if($user !== null) {
 				$reply->data = $user;
@@ -81,7 +81,7 @@ try {
 			// retrieve the user to update
 			$user = MlbScout\User::getUserByUserId($pdo, $id);
 			if($user === null) {
-				throw(new \RuntimeException("User does not exist.",404));
+				throw(new \RuntimeException("User does not exist.", 404));
 			}
 			// put the user content into the user and update it
 			$user->setUserEmail($requestObject->userEmail);
@@ -96,23 +96,21 @@ try {
 			if(empty($requestObject->userPassword) === true) {
 				throw(new \PDOException("Password is required"));
 			}
-			if($user->getUserId() === false && ($requestObject->userPassword !==null))
+			if($user->getUserId() === false && ($requestObject->userPassword !== null))
 				$user->update($pdo);
 			// update reply
 			$reply->message = "User Updated!";
 		} else if($method === "POST") {
 			// make sure the access level id is available
-			if (empty($requestObject->userAccessLevelId) === true) {
+			if(empty($requestObject->userAccessLevelId) === true) {
 				$requestObject->userAccessLevelId = 1;
 			}
 			// Hash the password and set it
-			$password = bin2hex(openssl_random_pseudo_bytes(32));
 			$salt = bin2hex(random_bytes(32));
-			$hash = hash_pbkdf2("sha512", $password, $salt, 40196, 128);
+			$hash = hash_pbkdf2("sha512", $requestObject->userPassword, $salt, 40196, 128);
 			$userActivationToken = bin2hex(random_bytes(16));
-
 			// create new User and insert it into the database
-			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt, null);
+			$user = new MlbScout\User(null, $requestObject->userAccessLevelId, $userActivationToken, $requestObject->userEmail, $requestObject->userFirstName, $hash, $requestObject->userLastName, $requestObject->userPhoneNumber, $salt);
 			$user->insert($pdo);
 			// update reply
 			$reply->message = "User Created!";
@@ -124,7 +122,7 @@ try {
 			 * attach the recipients to the message
 			 **/
 			$recipients = [$requestObject->userEmail];
-			$swiftMessage -> setTo($recipients);
+			$swiftMessage->setTo($recipients);
 			// attach the subject line to the message
 			$swiftMessage->setSubject("Please confirm your RealTimeScout account");
 			/**
@@ -136,7 +134,7 @@ try {
 				$lastSlash = strrpos($basePath, "/");
 				$basePath = substr($basePath, 0, $lastSlash);
 			}
-			$urlglue = $basePath . "/controllers/emailConfirmation?emailActivation=" . $user->getUserEmail();
+			$urlglue = $basePath . "/api/ActivationToken/?ActivationToken=" . $user->getUserActivationToken();
 			$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 			$message = <<< EOF
 			<h1> You're now registered for Real Time Scout!<h1>
@@ -146,7 +144,7 @@ EOF;
 			$swiftMessage->setBody($message, "TEXT/HTML");
 			$swiftMessage->addPart(html_entity_decode(filter_var($message, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)), "TEXT/PLAIN");
 			/**
-			 * send the Email via SMTP 
+			 * send the Email via SMTP
 			 **/
 			$smtp = Swift_SmtpTransport::newInstance("localhost", 25);
 			$mailer = Swift_Mailer::newInstance($smtp);
@@ -157,7 +155,7 @@ EOF;
 			if($numSent !== count($recipients)) {
 				throw(new \RuntimeException("Unable to send email", 404));
 			}
-		} 
+		}
 	} else if($method === "DELETE") {
 		verifyXsrf();
 		// retrieve the User to be deleted 
