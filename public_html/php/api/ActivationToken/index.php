@@ -43,7 +43,7 @@ EOF;
 		$swiftMessage->setFrom(["gulag@bootcamp-coders.cnm.edu" => "Mr Lucas, Gulag Guard"]);
 		$recipients = [$user->getUserEmail() => $user->getUserFirstName() . " " . $user->getUserLastName()];
 		$swiftMessage->setTo($recipients);
-		$swiftMessage->setSubject("Welcome to Gulag Betches");
+		$swiftMessage->setSubject("Welcome to Gulag");
 		$swiftMessage->setBody($message, "text/html");
 		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
 
