@@ -20,7 +20,7 @@
 						</div>
 						<input type="text" id="userFirstName" name="userFirstName" class="form-control" placeholder="First Name" ng-model="formData.userFirstName" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userPassword.$error" ng-if="signupForm.userPassword.$touched" ng-hide="signupForm.userPassword.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userFirstName.$error" ng-if="signupForm.userFirstName.$touched" ng-hide="signupForm.userFirstName.$valid">
 						<p ng-message="minlength">First name is too short.</p>
 						<p ng-message="maxlength">First name is too long.</p>
 						<p ng-message="required">Please enter your first name.</p>
@@ -32,7 +32,7 @@
 						</div>
 						<input type="text" id="userLastName" name="userLastName" class="form-control" placeholder="Last Name" ng-model="formData.userLastName" ng-minlength="2" ng-maxlength="32" ng-required="true" />
 					</div>
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userPassword.$error" ng-if="signupForm.userPassword.$touched" ng-hide="signupForm.userPassword.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userLastName.$error" ng-if="signupForm.userLastName.$touched" ng-hide="signupForm.userLastName.$valid">
 						<p ng-message="minlength">Last Name is too short.</p>
 						<p ng-message="maxlength">Last Name is too long.</p>
 						<p ng-message="required">Please enter your last name.</p>
@@ -44,7 +44,7 @@
 						</div>
 						<input type="text" id="userPhoneNumber" name="userPhoneNumber" class="form-control" placeholder="Phone Number" ng-model="formData.userPhoneNumber" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userPassword.$error" ng-if="signupForm.userPassword.$touched" ng-hide="signupForm.userPassword.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userPhoneNumber.$error" ng-if="signupForm.userPhoneNumber.$touched" ng-hide="signupForm.userPhoneNumber.$valid">
 						<p ng-message="minlength">Phone number is too short.</p>
 						<p ng-message="maxlength">Phone number is too long.</p>
 						<p ng-message="required">Please enter your phone number.</p>
@@ -56,7 +56,7 @@
 						</div>
 						<input type="text" id="userEmail" name="userEmail" class="form-control" placeholder="Email" ng-model="formData.userEmail" ng-minlength="4" ng-maxlength="32" ng-required="true" />
 					</div>
-					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userEmail.$error" ng-if="signupForm.userEmail.$touched" ng-hide="signupForm.email.$valid">
+					<div class="alert alert-danger" role="alert" ng-messages="signupForm.userEmail.$error" ng-if="signupForm.userEmail.$touched" ng-hide="signupForm.userEmail.$valid">
 						<p ng-message="minlength">Email is too short.</p>
 						<p ng-message="maxlength">email is too long.</p>
 						<p ng-message="required">Please enter your email.</p>
