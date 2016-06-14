@@ -17,13 +17,13 @@
 			<div class="well">
 				<h4>Player Stats</h4>
 				<p>First Name: {{ player.playerFirstName }}</p>
-				<p>Last Name: McJeffery</p>
-				<p>Batting: Right</p>
-				<p>Position: First Base</p>
-				<p>Height: 75 inches</p>
-				<p>Weight: 290</p>
-				<p>HomeTown: Denver, CO</p>
-				<p>Health Status: Active</p>
+				<p>Last Name:{{ player.playerLastName }}</p>
+				<p>Batting: {{ player.playerBatting }}</p>
+				<p>Position: {{ player.playerPosition }}</p>
+				<p>Height: {{ player.playerHeight }} inches</p>
+				<p>Weight: {{ player.playerWeight }} lbs</p>
+				<p>HomeTown: {{ player.playerHomeTown }}</p>
+				<p>Health Status: {{ player.playerHealthStatus }}</p>
 			</div>
 		</div>
 		<div class="col-md-12">
