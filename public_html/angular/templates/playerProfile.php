@@ -4,7 +4,7 @@
 		<div class="col-md-6">
 			<div class="well text-center">
 				<h4>Player Picture</h4>
-				<img class="img-responsive" src="/public_html/image/profilePicture.png" alt="Profile Picture">
+				<img class="img-responsive" src="/public_html/image/profilePicture.jpg" alt="Profile Picture">
 			</div>
 		</div>
 		<div class="col-md-6">
