@@ -1,4 +1,4 @@
-app.controller('playerController', ["$routeParams", "$scope","FavoritePlayerService", "PlayerService", "ScheduleService", "$window", function($routeParams, $scope ,FavoritePlayerService, PlayerService, ScheduleService, $window) {
+app.controller('playerController', ["$routeParams", "$scope","FavoritePlayerService", "PlayerService", "ScheduleService", "$window", "$location", function($routeParams, $scope ,FavoritePlayerService, PlayerService, ScheduleService, $window, $location) {
 	$scope.player = null;
 	$scope.user =[];
 	$scope.favoritePlayer = null;
@@ -62,6 +62,10 @@ app.controller('playerController', ["$routeParams", "$scope","FavoritePlayerServ
 	//			//..
 	//		});
 	//};
+
+	$scope.goToPlayer = function(playerId) {
+		$location.path("player-profile/" + playerId);
+	};
 
 	$scope.getSchedule = function() {
 		ScheduleService.fetchByTeamId($scope.player.playerTeamId)
