@@ -32,6 +32,7 @@
 					<li><a href="about-us">About Us</a></li>
 					<li><a href="search">Search</a></li>
 					<li><a href="player-profile">Profile</a></li>
+					<li><a href="user">My Favorite Players</a></li>
 					<li><a href="contact-us">Contact Us</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->

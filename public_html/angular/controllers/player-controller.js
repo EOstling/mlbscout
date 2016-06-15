@@ -1,5 +1,6 @@
-app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerService", "PlayerService", function($routeParams, $scope, FavoritePlayerService, PlayerService) {
+app.controller('playerController', ["$routeParams", "$scope", "UserService","FavoritePlayerService", "PlayerService", function($routeParams, $scope, UserService ,FavoritePlayerService, PlayerService) {
 	$scope.player = null;
+	$scope.user =[];
 
 	$scope.getPlayer = function() {
 		PlayerService.fetch($routeParams.id)
@@ -18,14 +19,30 @@ app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerSer
 			});
 	};
 	//This intends to be able to get a specific favorite player by its ID and populate it in our favorite player column.
-	$scope.favoritePlayer = function(){
-		FavoritePlayerService.fetch(favoritePlayerUserId)
-			.then(function(result){
+	$scope.user = function(){
+		UserService.fetch()
+			.then(function(result) {
+				if(result.data.status === 200) {
+					$scope.user = result.data.data;
+					console.log("floofy");
+					console.log(result.data);
+
+				}
+			});
+			FavoritePlayerService.fetch(favoritePlayerUserId)
+				.then(function(result){
+					$scope.favoritePlayer = result.data.data;
+					console.log("fuzzy");
+					console.log(result.data);
 				//..
 			});
 	};
 
 	if($scope.player === null) {
 		$scope.getPlayer();
+	}
+
+	if($scope.user === null) {
+		$scope.user();
 	}
 }]);
