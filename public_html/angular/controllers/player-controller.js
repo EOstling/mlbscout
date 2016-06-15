@@ -1,6 +1,6 @@
 app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerService", "PlayerService", function($routeParams, $scope, FavoritePlayerService, PlayerService) {
 	$scope.player = null;
-	$scope.alerts = [];
+
 	$scope.getPlayer = function() {
 		PlayerService.fetch($routeParams.id)
 			.then(function(result){
@@ -21,7 +21,7 @@ app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerSer
 	$scope.favoritePlayer = function(){
 		FavoritePlayerService.fetch(favoritePlayerUserId)
 			.then(function(result){
-			$scope.alerts[0] = {type: "success", msg:result.data.message};
+				//..
 			});
 	};
 
