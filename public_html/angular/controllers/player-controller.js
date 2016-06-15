@@ -9,7 +9,7 @@ app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerSer
 				}
 			});
 	};
-
+//This is intended to be able to favorite a player; only when logged in.
 	$scope.favoritePlayer = function() {
 		var postPlayer = {favoritePlayerPlayerId: $scope.player.playerId};
 		FavoritePlayerService.create(postPlayer)
@@ -17,6 +17,7 @@ app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerSer
 				$scope.alerts[0] = {type: "success", msg: result.data.message};
 			});
 	};
+	//This intends to be able to get a specific favorite player by its ID and populate it in our favorite player column.
 	$scope.favoritePlayer = function(){
 		FavoritePlayerService.fetch(favoritePlayerUserId)
 			.then(function(result){
