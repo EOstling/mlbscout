@@ -34,8 +34,8 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$scheduleId = filter_input(INPUT_GET, "scheduleId", FILTER_VALIDATE_INT);
 	$scheduleTeamId = filter_input(INPUT_GET, "scheduleTeamId", FILTER_VALIDATE_INT);
-	$scheduleLocation = filter_input(INPUT_GET, "scheduleLocation", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
-	$scheduleStartingPosition = filter_input(INPUT_GET, "scheduleStartingPosition", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$scheduleLocation = filter_input(INPUT_GET, "scheduleLocation", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$scheduleStartingPosition = filter_input(INPUT_GET, "scheduleStartingPosition", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$scheduleTime = filter_input(INPUT_GET, "scheduleTime ", FILTER_VALIDATE_INT);
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -61,6 +61,11 @@ try {
 			}
 		} else if(empty($id) === false) {
 			$schedule = MlbScout\Schedule::getScheduleByScheduleId($pdo, $id);
+			if($schedule !== null) {
+				$reply->data = $schedule;
+			}
+		} else if(empty($scheduleTeamId) === false) {
+			$schedule = MlbScout\Schedule::getScheduleByScheduleTeamId($pdo, $scheduleTeamId);
 			if($schedule !== null) {
 				$reply->data = $schedule;
 			}

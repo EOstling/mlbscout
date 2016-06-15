@@ -1,4 +1,4 @@
-app.constant("SCHEDULE_ENDPOINT", "php/api/schedule/");
+app.constant("SCHEDULE_ENDPOINT", "php/api/Schedule/");
 app.service("ScheduleService", function($http, SCHEDULE_ENDPOINT) {
 	function getUrl() {
 		return(SCHEDULE_ENDPOINT);
@@ -14,6 +14,10 @@ app.service("ScheduleService", function($http, SCHEDULE_ENDPOINT) {
 
 	this.fetch = function(scheduleId) {
 		return($http.get(getUrlForId(scheduleId)));
+	};
+
+	this.fetchByTeamId = function(scheduleTeamId) {
+		return($http.get(getUrl() + "?scheduleTeamId=" + scheduleTeamId));
 	};
 
 	this.create = function(schedule) {

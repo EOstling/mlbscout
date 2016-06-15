@@ -425,6 +425,44 @@ class Schedule implements \JsonSerializable {
 	}
 
 	/**
+	 * gets the schedule by scheduleTeamId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $scheduleTeamId schedule id to search for
+	 * @return Schedule|null Schedule found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getScheduleByScheduleTeamId(\PDO $pdo, int $scheduleTeamId) {
+		// sanitize the scheduleId before searching
+		if($scheduleTeamId <= 0) {
+			throw(new \PDOException("schedule team id is not positive"));
+		}
+
+		// create query template
+		$query = "SELECT scheduleId, scheduleTeamId, scheduleLocation, scheduleStartingPosition, scheduleTime FROM schedule WHERE scheduleTeamId LIKE :scheduleTeamId";
+		$statement = $pdo->prepare($query);
+
+		// bind the schedule id to the place holder in the template
+		$parameters = array("scheduleTeamId" => $scheduleTeamId);
+		$statement->execute($parameters);
+
+		// grab the schedule from mySQL
+		try {
+			$schedule = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$schedule = new Schedule($row["scheduleId"], $row["scheduleTeamId"], $row["scheduleLocation"], $row["scheduleStartingPosition"], $row["scheduleTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($schedule);
+	}
+
+	/**
 	 * gets all schedules
 	 *
 	 * @param \PDO $pdo PDO connection object

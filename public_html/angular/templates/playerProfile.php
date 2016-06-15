@@ -23,7 +23,7 @@
 			<div class="well text-center">
 				<h4>Player Schedule</h4>
 				<p>Location: {{ schedule.scheduleLocation }}</p>
-				<p>Date: {{ schedule.scheduleTime }}</p>
+				<p>Date: {{ schedule.scheduleTime | date }}</p>
 			</div>
 		</div>
 	</section>
