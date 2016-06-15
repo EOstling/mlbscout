@@ -35,7 +35,7 @@
 			</form>
 		</div>
 	</div>
-	<table class="table table-striped">
+	<table class="table table-striped white-background">
 		<tr ng-repeat="player in players" ng-click="goToPlayer(player.playerId);">
 			<td>First Name: {{player.playerFirstName}}</td>
 			<td>Last Name: {{player.playerLastName}}</td>

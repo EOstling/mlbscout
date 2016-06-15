@@ -27,7 +27,7 @@
 						<li><a href="sign-up">Have an Account? Sign Up</a></li>
 					<?php } else { ?>
 						<li>
-							<button ng-click="logout();">Logout</button>
+							<button class="logout" ng-click="logout();">Logout</button>
 						</li>
 					<?php } ?>
 					<li><a href="user-login">Home</a></li>

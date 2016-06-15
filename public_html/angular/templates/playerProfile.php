@@ -1,5 +1,5 @@
 <div class="row">
-	<section class="col-md-9">
+	<section class="col-md-12">
 		<div class="col-md-6">
 			<div class="well text-center">
 				<h4>Player Picture</h4>
@@ -27,14 +27,14 @@
 			</div>
 		</div>
 	</section>
-	<section class="col-md-3">
-		<div class="well text-center">
-			<h4>Favorite Players</h4>
-			<table>
-				<tr ng-repeat='favoritePlayer[ track by_UserId_]'>
-					<td>{{ favoritePlayer.favoritePlayerUserId }}</td>
-				</tr>
-			</table>
-		</div>
-	</section>
+<!--	<section class="col-md-3">-->
+<!--		<div class="well text-center">-->
+<!--			<h4>Favorite Players</h4>-->
+<!--			<table>-->
+<!--				<tr ng-repeat='favoritePlayer[ track by_UserId_]'>-->
+<!--					<td>{{ favoritePlayer.favoritePlayerUserId }}</td>-->
+<!--				</tr>-->
+<!--			</table>-->
+<!--		</div>-->
+<!--	</section>-->
 </div>
