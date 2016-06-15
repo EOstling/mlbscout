@@ -3,6 +3,6 @@
 		<h2>Favorite Players</h2>
 		<table ng-init="loadFavoritePlayers();">
 			<tr ng-repeat="player in favoritePlayer">
-				<td>{{ player.playerFirstName }}</td>
+				<td>{{ player.playerFirstName }} </td>
 			</tr>
 		</table>
