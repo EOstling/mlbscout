@@ -29,6 +29,18 @@
 					<button class="btn btn-lg btn-info" type="submit"><i class="fa fa-search"></i>&nbsp;Find</button>
 					<hr />
 			</form>
+			<table>
+				<tr ng-repeat="player in players">
+					<td>First Name: {{player.playerFirstName}}</td>
+					<td>Last Name: {{player.playerLastName}}</td>
+					<td>Batting: {{ player.playerBatting }}</td>
+					<td>Position: {{ player.playerPosition }}</td>
+					<td>Height: {{ player.playerHeight }} inches</td>
+					<td>Weight: {{ player.playerWeight }} lbs</td>
+					<td>HomeTown: {{ player.playerHomeTown }}</td>
+					<td>Health Status: {{ player.playerHealthStatus }}</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>

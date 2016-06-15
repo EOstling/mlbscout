@@ -31,7 +31,7 @@
 		<div class="well text-center">
 			<h4>Favorite Players</h4>
 			<table>
-				<tr ng-repeat="favoritePlayerUserId">
+				<tr ng-repeat='favoritePlayer[ track by_UserId_]'>
 					<td>{{ favoritePlayer.favoritePlayerUserId }}</td>
 				</tr>
 			</table>

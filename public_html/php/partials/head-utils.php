@@ -56,6 +56,7 @@ setXsrfCookie();
 		<script type="text/javascript" src="angular/services/mailer-services.js"></script>
 		<script type="text/javascript" src="angular/services/player-services.js"></script>
 		<script type="text/javascript" src="angular/services/schedule-services.js"></script>
+		<script type="text/javascript" src="angular/services/search-services.js"></script>
 		<script type="text/javascript" src="angular/services/team-services.js"></script>
 		<script type="text/javascript" src="angular/services/user-services.js"></script>
 
