@@ -1,4 +1,4 @@
-app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerService", "PlayerService", "ScheduleService", function($routeParams, $scope, FavoritePlayerService, PlayerService, ScheduleService) {
+app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerService", "PlayerService", function($routeParams, $scope, FavoritePlayerService, PlayerService) {
 	$scope.player = null;
 	$scope.alerts = [];
 	$scope.getPlayer = function() {
@@ -17,20 +17,12 @@ app.controller('playerController', ["$routeParams", "$scope", "FavoritePlayerSer
 				$scope.alerts[0] = {type: "success", msg: result.data.message};
 			});
 	};
-	//$scope.schedule = null;
-	//
-	//$scope.getSchedule = function() {
-	//	ScheduleService.fetch($routeParams.id)
-	//		.then(function(result){
-	//			if(result.data.status === 200) {
-	//				$scope.schedule = result.data.data;
-	//			}
-	//		});
-	//};
-	//
-	//if($scope.schedule === null) {
-	//	$scope.getSchedule();
-	//}
+	$scope.favoritePlayer = function(){
+		FavoritePlayerService.fetch(favoritePlayerUserId)
+			.then(function(result){
+			$scope.alerts[0] = {type: "success", msg:result.data.message};
+			});
+	};
 
 	if($scope.player === null) {
 		$scope.getPlayer();
