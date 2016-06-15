@@ -4,6 +4,11 @@
 	background-color: rgba(245, 245, 245, 0.7);
 }
 
+button.logout {
+	margin-right: 1rem;
+	margin-left: 1rem;
+}
+
 .navbar {
 	background-color: black;
 }

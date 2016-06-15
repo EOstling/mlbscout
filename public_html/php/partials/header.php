@@ -25,10 +25,6 @@
 					if(empty($_SESSION["user"]) === true) {
 						?>
 						<li><a href="sign-up">Have an Account? Sign Up</a></li>
-					<?php } else { ?>
-						<li>
-							<button class="logout" ng-click="logout();">Logout</button>
-						</li>
 					<?php } ?>
 					<li><a href="user-login">Home</a></li>
 					<li><a href="about-us">About Us</a></li>
@@ -40,6 +36,11 @@
 						<li><a href="user">My Favorite Players</a></li>
 					<?php } ?>
 					<li><a href="contact-us">Contact Us</a></li>
+					<?php if(!empty($_SESSION["user"]) === true) { ?>
+						<li>
+							<button class="btn btn-info navbar-btn" ng-click="logout();">Logout</button>
+						</li>
+					<?php } ?>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</nav>
