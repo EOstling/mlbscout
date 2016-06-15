@@ -1,5 +1,4 @@
 <div class="row">
-	<button type="button" ng-click="favoritePlayer();">Favorite Prisoner</button>
 	<section class="col-md-9">
 		<div class="col-md-6">
 			<div class="well text-center">
@@ -9,7 +8,7 @@
 		</div>
 		<div class="col-md-6">
 			<div class="well">
-				<h4>Player Stats</h4>
+				<h4>Player Stats</h4><button class="pull-right" type="button" ng-click="favoritePlayer();">Favorite Prisoner</button>
 				<p>First Name: {{ player.playerFirstName }}</p>
 				<p>Last Name: {{ player.playerLastName }}</p>
 				<p>Batting: {{ player.playerBatting }}</p>
@@ -23,7 +22,8 @@
 		<div class="col-md-12">
 			<div class="well text-center">
 				<h4>Player Schedule</h4>
-				<h5>Location:</h5> <h5>Date:</h5>
+				<p>Location: {{ schedule.scheduleLocation }}</p>
+				<p>Date: {{ schedule.scheduleTime }}</p>
 			</div>
 		</div>
 	</section>
