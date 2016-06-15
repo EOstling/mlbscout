@@ -33,7 +33,6 @@
 					<li><a href="user-login">Home</a></li>
 					<li><a href="about-us">About Us</a></li>
 					<li><a href="search">Search</a></li>
-					<li><a href="player-profile">Profile</a></li>
 					<?php
 					// if (there is NOT a user in the session)
 					if(empty($_SESSION["user"]) !== true) {
