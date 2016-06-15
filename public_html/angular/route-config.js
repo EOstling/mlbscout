@@ -26,13 +26,18 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'angular/templates/playerProfile.php'
 		})
 
+		.when('/player-profile/', {
+			controller: 'playerController',
+			templateUrl: 'angular/templates/playerProfile.php'
+		})
+
 		.when('/schedule/:id', {
 			controller: 'playerController',
 			templateUrl: 'angular/templates/playerProfile.php'
 		})
 
 		.when('/user/:id', {
-			controller: 'userController',
+			controller: 'playerController',
 			templateUrl: 'angular/templates/user.php'
 		})
 

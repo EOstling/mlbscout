@@ -62,8 +62,13 @@ try {
 //			}
 		} else {
 			// here you return all favorite players for the user in the $_SESSION
-			$userFavoritePrisoners = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $_SESSION["user"]->getUserId())->toArray();
-			$reply->data = $userFavoritePrisoners;
+			$userFavoritePrisoners = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerUserId($pdo, $_SESSION["user"]->getUserId());
+			$finalPrisoners = [];
+			foreach( $userFavoritePrisoners as $prisoner){
+				$finalPrisoners[]= MlbScout\Player::getPlayerByPlayerId($pdo, $prisoner->getFavoritePlayerPlayerId());
+			}
+
+			$reply->data = $finalPrisoners;
 
 		}
 

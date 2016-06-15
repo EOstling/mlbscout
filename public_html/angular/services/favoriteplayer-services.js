@@ -17,6 +17,7 @@ app.service("FavoritePlayerService", function($http, FAVORITEPLAYER_ENDPOINT) {
 	};
 
 	this.create = function(favoritePlayer) {
+		console.log(favoritePlayer);
 		return($http.post(getUrl(), favoritePlayer));
 	};
 
