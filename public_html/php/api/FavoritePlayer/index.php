@@ -63,7 +63,7 @@ try {
 //				$reply->data = $favoritePlayer;
 //			}
 		} else {
-
+			$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerPlayerId, $_SESSION["user"]->getUserId());
 			// here you return all favorite players for the user in the $_SESSION
 		}
 	} else if($method === "POST") {
