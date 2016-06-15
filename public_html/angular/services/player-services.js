@@ -16,12 +16,12 @@ app.service("PlayerService", function($http, PLAYER_ENDPOINT) {
 		return($http.get(getUrlForId(playerId)));
 	};
 
-	this.fetchPlayerByFirstName = function(firstName) {
-		return($http.get(getUrl() + "?firstName=" + firstName));
+	this.fetchPlayerByPlayerFirstName = function(firstName) {
+		return($http.get(getUrl() + "?playerFirstName=" + firstName));
 	};
 
-	this.fetchPlayerByLastName = function(lastName) {
-		return($http.get(getUrl() + "?lastName=" + lastName));
+	this.fetchPlayerByPlayerLastName = function(lastName) {
+		return($http.get(getUrl() + "?playerLastName=" + lastName));
 	};
 
 	this.create = function(player) {

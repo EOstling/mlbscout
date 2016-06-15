@@ -62,7 +62,12 @@ try {
 				$reply->data = $players;
 			}
 		} else if(empty($playerFirstName) === false) {
-			$players = MlbScout\Player::getPlayerByPlayerFirstName($pdo, $playerFirstName);
+			$players = MlbScout\Player::getPlayerByPlayerFirstName($pdo, $playerFirstName)->toArray();
+			if($players !== null) {
+				$reply->data = $players;
+			}
+		} else if(empty($playerLastName) === false) {
+			$players = MlbScout\Player::getPlayerByPlayerLastName($pdo, $playerLastName)->toArray();
 			if($players !== null) {
 				$reply->data = $players;
 			}
@@ -159,7 +164,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerBatting) !== true) {
+			}
+			if(empty($requestObject->playerBatting) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -171,7 +177,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerFirstName) !== true) {
+			}
+			if(empty($requestObject->playerFirstName) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -183,7 +190,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerHealthStatus) !== true) {
+			}
+			if(empty($requestObject->playerHealthStatus) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -195,7 +203,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerHeight) !== true) {
+			}
+			if(empty($requestObject->playerHeight) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -207,7 +216,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerHomeTown) !== true) {
+			}
+			if(empty($requestObject->playerHomeTown) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -219,7 +229,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerLastName) !== true) {
+			}
+			if(empty($requestObject->playerLastName) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -231,7 +242,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerPosition) !== true) {
+			}
+			if(empty($requestObject->playerPosition) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -243,7 +255,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerThrowingHand) !== true) {
+			}
+			if(empty($requestObject->playerThrowingHand) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
@@ -255,7 +268,8 @@ try {
 				// update reply
 				$reply->message = "player updated OK";
 				// update player rating if it needs updated
-			} if(empty($requestObject->playerWeight) !== true) {
+			}
+			if(empty($requestObject->playerWeight) !== true) {
 				// retrieve the player to update
 				$player = MlbScout\Player::getPlayerByPlayerId($pdo, $id);
 				if($player === null) {
