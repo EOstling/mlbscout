@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-md-6">
 			<div class="well">
-				<h4>Player Stats</h4><button class="pull-right" type="button" ng-click="favoritePlayer();">Favorite Prisoner</button>
+				<h4>Player Stats</h4><button class="btn btn-info pull-right" class="pull-right" type="button" ng-click="favoritePlayer();">Favorite Prisoner</button>
 				<p>First Name: {{ player.playerFirstName }}</p>
 				<p>Last Name: {{ player.playerLastName }}</p>
 				<p>Batting: {{ player.playerBatting }}</p>

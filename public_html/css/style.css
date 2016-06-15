@@ -9,6 +9,11 @@ button.logout {
 	margin-left: 1rem;
 }
 
+button.favoritePlayer {
+	margin-right: 1rem;
+	margin-left: 1rem;
+}
+
 .navbar {
 	background-color: black;
 }
