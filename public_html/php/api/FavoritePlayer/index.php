@@ -39,6 +39,11 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 
+		if(empty($_SESSION["user"]) === true) {
+			throw(new RuntimeException("This might be appropriate but then again if you think about it, the reason you are getting this message is because you were inappropriate. Good for you", 401));
+		}
+		$favoritePlayer = new MlbScout\FavoritePlayer($requestObject->favoritePlayerPlayerId, $_SESSION["user"]->getUserId());
+
 		if(empty($favoritePlayerPlayerId) === false && empty($favoritePlayerUserId) === false) {
 			$favoritePlayer = MlbScout\FavoritePlayer::getFavoritePlayerByFavoritePlayerPlayerIdAndFavoritePlayerUserId($pdo, $favoritePlayerPlayerId, $favoritePlayerUserId);
 			if($favoritePlayer !== null) {
@@ -57,6 +62,9 @@ try {
 //			if($favoritePlayer !== null){
 //				$reply->data = $favoritePlayer;
 //			}
+		} else {
+
+			// here you return all favorite players for the user in the $_SESSION
 		}
 	} else if($method === "POST") {
 

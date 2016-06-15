@@ -21,7 +21,12 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 
 		// route for the player profile page
-		.when('/player-profile/:id','schedule/:id', {
+		.when('/player-profile/:id', {
+			controller  : 'playerController',
+			templateUrl : 'angular/templates/playerProfile.php'
+		})
+
+		.when('/schedule/:id', {
 			controller  : 'playerController',
 			templateUrl : 'angular/templates/playerProfile.php'
 		})
