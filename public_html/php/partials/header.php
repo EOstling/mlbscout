@@ -26,13 +26,20 @@
 						?>
 						<li><a href="sign-up">Have an Account? Sign Up</a></li>
 					<?php } else { ?>
-					<li><button ng-click="logout();">Logout</button></li>
+						<li>
+							<button ng-click="logout();">Logout</button>
+						</li>
 					<?php } ?>
 					<li><a href="user-login">Home</a></li>
 					<li><a href="about-us">About Us</a></li>
 					<li><a href="search">Search</a></li>
 					<li><a href="player-profile">Profile</a></li>
-					<li><a href="user">My Favorite Players</a></li>
+					<?php
+					// if (there is NOT a user in the session)
+					if(empty($_SESSION["user"]) !== true) {
+						?>
+						<li><a href="user">My Favorite Players</a></li>
+					<?php } ?>
 					<li><a href="contact-us">Contact Us</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->

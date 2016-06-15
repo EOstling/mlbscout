@@ -36,7 +36,7 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'angular/templates/playerProfile.php'
 		})
 
-		.when('/user/:id', {
+		.when('/user/', {
 			controller: 'playerController',
 			templateUrl: 'angular/templates/user.php'
 		})
